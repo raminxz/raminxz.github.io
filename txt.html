@@ -12,16 +12,11 @@
 			}
 		</style>
 		<link rel="stylesheet" href="css/txt-1-r.css">
-		<script charset="utf-8" src="js/kindeditor-min.js"></script>
+		<script charset="utf-8" src="js/raminxz-1-min.js"></script>
 		<script charset="utf-8" src="js/zh-CN.js"></script>
-			<!-- 		 
-		<link rel="stylesheet" href="../themes/default/default.css" />
-		<script charset="utf-8" src="../kindeditor-min.js"></script>
-		<script charset="utf-8" src="../lang/zh-CN.js"></script>
-			-->		
 		<script>
 			var editor;
-			KindEditor.ready(function(K) {
+			rxminxz.ready(function(K) {
 				editor = K.create('textarea[name="content"]', {
 					allowFileManager : true
 				});
@@ -38,10 +33,10 @@
 					alert(editor.selectedHtml());
 				});
 				K('input[name=setHtml]').click(function(e) {
-					editor.html('<h3>Hello KindEditor</h3>');
+					editor.html('<h3>Hello raminmxz</h3>');
 				});
 				K('input[name=setText]').click(function(e) {
-					editor.text('<h3>Hello KindEditor</h3>');
+					editor.text('<h3>Hello raminxz</h3>');
 				});
 				K('input[name=insertHtml]').click(function(e) {
 					editor.insertHtml('<strong>插入HTML</strong>');
@@ -56,33 +51,32 @@
 		</script>
 	</head>
 	<body>
-		<script type="text/javascript"><!--
+<!-- 		<script type="text/javascript"><!--
 		google_ad_client = "ca-pub-7116729301372758";
 		/* 更多演示（728x90） */
 		google_ad_slot = "5052271949";
 		google_ad_width = 728;
 		google_ad_height = 90;
 		//-->
+ 		</script> -->
+		<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 		</script>
-		<script type="text/javascript"
-		src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-		</script>
-		<h3>默认模式</h3>
+		<h3>text - Editor - <b>raminxz</b></h3>
 		<form>
-			<textarea name="content" style="width:800px;height:400px;visibility:hidden;">KindEditor</textarea>
+			<textarea name="content" style="width:800px;height:400px;visibility:hidden;">text - Editor</textarea>
 			<p>
-				<input type="button" name="getHtml" value="取得HTML" />
-				<input type="button" name="isEmpty" value="判断是否为空" />
-				<input type="button" name="getText" value="取得文本(包含img,embed)" />
-				<input type="button" name="selectedHtml" value="取得选中HTML" />
+				<input type="button" name="getHtml" value="دریافت html" />
+				<input type="button" name="getText" value="دریافت متن" />
+				<input type="button" name="selectedHtml" value="انتخاب html" />
 				<br />
 				<br />
-				<input type="button" name="setHtml" value="设置HTML" />
-				<input type="button" name="setText" value="设置文本" />
-				<input type="button" name="insertHtml" value="插入HTML" />
-				<input type="button" name="appendHtml" value="添加HTML" />
-				<input type="button" name="clear" value="清空内容" />
-				<input type="reset" name="reset" value="Reset" />
+				<input type="button" name="setHtml" value="setHtml" />
+				<input type="button" name="setText" value="setText" />
+				<input type="button" name="insertHtml" value="insertHtml" />
+				<input type="button" name="appendHtml" value="appendHtml" />
+				<input type="button" name="clear" value="پاک کردن همه" />
+<!-- 				<input type="button" name="isEmpty" value="判断是否为空" /> -->
+				<input type="reset" name="reset" value="ریست" />
 			</p>
 		</form>
 	</body>
