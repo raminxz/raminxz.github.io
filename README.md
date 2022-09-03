@@ -29,3 +29,8 @@
 |:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
 
 <img align="center" width="50" border-radius="50%" src="https://raw.githubusercontent.com/raminxz/raminxz.github.io/main/img/Raminxz.gif" />
+
+***
+
+## TEXT
+> log_raminxz.svg <BR /> log_raminxz.png
