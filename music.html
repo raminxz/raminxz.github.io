@@ -1,504 +1,519 @@
-<html><head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <title>Page not found · GitHub Pages</title>
-  <style>
-  body {
-  font-family: Roboto;
-  background-color: #bbdefb;
-}
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="theme-color" content="#000">
+        <link rel="shortcut icon" type="image/png" href="img/log_raminxz.svg">
+        
+        <link rel="stylesheet" href="css/font-awesome.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <title>وب سایت اختصاصی رامین رودباری</title>
+        <!-- ---------------------------------------------------- -->
+        <title>home</title>
+        <!-- ---------------------------------------------------- -->
+        <!-- -->
+        <link rel="stylesheet" href="css/font-awesome.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/fontawesome.css">
+        <link rel="stylesheet" href="css/fontawesome.min.css">
+        <!-- ---------------------------------------------------- -->
+        <link rel="apple-touch-icon" sizes="57x57" href="">
+        <link rel="apple-touch-icon" sizes="60x60" href="">
+        <link rel="apple-touch-icon" sizes="72x72" href="">
+        <link rel="apple-touch-icon" sizes="76x76" href="">
+        <link rel="apple-touch-icon" sizes="114x114" href="">
+        <link rel="apple-touch-icon" sizes="120x120" href="">
+        <link rel="apple-touch-icon" sizes="144x144" href="">
+        <link rel="apple-touch-icon" sizes="152x152" href="">
+        <link rel="apple-touch-icon" sizes="180x180" href="">
+        <link rel="icon" type="image/png" sizes="192x192" href="">
+        <link rel="icon" type="image/png" sizes="32x32" href="">
+        <link rel="icon" type="image/png" sizes="32x32" href="">
+        <!-- ---------------------------------------------------- -->
+        <meta name="msapplication-TileColor" content="#000">
+        <meta name="msapplication-TileImage" content="img/logo-raminxz.png">
+        <meta name="theme-color" content="#000">
+        <meta name="msapplication-navbutton-color" content="#000">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="#000">
+        <meta name="description" content="طراح سایت رامین رودباری">
+        <meta property="og:title" content="raminxz">
+        <meta property="og:description" content="وب سایت رسمی رامین رودباری">
+        <meta property="og:image" content="https://github.com/raminxz/raminxz.github.io/blob/main/img/img%20xz.png?raw=true">
+        <meta property="og:url" content="https://raminxz.github.io">
+        <link rel="canonical" href="https://raminxz.github.io">
+        <meta name="twitter:title" content="home">
+        <meta name="twitter:description" content="وب سایت رسمی رامین رودباری">
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:image:alt" content="  Home|index ">
+        <meta property="og:site_name" content="https://raminxz.github.io">
+        <meta name="twitter:site" content="raminxz">
+        <!-- ---------------------------------------------------- -->
+        
+        
+        <!---->
+        <link rel="stylesheet" href="css/style.min.r.css">
+        <link rel="stylesheet" href="css/ico-style.css">
+        <!---->
+        
+        <link rel="stylesheet" href="css/all.css">
+        <link rel="stylesheet" href="css/all-1.css">
+        <link rel="stylesheet" href="css/animate.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/mdb.css">
+        <link rel="stylesheet" href="css/styles.min.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+    </head>
+    <body>
+        <div class="audio-button">
+            <div class="audio-button-tooltip">
+                <h3></h3>
+                <p></p>
+            </div>
+            <div class="music-player__wrapper">
+                <div class="music-player" id="music-container">
+                    <audio id="audio-player" autoplay loop>
+                        <source src="audio/001.mp3" type="audio/mpeg">
+                    </audio>
+                    <div class="music-player__bar music-player__bar1"></div>
+                    <div class="music-player__bar music-player__bar2"></div>
+                    <div class="music-player__bar music-player__bar3"></div>
+                    <div class="music-player__bar music-player__bar4"></div>
+                    <button onclick="playMusic()" class="music-player__button music-player__play">
+                        <span class="sr-only">Play</span>
+                    </button>
+                    <button onclick="pauseMusic()" class="music-player__button music-player__pause">
+                        <span class="sr-only">Pause</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            var audioPlayer = document.getElementById('audio-player');
+            var audioContainer = $('#music-container');
 
+            function pauseMusic() {
+                audioPlayer.pause();
+                audioContainer.addClass("music-player--disabled");
+            }
 
-.container {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+            function playMusic() {
+                audioPlayer.play();
+                audioContainer.removeClass("music-player--disabled");
+            }
 
-.player {
-  position: relative;
-  background-color: #ffffff;
-  background-image: url("https://michael-zhigulin.github.io/mz-codepen-projects/Material%20Design%20UI%20Audio%20Player/tim_minchin_piano.jpg");
-  width: 550px;
-  height: 375px;
-  border-radius: 3px;
-  border-bottom: 6px solid #3f51b5;
-  box-shadow: 0 0 20px 3px rgba(0, 0, 0, .5);
-  z-index: 1;
-  &:hover .mask {
-    background-color: rgba(255, 255, 255, .1);
-    transition: all 1s;
-  }
-  & .like {
-    position: absolute;
-    width: 35px;
-    height: 35px;
-    top: 15px;
-    right: 20px;
-    z-index: 15;
-    font-size: 1.5em;
-    vertical-align: middle;
-    line-height: 38px;
-    color: #f2f2f2;
-    border-radius: 50%;
-    text-align: center;
-    cursor: pointer;
-  }
-  & .icon-heart {
-    display: block;
-  }
-  & .mask {
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, .2);
-    z-index: 2;
-    transition: all 1s;
-  }
-  &-info {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    z-index: 4;
-    list-style: none;
-    color: #262626;
-    transform: scale(1);
-    & li {
-      margin-bottom: 7px;
-    }
-    & li:nth-child(1) {
-      font-size: 1.5em;
-    }
-    & li:nth-child(2) {
-      font-size: 1.2em;
-    }
-    & li:nth-child(3) {
-      font-size: .9em;
-    }
-  }
-  & .info-two {
-    left: auto;
-    right: 4.5%;
-    z-index: 1;
-    color: #f2f2f2;
-    & li:nth-child(2) {
-      float: right;
-    }
-    & li:nth-child(3) {
-      display: inline-block;
-      float: right;
-      clear: both;
-    }
-  }
-  & #play-button {
-    box-sizing: border-box;
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background-color: #5c6bc0;
-    box-shadow: 0 8px 25px 6px rgba(0, 0, 0, .5);
-    right: 40px;
-    bottom: 90px;
-    z-index: 5;
-    cursor: pointer;
-    transition: all 70ms;
-    border: none;
-    &:hover {
-      width: 70px;
-      height: 70px;
-      box-shadow: 0 4px 15px 0 rgba(0, 0, 0, .5);
-      right: 45px;
-      bottom: 95px;
-      transition: all 70ms;
-    }
-    & .icon-play {
-      position: absolute;
-      font-size: 1.5em;
-      left: 52%;
-      top: 50%;
-      transform: translate(-48%, -50%);
-      transition: all 70ms;
-      color: #ffffff;
-    }
-    &:hover .icon-play {
-      font-size: 1.2em;
-      transition: all 70ms;
-    }
-    & .icon-cancel {
-      position: absolute;
-      font-size: 1.6em;
-      left: 50%;
-      top: 49%;
-      transform: translate(-50%, -51%);
-      color: #ffffff;
-    }
-  }
-}
+            translate();
 
-.control-row {
-  position: absolute;
-  bottom: -1px;
-  width: 100%;
-  height: 130px;
-  background-color: #ffffff;
-  overflow: hidden;
-  z-index: 3;
-  & #pause-button {
-    box-sizing: border-box;
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background-color: #f2f2f2;
-    left: 40px;
-    bottom: 25px;
-    z-index: 5;
-    cursor: pointer;
-    border: none;
-    transform: scale(0);
-    display: none;
-    animation: scale-animation .4s;
-    animation-fill-mode: forwards;
-    animation-delay: .3s;
-    & .icon-pause {
-      position: absolute;
-      font-size: 1.5em;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      transition: all .1s;
-      color: #424242;
-    }
-    & .icon-play {
-      position: absolute;
-      font-size: 1.5em;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      transition: all .1s;
-      color: #424242;
-    }
-  }
-  & .seek-field {
-    bottom: 67px;
-    left: 148px;
-    position: absolute;
-    width: 170px;
-    z-index: 5;
-    transform: scale(0);
-    display: none;
-    animation: scale-animation .4s;
-    animation-fill-mode: forwards;
-    animation-delay: .3s;
-  }
-  & .volume-field {
-    bottom: 67px;
-    right: 127px;
-    position: absolute;
-    width: 50px;
-    z-index: 5;
-    transform: scale(0);
-    display: none;
-    animation: scale-animation .4s;
-    animation-fill-mode: forwards;
-    animation-delay: .3s;
-  }
-  & .volume-icon {
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    border-radius: 50%;
-    bottom: 58px;
-    right: 185px;
-    z-index: 5;
-    font-size: 1.2em;
-    display: none;
-    transform: scale(0);
-    animation: scale-animation .4s;
-    animation-fill-mode: forwards;
-    animation-delay: .3s;
-    & .icon-volume-up {
-      color: #424242;
-    }
-  }
-}
+            function fromLangChange() {
+                var classes = ['form_fullname', 'form_mail', 'form_phone', 'form_subject', 'form_des'];
+                var enLang = {
+                    'form_fullname': 'Fullname',
+                    'form_mail': 'E-mail',
+                    'form_phone': 'Phone Number',
+                    'form_subject': 'Subject',
+                    'form_des': 'Description'
+                };
+                var faLang = {
+                    'form_fullname': 'نام و نام خانوادگی',
+                    'form_mail': 'ایمیل',
+                    'form_phone': 'شماره تماس',
+                    'form_subject': 'موضوع',
+                    'form_des': 'توضیحات'
+                };
+                if (current_lang_index == 1) {
+                    classes.forEach(cl => {
+                        $('.' + cl).attr('placeholder', enLang[cl]);
+                    }
+                    );
+                } else {
+                    classes.forEach(cl => {
+                        $('.' + cl).attr('placeholder', faLang[cl]);
+                    }
+                    );
+                }
 
-.like-active {
-  color: #ef5350;
-  animation: scale-animation .4s;
-  animation-fill-mode: forwards;
-}
+            }
 
-@keyframes scale-animation {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1.2);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
+            const canvas = document.getElementById('canv');
+            const ctx = canvas.getContext('2d');
 
-.waves-animation-one {
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background-color: #5c6bc0;
-  z-index: 3;
-  left: 42.5%;
-  bottom: 20%;
-  transform: scale(0);
-  animation: waves-animation-one .25s;
-  animation-fill-mode: forwards;
-  animation-delay: .3s;
-  display: none;
-}
+            const w = canvas.width = document.body.offsetWidth;
+            const h = canvas.height = document.body.offsetHeight;
+            const cols = Math.floor(w / 20) + 1;
+            const ypos = Array(cols).fill(0);
 
-@keyframes waves-animation-one {
-  0% {
-    transform: scale(1);
-  }
-  99% {
-    transform: scale(7.8);
-  }
-  100% {
-    transform: scale(7.8);
-  }
-}
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, w, h);
 
-.waves-animation-two {
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background-color: #5c6bc0;
-  z-index: 3;
-  right: 40px;
-  bottom: 35px;
-  transform: scale(7.8);
-  display: none;
-  animation: waves-animation-two .2s;
-  animation-fill-mode: forwards;
-}
+            function matrix() {
+                ctx.fillStyle = '#0001';
+                ctx.fillRect(0, 0, w, h);
 
-@keyframes waves-animation-two {
-  to {
-    transform: scale(0);
-  }
-}
+                ctx.fillStyle = $('.root-bg').css('background-color');
+                ctx.font = '13pt monospace';
 
-.info-active {
-  animation: info-active-animation 3s;
-  animation-fill-mode: forwards;
-  animation-delay: .37s;
-}
+                ypos.forEach((y, ind) => {
+                    const text = String.fromCharCode(Math.random() * 128);
+                    const x = ind * 20;
+                    ctx.fillText(text, x, y);
+                    if (y > 100 + Math.random() * 10000)
+                        ypos[ind] = 0;
+                    else
+                        ypos[ind] = y + 20;
+                }
+                );
+            }
 
-@keyframes info-active-animation {
-  to {
-    bottom: 56.5%;
-  }
-}
+            setInterval(matrix, 50);
 
-.play-active {
-  animation: play-animation .3s;
-  animation-fill-mode: forwards;
-}
+            !function () {
+                function t() {
+                    var t = document.createElement("script");
+                    t.type = "text/javascript",
+                        t.async = !0,
+                        localStorage.getItem("rayToken") ? t.src = "https://app.raychat.io/scripts/js/" + o + "?rid=" + localStorage.getItem("rayToken") + "&href=" + window.location.href : t.src = "https://app.raychat.io/scripts/js/" + o + "?href=" + window.location.href;
+                    var e = document.getElementsByTagName("script")[0];
+                    e.parentNode.insertBefore(t, e)
+                }
+                var e = document
+                    , a = window
+                    , o = "8fba5372-f6d7-43e1-88e1-cbee23bbcaa6";
+                "complete" == e.readyState ? t() : a.attachEvent ? a.attachEvent("onload", t) : a.addEventListener("load", t, !1)
+            }();
+        </script>
+        <script>
+            let header = document.querySelector('header');
+            let headerBg = document.querySelector('.header-bg');
+            let headerWidth = header.offsetWidth;
+            //let headerHeight = header.offsetHeight;
+            let headerBgMoveMent = 40;
+            
+            header.addEventListener('mousemove', (event) => {
+                movement(event);
+            }
+            );
 
-@keyframes play-animation {
-  0% {
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-  }
-  98% {
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-    transform: translate(-200px, 65px);
-  }
-  99% {
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-    transform: translate(-200px, 65px) scale(0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-    transform: translate(0, 65px) scale(1);
-  }
-}
+            function movement(event) {
+                let mouseX = Math.floor(-((event.offsetX) - (headerWidth / 2)) * (headerBgMoveMent / headerWidth));
+                //let mouseY = Math.floor(-((event.offsetY) - (headerHeight / 2)) * (headerBgMoveMent / headerHeight));
+                headerBg.style.transform = `translate(${mouseX}px)`;
+            }
 
-.play-inactive {
-  animation: play-inactive 1s;
-  animation-fill-mode: forwards
-}
+            function getPosition(elem) {
+                const rect = elem.getBoundingClientRect()
+                return {
+                    top: rect.top,
+                    left: rect.left,
+                    width: rect.width,
+                    height: rect.height
+                }
+            }
 
-@keyframes play-inactive {
-  from {
-    transform: translate(0, 65px);
-  }
-}
+            function toPx(val) {
+                return [val, 'px'].join('')
+            }
+        </script>
+        <script>
+            $(window).on('load', function () {
+                $('.canvas-wrapper,#canv').delay(1500).fadeOut();
+                setTimeout(function () {
+                    $("iframe#raychatFrame").contents().find(".raychat_main_container_header_agents_agent_border").css({
+                        'border': 'none',
+                        'box-shadow': '0 0 0 4px rgba(0,0,0,.2)'
+                    });
+                    $("iframe#raychatFrame").contents().find(".raychat_bgc").css('background-color', $('.root-bg').css('background-color'));
+                    $(".raychat_bgc").css('background-color', $('.root-bg').css('background-color'));
+                    $('iframe#raychatFrame').css('z-index', '100000000000');
+                }, 1000);
+                setTimeout(function () {
+                    playMusic();
+                }, 5000);
 
-input[type="range"] {
-  -webkit-appearance: none;
-  width: 100%;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-}
+                var result = detect.parse(navigator.userAgent);
+                var B = result.browser.family;
+                var BV = result.browser.version;
+                var Os = result.os.family;
+                var Type = result.device.type;
+                $.ajax({
+                    type: 'post',
+                    url: 'ajax/statistics.php',
+                    data: {
+                        B: B,
+                        BV: BV,
+                        Os: Os,
+                        Type: Type
+                    },
+                    success: function (response) {
+                    }
+                });
+            });
+            $(document).ready(function () {
 
-input[type="range"]:focus {
-  outline: none;
-}
+                $('.lang-two').click(function () {
+                    let src1 = $('.lang-one a img').attr('src');
+                    $('.lang-one a img').attr('src', $('.lang-two a img').attr('src'));
+                    $('.lang-two a img').attr('src', src1);
+                    $('body').toggleClass('en-lang');
+                    change_lang();
+                    $('.map-wrapper img').attr("data-tooltip", $('.address-val').text());
+                    fromLangChange();
+                });
 
-input[type="range"] + .thumb {
-  display: none;
-}
+                $('.myDiv h5').click(function (e) {
+                    let pos = getPosition(this);
+                    let div = document.getElementsByClassName('myDiv')[0];
+                    div.style.width = toPx(pos.width);
+                    div.style.height = toPx(pos.height);
+                    div.style.top = toPx(pos.top);
+                    div.style.left = toPx(pos.left);
+                    setTimeout(function () {
+                        div.classList.add('fullscreen');
+                    }, 50);
+                    div.style.position = 'fixed';
+                    var x = $('.root-bg').css('background-color').replace(')', ', 0.2)').replace('rgb', 'rgba');
+                    $('.myDiv').attr('style', $('.myDiv').attr('style') + 'background-color:' + x + ' !important');
+                    $(this).fadeOut('fast');
+                    $('.contact-wrapper-contents').delay(1000).fadeIn('slow');
+                    $('.contact-bg').delay(200).fadeIn(100);
+                });
+                $('.close-contact-wrapper').click(function (e) {
+                    $('.myDiv').removeClass('fullscreen');
+                    $('.myDiv').css('background-color', $('.root-bg').css('background-color').replace(')', ', 1)').replace('rgb', 'rgba'));
+                    $('.contact-wrapper-contents').delay(0).fadeOut(1);
+                    $('.myDiv').css({
+                        'opacity': '1',
+                        'height': '50px',
+                        'width': '160px'
+                    });
+                    setTimeout(e => $('.myDiv').css('position', 'static'), 1000);
+                    $('.myDiv h5').delay(500).fadeIn('slow');
+                    $('.contact-bg').fadeOut(10);
+                });
 
-input[type="range"]::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 3px;
-  cursor: pointer;
-  animate: 0.2s;
-  box-shadow: 0px 0px 0px transparent, 0px 0px 0px transparent;
-  background: #f2f2f2;
-  border-radius: 0;
-  border: 0px solid #000101;
-}
+                $('.contact-box-wrapper').on({
+                    mouseenter: function () {
+                        $('.myDiv').addClass('rubberBand');
+                    },
+                    mouseleave: function () {
+                        $('.myDiv').removeClass('rubberBand');
+                    }
+                });
 
-input[type="range"]::-webkit-slider-thumb {
-  box-shadow: 0px 0px 0px transparent, 0px 0px 0px transparent;
-  border: 0px solid transparent;
-  height: 18px;
-  width: 18px;
-  border-radius: 50%;
-  background: #009688;
-  cursor: pointer;
-  -webkit-appearance: none;
-  margin-top: -7px;
-}
+                $('.tooltipLink').hover(function () {
+                    var title = $(this).attr('data-tooltip');
+                    $(this).data('tipText', title);
+                    if (title == '') { } else {
+                        $('<p class="tooltips"></p>').fadeIn(200).text(title).appendTo('body');
+                    }
+                }, function () {
+                    $(this).attr('data-tooltip', $(this).data('tipText'));
+                    $('.tooltips').fadeOut(200);
+                }).mousemove(function (e) {
+                    var mousex = e.pageX;
+                    var mousey = e.pageY;
+                    $('.tooltips').css({
+                        top: mousey,
+                        left: mousex
+                    })
+                });
 
-input[type="range"]:focus::-webkit-slider-runnable-track {
-  background: #f2f2f2;
-}
+                var PageState = 'Header';
 
-input[type="range"]::-moz-range-track {
-  width: 100%;
-  height: 3px;
-  cursor: pointer;
-  animate: 0.2s;
-  box-shadow: 0px 0px 0px transparent, 0px 0px 0px transparent;
-  background: #f2f2f2;
-  border-radius: 0;
-  border: 0px solid #000101;
-}
+                $('.menu ul li i').on({
+                    click: function () {
+                        if (PageState != $(this).attr('data-id')) {
+                            PageState = $(this).attr('data-id');
+                            $('section,header').delay(600).fadeOut();
+                            $('#' + PageState).delay(500).fadeIn();
+                            /*$('.color--white').addClass('expanded');
+                        setTimeout(function() {
+                            $('.color--white').removeClass('expanded');
+                         }, 1000);*/
 
-input[type="range"]::-moz-range-thumb {
-  box-shadow: 0px 0px 0px transparent, 0px 0px 0px transparent;
-  border: 0px solid transparent;
-  height: 18px;
-  width: 18px;
-  border-radius: 50%;
-  background: #009688;
-  cursor: pointer;
-}
+                            $('.canvas-wrapper,#canv').fadeIn();
+                            setTimeout(function () {
+                                $('.canvas-wrapper,#canv').fadeOut();
+                            }, 1500);
+                        }
+                    },
+                    mouseenter: function () {
+                        let num = $(this).attr('data-num');
+                        $('.menu-p' + num).addClass('active');
+                    },
+                    mouseleave: function () {
+                        $('.menu ul li p').removeClass('active');
+                    }
+                });
 
-input[type="range"]::-ms-track {
-  width: 100%;
-  height: 3px;
-  cursor: pointer;
-  animate: 0.2s;
-  background: transparent;
-  border-color: transparent;
-  border-width: 39px 0;
-  color: transparent;
-  padding-top: 5px;
-}
+                $('#Fn').on('input', function () {
+                    if ($(this).val() != "") {
+                        $('.fn .form-status').addClass('success');
+                    } else {
+                        $('.fn .form-status').removeClass('success error');
+                    }
+                });
 
-input[type="range"]::-ms-fill-lower {
-  background: #f2f2f2;
-  border: 0px solid transparent;
-  border-radius: 0;
-  box-shadow: 0px 0px 0px transparent, 0px 0px 0px transparent;
-}
+                $('#Mail').on('focusout', function () {
+                    if ($(this).val() != "") {
+                        var EmailPatt = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                        if (EmailPatt.test($(this).val())) {
+                            $('.mail .form-status').removeClass('error').addClass('success');
+                        } else {
+                            $('.mail .form-status').removeClass('success').addClass('error');
+                        }
+                    } else {
+                        $('.mail .form-status').removeClass('success error');
+                    }
+                });
 
-input[type="range"]::-ms-fill-upper {
-  background: #f2f2f2;
-  border: 0px solid transparent;
-  border-radius: 0x;
-  box-shadow: 0px 0px 0px transparent, 0px 0px 0px transparent;
-}
+                $('#Mobile').on('focusout', function () {
+                    if ($(this).val() != "") {
+                        var MobilePatt = /^(09[0-9]{9})$/;
+                        if (MobilePatt.test($(this).val())) {
+                            $('.mobile .form-status').removeClass('error').addClass('success');
+                        } else {
+                            $('.mobile .form-status').removeClass('success').addClass('error');
+                        }
+                    } else {
+                        $('.mobile .form-status').removeClass('success error');
+                    }
+                });
 
-input[type="range"]::-ms-thumb {
-  box-shadow: 0px 0px 0px transparent, 0px 0px 0px transparent;
-  border: 0px solid transparent;
-  height: 18px;
-  width: 18px;
-  border-radius: 50%;
-  background: #009688;
-  cursor: pointer;
-  margin-top: 1px;
-}
+                $('#Subject').on('input', function () {
+                    if ($(this).val() != "") {
+                        $('.subject .form-status').addClass('success');
+                    } else {
+                        $('.subject .form-status').removeClass('success error');
+                    }
+                });
 
-input[type="range"]::-ms-tooltip {
-  display: none;
-}
+                $('#Description').on('input', function () {
+                    if ($(this).val() != "") {
+                        $('.description .form-status').addClass('success');
+                    } else {
+                        $('.description .form-status').removeClass('success error');
+                    }
+                });
 
-input[type="range"]::-ms-ticks {
-  display: none;
-}
+                $('#Contact_Btn').click(function () {
+                    var Fname = $('#Fn').val();
+                    var Mail = $('#Mail').val();
+                    var Mobile = $('#Mobile').val();
+                    var Subject = $('#Subject').val();
+                    var Description = $('#Description').val();
+                    if (Fname != "" && Mail != "" && Mobile != "" && Subject != "" && Description != "") {
+                        var EmailPatt = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                        var MobilePatt = /^(09[0-9]{9})$/;
+                        if (EmailPatt.test(Mail)) {
+                            if (MobilePatt.test(Mobile)) {
+                                $(this).attr('disabled', true);
+                                $(this).find('p').fadeOut(10);
+                                $(this).find('.spinner-border').delay(400).fadeIn(100);
+                                $(this).addClass('active');
+                                $.ajax({
+                                    type: 'post',
+                                    url: 'contact-bot/index.php',
+                                    data: {
+                                        Fn: Fname,
+                                        Mail: Mail,
+                                        Mobile: Mobile,
+                                        Subject: Subject,
+                                        Description: Description
+                                    },
+                                    success: function (response) {
+                                        setTimeout(function () {
+                                            $('#Contact_Btn').find('.spinner-border').fadeOut(10);
+                                            $('#Contact_Btn').find('p').delay(300).fadeIn();
+                                            $('#Contact_Btn').removeClass('active');
+                                            $('#Contact_Btn').attr('disabled', false);
+                                            $('#Fn,#Mail,#Mobile,#Subject,#Description').val("");
+                                            $('.fn,.mail,.mobile,.description,.subject,.form-status').removeClass('success error');
+                                            $('#Fn').focus();
+                                        }, 3000);
+                                    }
+                                });
+                            } else {
+                                $('.mobile .form-status').addClass('error');
+                                $('.mobile').addClass('animated shake');
+                            }
+                        } else {
+                            $('.mail .form-status').addClass('error');
+                            $('.mail').addClass('animated shake');
+                        }
+                    } else {
+                        if (Fname == "") {
+                            $('.fn .form-status').addClass('error');
+                            $('.mail .form-status,.mobile .form-status,.subject .form-status , .description .form-status').removeClass('error');
+                            $('.fn').addClass('animated shake');
+                        } else if (Mail == "") {
+                            $('.mail .form-status').addClass('error');
+                            $('.mobile .form-status,.subject .form-status , .description .form-status').removeClass('error');
+                            $('.mail').addClass('animated shake');
+                        } else if (Mobile == "") {
+                            $('.mobile .form-status').addClass('error');
+                            $('.subject .form-status , .description .form-status').removeClass('error');
+                            $('.mobile').addClass('animated shake');
+                        } else if (Subject == "") {
+                            $('.subject .form-status').addClass('error');
+                            $('.description .form-status').removeClass('error');
+                            $('.subject').addClass('animated shake');
+                        } else if (Description == "") {
+                            $('.description .form-status').addClass('error');
+                            $('.description').addClass('animated shake');
+                        }
+                    }
+                    setTimeout(function () {
+                        $('.fn , .mail , .mobile , .subject , .description').removeClass('animated shake');
+                    }, 500);
+                });
 
-input[type="range"]:focus::-ms-fill-lower {
-  background: #f2f2f2;
-}
+                $('.close-contact-wrapper').click(function () {
+                    $('.contact-wrapper-contents').fadeOut();
+                    $('.contact-form-wrapper h5').delay(500).fadeIn();
+                    $('.contact-form-wrapper').removeClass('active');
+                });
 
-input[type="range"]:focus::-ms-fill-upper {
-  background: #f2f2f2;
-}
-  </style>
-  
-  </head>
-  <body>
-<div class="container">
-  <div class="player">
-    <div class="like waves-effect waves-light">
-      <i class="icon-heart"></i>
-    </div>
-    <div class="mask"></div>
-    <ul class="player-info info-one">
-      <li>Rock'n'Roll Nerd</li>
-      <li>Tim Minchin</li>
-      <li>5:34</li>
-    </ul>
-    <ul class="player-info info-two">
-      <li>Rock'n'Roll Nerd</li>
-      <li>Tim Minchin</li>
-      <li><span id="duration"></span><i> / </i>5:34</li>
-    </ul>
-    <div id="play-button" class="unchecked">
-      <i class="icon icon-play"></i>
-    </div>
-    <div class="control-row">
-      <div class="waves-animation-one"></div>
-      <div class="waves-animation-two"></div>
-      <div id="pause-button">
-        <i class="icon"></i>
-      </div>
-      <div class="seek-field">
-        <input id="audioSeekBar" min="0" max="334" step="1" value="0" type="range" oninput="audioSeekBar()" onchange="this.oninput()">
-      </div>
-      <div class="volume-icon">
-        <i class="icon-volume-up"></i>
-      </div>
-      <div class="volume-field">
-        <input type="range" min="0" max="100" value="100" step="1" oninput="audio.volume = this.value/100" onchange="this.oninput()">
-      </div>
-    </div>
-  </div>
-</div>
-<audio id="audio-player" ontimeupdate="SeekBar()" ondurationchange="CreateSeekBar()" preload="auto" loop>
-  <source src="https://michael-zhigulin.github.io/mz-codepen-projects/Material%20Design%20UI%20Audio%20Player/audio/Tim%20Minchin%20%E2%80%94%20Rock%20n%20Roll%20Nerd.ogg" type="audio/ogg">
-  <source src="https://michael-zhigulin.github.io/mz-codepen-projects/Material%20Design%20UI%20Audio%20Player/audio/Tim%20Minchin%20%E2%80%94%20Rock%20n%20Roll%20Nerd.mp3" type="audio/mpeg">
-</audio>
-      <script src="js/music.js"></script>
+                $('[data-toggle="tooltip"]').tooltip();
+
+                let menuStatus = true;
+                $('.visuallyHidden').click(function () {
+                    if (menuStatus) {
+                        $('.nav-button').addClass('nav-button-active');
+                        $('.menu ul').addClass('active');
+                        menuStatus = false;
+                    } else {
+                        $('.nav-button').removeClass('nav-button-active');
+                        menuStatus = true;
+                        $('.menu ul').removeClass('active');
+                    }
+                });
+
+                $('.menu-color-option').click(function () {
+                    $('.menu-color-option').removeClass('selected');
+                    $(this).addClass('selected');
+                    removeColorClasses($('.root-color'));
+                    removeBgClasses($('.root-bg'));
+                    removeBgClasses($('.raychat_bgc'));
+                    $('.root-color').addClass('text-' + $(this).attr('data-color'));
+                    $('.root-bg').addClass('bg-' + $(this).attr('data-color'));
+                    $("iframe#raychatFrame").contents().find(".raychat_bgc").css('background-color', $('.root-bg').css('background-color'));
+                    $(".raychat_bgc").css('background-color', $('.root-bg').css('background-color'));
+
+                });
+
+                function removeColorClasses(elm) {
+                    elm.removeClass("text-blue text-cyan text-indigo text-purple text-pink text-red text-orange text-yellow text-green text-teal");
+                }
+
+                function removeBgClasses(elm) {
+                    elm.removeClass("bg-blue bg-cyan bg-indigo bg-purple bg-pink bg-red bg-orange bg-yellow bg-green bg-teal");
+                }
+
+            });
+        </script>
+
     </body>
-      </html>
+
+</html>
