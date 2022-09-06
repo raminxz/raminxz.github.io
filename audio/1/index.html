@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>music player</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.0/css/font-awesome.css"
+      integrity="sha512-72McA95q/YhjwmWFMGe8RI3aZIMCTJWPBbV8iQY3jy1z9+bi6+jHnERuNrDPo/WGYEzzNs4WdHNyyEr/yXJ9pA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <p>موزیک پلیر</p>
+    <!-- audio tag -->
+    <audio pl src="" id="audio"></audio>
+    <!-- wraper player -->
+    <div class="wraper-player">
+      <!-- wraper image -->
+      <div class="image-wraper">
+        <!-- image -->
+        <img src="img/0.jpg" id="img" class="image-music-player" />
+      </div>
+      <!-- wraper icons -->
+      <div class="icons-wraper">
+        <!-- icon forward  -->
+        <div class="parts">
+          <i class="fa fa-forward" aria-hidden="true" onclick="next()"></i>
+        </div>
+        <!-- icons play and pause  -->
+
+        <div class="play" onclick="playOrPause()">
+          <i class="fa fa-play" aria-hidden="true"></i>
+          <i class="fa fa-pause" aria-hidden="true"></i>
+        </div>
+        <!-- icon  backward -->
+        <div class="parts">
+          <i
+            class="fa fa-backward"
+            aria-hidden="true"
+            id="prev"
+            onclick="prev()"
+          ></i>
+        </div>
+      </div>
+    </div>
+    <script src="script/script.js"></script>
+  </body>
+</html>
