@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+    />
+
+    <title>slider</title>
+    <style>
+      *,
+      *::after,
+      *::before {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .slider-wraper {
+        width: 1000px;
+        height: 600px;
+        position: relative;
+        margin: 50px auto;
+      }
+      .slider-wraper i {
+        color: black;
+        font-size: 40px;
+        position: absolute;
+        cursor: pointer;
+        transform: 0.5s;
+      }
+      .slider-wraper i:hover {
+        opacity: 0.5;
+      }
+      .slider-wraper i[class*="fas fa-angle-left"] {
+        top: 50%;
+        left: 0%;
+        transform: translate(100%, -50%);
+      }
+      .slider-wraper i[class*="fas fa-angle-right"] {
+        top: 50%;
+        right: 0%;
+        transform: translate(-100%, -50%);
+      }
+      img {
+        height: 100%;
+        width: 100%;
+        border: 1px solid black;
+      }
+      body {
+        background-color: #3333;
+      }
+      .parent-circles {
+        width: 200px;
+        position: absolute;
+        left: 50%;
+        bottom: 15%;
+        height: 50px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        transform: translateX(-50%);
+      }
+      .parent-circles i[class*="fa-circle"] {
+        font-size: 22px;
+        cursor: pointer;
+        color: #3333;
+        transition: 0.5s;
+      }
+      .parent-circles i:hover {
+        color: black;
+      }
+
+      .parent-circles .color-black[class*="fa-circle"] {
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slider-wraper">
+      <img src="images/1.jpg" alt="" class="img" />
+      <i class="fas fa-angle-left" onclick="left()"></i>
+      <i class="fas fa-angle-right" onclick="right()"></i>
+    </div>
+    <div class="parent-circles">
+      <i class="fas fa-circle one color-black" onclick="one()"></i>
+      <i class="fas fa-circle two" onclick="two()"></i>
+      <i class="fas fa-circle three" onclick="three()"></i>
+    </div>
+    <script>
+      const source = [
+        {
+          img: "1.jpg",
+          circle: ".one",
+        },
+        {
+          img: "2.jpg",
+          circle: ".two",
+        },
+        {
+          img: "3.jpg",
+          circle: ".three",
+        },
+      ];
+      const img = document.querySelector(".img");
+      let index = 0;
+      const circles = document.getElementsByClassName("fa-circle");
+
+      setInterval(function () {
+        for (let i = 0; i < 3; i++) {
+          circles[i].classList.remove("color-black");
+        }
+        document
+          .querySelector(`${source[index].circle}`)
+          .classList.add("color-black");
+        img.setAttribute("src", `images/${source[index].img}`);
+
+        console.log(index);
+        index++;
+        if (index === 3) {
+          index = 0;
+        }
+      }, 50000);
+
+      function left() {
+        if (index <= 0) {
+          index = 2;
+        } else {
+          index--;
+        }
+
+        img.setAttribute("src", `images/${source[index].img}`);
+        console.log(index);
+        for (let i = 0; i < 3; i++) {
+          circles[i].classList.remove("color-black");
+        }
+        document
+          .querySelector(`${source[index].circle}`)
+          .classList.add("color-black");
+      }
+      function right() {
+        if (index >= 2) {
+          index = 0;
+        } else {
+          index++;
+        }
+        img.setAttribute("src", `images/${source[index].img}`);
+        console.log(index);
+        for (let i = 0; i < 3; i++) {
+          circles[i].classList.remove("color-black");
+        }
+        document
+          .querySelector(`${source[index].circle}`)
+          .classList.add("color-black");
+      }
+      function one() {
+        index = 1;
+        img.setAttribute("src", "images/" + [index] + ".jpg");
+        var circles = document.getElementsByClassName("fa-circle");
+        for (let i = 0; i < 3; i++) {
+          circles[i].classList.remove("color-black");
+        }
+        document
+          .querySelector(`${source[0].circle}`)
+          .classList.add("color-black");
+      }
+      function two() {
+        index = 2;
+        img.setAttribute("src", "images/" + [index] + ".jpg");
+        var circles = document.getElementsByClassName("fa-circle");
+        for (let i = 0; i < 3; i++) {
+          circles[i].classList.remove("color-black");
+        }
+        document
+          .querySelector(`${source[1].circle}`)
+          .classList.add("color-black");
+      }
+      function three() {
+        index = 3;
+        img.setAttribute("src", "images/" + [index] + ".jpg");
+        var circles = document.getElementsByClassName("fa-circle");
+        for (let i = 0; i < 3; i++) {
+          circles[i].classList.remove("color-black");
+        }
+        document
+          .querySelector(`${source[2].circle}`)
+          .classList.add("color-black");
+      }
+      //   setInterval(function () {
+      //     index++;
+
+      //     img.setAttribute("src", "images/" + [index] + ".jpg");
+      //     console.log(index);
+      //     if (index > 2) {
+      //       index = 0;
+      //     }
+      //   }, 3000);
+
+      //   function left() {
+      //     if (index <= 1) {
+      //       index = 3;
+      //     } else {
+      //       index--;
+      //     }
+      //     img.setAttribute("src", "images/" + [index] + ".jpg");
+      //     console.log(index);
+      //   }
+      //   function right() {
+      //     if (index >= 3) {
+      //       index = 1;
+      //     } else {
+      //       index++;
+      //     }
+      //     img.setAttribute("src", "images/" + [index] + ".jpg");
+      //     console.log(index);
+      //   }
+      //   for (let index = 0; index < array.length; index++) {}
+    </script>
+  </body>
+</html>
