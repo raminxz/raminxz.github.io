@@ -32,5 +32,41 @@
 
 ***
 
+
+
+<div align="rtl">
+
+فونت ها
+
+|نام|آدرس فایال|
+|:---:|:---:|
+|font awesome|`css/font-awesome.css`|
+|bootstrap icons|`font/bootstrap-icons.css`|
+
+<br /><br /><br /><br />
+
+برای کپی
+
+``` html
+<link rel="stylesheet" href="css/font-awesome.css">
+```
+``` html
+<link rel="stylesheet" href="css/font-awesome.css">
+```
+``` html
+ <link rel="stylesheet" href="css/font-awesome.min.css">
+```
+``` html
+ <link rel="stylesheet" href="css/fontawesome.css">
+```
+``` html
+<link rel="stylesheet" href="css/fontawesome.min.css">
+```
+``` html
+<link rel="stylesheet" href="font/bootstrap-icons.css">
+```
+
+</div>
+
 ## TEXT
 > log_raminxz.svg <BR /> log_raminxz.png
