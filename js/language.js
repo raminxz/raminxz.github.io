@@ -40,8 +40,8 @@ var dictionary = {
         'en': 'Address',
     },
     'address-value': {
-        'fa': 'ایران - بندر عباس',
-        'en': 'Iran - Bandar Abbas',
+        'fa': 'ایران - بندر لنگه محله بحرینی',
+        'en': 'Iran - Bandar Langeh, Bahraini neighborhood',
     },
     'mobile': {
         'fa': 'شماره تماس',
