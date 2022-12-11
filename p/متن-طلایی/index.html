@@ -1,0 +1,91 @@
+<html>
+  <head>
+    <style>
+    :root {
+  --gold: #ffb338;
+  --light-shadow: #77571d;
+  --dark-shadow: #3e2904;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #000;
+}
+.main {
+  margin: 35vh;
+  display: grid;
+  grid-template-areas: "overlap";
+  place-content: center;
+  text-transform: uppercase;
+  height: 45vh;
+}
+.tx1,
+.tx2 {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: #363833;
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: 500;
+  font-size: 7vw;
+  grid-area: overlap;
+  letter-spacing: 2px;
+  -webkit-text-stroke: 3px transparent;
+}
+.tx1 {
+  background-image: repeating-linear-gradient(
+    105deg,
+    var(--gold) 1%,
+    var(--dark-shadow) 5%,
+    var(--gold) 12%
+  );
+  color: transparent;
+  filter: drop-shadow(5px 15px 15px black);
+  transform: scaleY(1.05);
+  transform-origin: top;
+}
+.tx2 {
+  background-image: repeating-linear-gradient(
+    5deg,
+    var(--gold) 0%,
+    var(--light-shadow) 23%,
+    var(--gold) 31%
+  );
+  color: #1e2127;
+  transform: scale(1);
+}
+
+.main:hover {
+  cursor: pointer;
+}
+/* credit&thanks: Shireen Taj */
+  </style>
+    <head>
+  <body>
+<div class="main">
+  <div class="tx1">
+    <h1> Coming Soon... </h1>
+  </div>
+  <div class="tx2">
+    <h1> Coming Soon... </h1>
+  </div>
+    <!--     <p> saramazal projects &gt; </p> -->
+</div>
+    
+<script>
+VanillaTilt.init(document.querySelectorAll(".main"), {
+  max: 25,
+  speed: 400,
+  easing: "cubic-bezier(.02,.77,.43,.87)",
+  perspective: 730,
+  transition: true,
+  gyroscope: true
+});
+</script>
+    </body>
+</html>
