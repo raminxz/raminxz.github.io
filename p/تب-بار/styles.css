@@ -15,33 +15,29 @@ html *::after {
 }
 
 body{
-    
     margin: 0;
     display: flex;
     height: 100vh;
     overflow: hidden;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
     background-color: #ffb457;
     -webkit-tap-highlight-color: transparent;
     transition: background-color var(--duration);
-
 }
 
 .menu{
-
     margin: 0;
     display: flex;
     /* Works well with 100% width  */
-    width: 32.05em;
+    width: 100%;
     font-size: 1.5em;
     padding: 0 2.85em;
     position: relative;
     align-items: center;
     justify-content: center;
     background-color: var(--bgColorMenu);
-    
-}
+    }
 
 .menu__item{
     
