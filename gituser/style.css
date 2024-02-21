@@ -1,0 +1,42 @@
+body {
+	background-image: url('../../img/1.jpg');
+	background-size: cover;
+	background-repeat: repeat;
+	background-position: center center;
+}
+.card {
+	background: #22222250;
+	backdrop-filter: Blur(5px);
+}
+#user-image {
+	border-radius: 12px;
+	border: none;;
+	width: 100px;
+	height: 100px;
+}
+#username {
+	width: 240px;
+	display: inline;
+}
+hr {
+	margin: 2px 0;
+}
+.red {
+	background: red;
+}
+.container.dark {
+	text-shadow: 0px 0px 1px #f00;
+	color: #fff;
+}
+.neon {
+	box-shadow: 0 0 20px blue;
+}
+.img-user {
+	background: #00000030;
+	border: none;
+	color: red;
+}
+.hidden-icon {
+	display: none;
+	/* مخفی کردن عنصر */
+}
