@@ -1,0 +1,96 @@
+/*
+ * MIT License
+ 
+ * Copyright (c) 2024 raminrodbari
+
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+.theme-switcher {
+	display: none;
+}
+[data-bs-theme='dark'] .light-mode {
+	display: inline-block;
+}
+
+[data-bs-theme='light'] .dark-mode {
+	display: inline-block;
+}
+:root[data-bs-theme='light'] {
+	--background-color: #ffffff;
+	--text-color: #000000;
+	--modal: #ffffff30;
+}
+
+:root[data-bs-theme='dark'] {
+	--background-color: #333333;
+	--text-color: #ffffff;
+	--modal: #33333330;
+}
+
+.modal {
+	background-color: var(--background-color);
+	color: var(--text-color);
+}
+
+/* به تمام کادر های ورودی اندازه 100% داده شده */
+#htmlCode,#cssCode,#jsCode {
+	height: 100%;
+}
+/* استایل کم رنگی و کدری به مودال */ .modal,.modal-dialog,.modal-content {
+	backdrop-filter: blur(5px);
+	background-color: var(--modal);
+}
+[data-bs-theme='dark'] .modal-theme {
+	text-shadow: 0 0 10px var(--text-color);
+}
+.mod-sm {
+	width: 360px;
+}
+.mod-md {
+	width: 768px;
+}
+.mod-lg {
+	width: 1024px;
+}
+.mod-xl {
+	width: 1920px;
+}
+.mod-auto {
+	width: 100%;
+}
+.rtl-list {
+	direction: rtl;
+	text-align: right;
+}
+.rtl-list ul {
+	list-style-position: inside;
+}
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.spinlooooo::Before {
+	animation: spin 2s linear infinite;
+}
