@@ -50,14 +50,14 @@ $(document).ready(function() {
 	$("img").each(function() {
 		// بررسی می‌کنیم که آیا src خالی است
 		if ($(this).attr("src") === "") {
-			$(this).attr("src", "./errorimg.png");
+			$(this).attr("src", "https://raw.githubusercontent.com/raminxz/raminxz.github.io/main/img/errorimg.png");
 		}
 	});
 
 	$("img").on("error",
 		function() {
 			// در صورتی که تصویر به درستی لود نشود، تصویر پیش‌فرض را جایگزین می‌کنیم
-			$(this).attr("src", "./errorimg.png");
+			$(this).attr("src", "https://raw.githubusercontent.com/raminxz/raminxz.github.io/main/img/errorimg.png");
 		});
 	$("#addimg").click(function(event) {
 		event.preventDefault(); // جلوگیری از ارسال فرم
