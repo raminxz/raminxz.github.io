@@ -59,16 +59,16 @@
 			</div>
 		</div>
 	</div>
-	<div class="btn-cols-1">
+	<div class="btn btn-primary btn-cols-1">
 		+row-cols-1
 	</div>
-	<div class="btn-cols-2">
+	<div class="btn btn-primary btn-cols-2">
 		+row-cols-2
 	</div>
-	<div class="btn-cols-3">
+	<div class="btn btn-primary btn-cols-3">
 		+row-cols-3
 	</div>
-	<div class="btn-cols-4">
+	<div class="btn btn-primary btn-cols-4">
 		+row-cols-4
 	</div>
 
@@ -110,7 +110,6 @@
 			});
 			// پنهان کردن لودر پس از لود شدن صفحه
 			$("#loader").fadeOut("slow");
-
 			$('.btn-cols-1').click(function() {
 				$('.selctor-row').addClass('row-cols-1');
 				$('.selctor-row').removeClass('row-cols-2 row-cols-3 row-cols-4');
@@ -130,7 +129,7 @@
 				$('.selctor-row').addClass('row-cols-4');
 				$('.selctor-row').removeClass('row-cols-2 row-cols-3 row-cols-1');
 			});
-
+		
 		});
 	</script>
 	<script>
@@ -139,10 +138,8 @@
 				// دریافت مقادیر ورودی
 				let rgb = $('#rgbInput').val();
 				let hex = $('#hexInput').val();
-
 				// تبدیل مقادیر ورودی به اطلاعات رنگ
 				let colorInfo = parseColorInput(rgb, hex);
-
 				// ایجاد المان HTML برای نمایش رنگ
 				let colorDiv = `
 				<div class="col mb-4">
@@ -155,19 +152,6 @@
 				<button class="btn btn-danger" onclick="removeColor(this)">حذف</button>
 				<div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#copyModal">بازکردن</div>
 
-				<!--<button class="btn btn-secondary" onclick="navigator.clipboard.writeText('${colorInfo.hex}')">hex کپی</button>
-				<button class="btn btn-secondary" onclick="navigator.clipboard.writeText('${colorInfo.rgb}')"> rgb کپی</button>
-				--></div>
-				</div>
-				</div>
-				</div>
-				<div class="modal fade" id="copyModal" tabindex="-1" aria-labelledby="copyModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-				<div class="modal-content">
-				<div class="modal-header">
-				<h5 class="modal-title" id="copyModalLabel">انتخاب فرمت رنگ برای کپی</h5>
-				</div>
-				<div class="modal-body">
 				<button class="btn btn-secondary" onclick="navigator.clipboard.writeText('${colorInfo.hex}')">hex کپی</button>
 				<button class="btn btn-secondary" onclick="navigator.clipboard.writeText('${colorInfo.rgb}')"> rgb کپی</button>
 				</div>
@@ -175,9 +159,7 @@
 				</div>
 				</div>
 				`;
-				// ${colorInfo.rgb}
-				//<button class="btn btn-secondary" onclick="navigator.clipboard.writeText('${colorInfo.hex}')">کپی</button>
-
+			
 				// اضافه کردن المان به DOM
 				$('#simpleColorsContainer').append(colorDiv);
 			});
@@ -195,25 +177,7 @@
 				$('#copyModal').modal('hide');
 			});
 		});
-		//	function openColorModal(colorInfo) {
-		// تولید متنی که شامل مقادیر RGB و HEX است
-		//		const colorText = `RGB: ${colorInfo.rgb} HEX: ${colorInfo.hex}`;
-
-		// کپی کردن متن به کلیپ‌بورد
-		//			navigator.clipboard.writeText(colorText).then(function() {
-		//				console.log('متن رنگ با موفقیت کپی شد.');
-		// می‌توانید پیام موفقیت را در UI نمایش دهید یا یک alert نمایش دهید
-		//				alert('متن رنگ با موفقیت کپی شد: ' + colorText);
-		//			}, function(err) {
-		//				console.error('خطا در کپی کردن متن رنگ: ', err);
-		// نمایش خطا در صورت وجود
-		//			alert('خطا در کپی کردن متن رنگ!');
-		//		});
-		//		}
-
-
-
-
+	
 		function parseColorInput(rgb, hex) {
 			if (rgb) {
 				return {
