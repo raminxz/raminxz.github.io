@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+	<meta charset="UTF-8">
+	<title>بازی تاس</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+	<style type="text/css" media="all">
+		.btn-bottom-right {
+			position: fixed;
+			right: 20px;
+			bottom: 20px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container-md">
+		<div class="row text-center">
+			<div class="col">
+			</div>
+			<button id="rollDice" class="btn btn-success">پرتاب تاس</button>
+			<div class="col">
+				تعداد بازیکنان: <span class="playerCount">4</span>
+			</div>
+			<div class="col">
+				تعداد تاس: <span class="diceCount">1</span>
+			</div>
+			<div class="col">
+				<span id="diceResult"> 0 :نتیجه پرتاب</span>
+			</div>
+		</div>
+		<hr>
+		<div id="players"></div>
+		<button type="button" class="btn-bottom-right p-3 btn btn-secondary" data-bs-toggle="modal" data-bs-target="#settingsModal"> <i class="bi bi-gear"></i> </button> <!-- مودال تنظیمات --> <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="settingsModalLabel">تنظیمات</h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<!-- محتوای تنظیمات --> <div class="row">
+							<div class="col-6">
+								تعداد تاس: <span class="diceCount">1</span>
+							</div>
+							<div class="col-6">
+								تعداد بازیکنان: <span class="playerCount">4</span>
+							</div>
+							<div class="col-6">
+								<div>
+									<button id="decreaseDice" class="btn btn-outline-secondary">-</button> <button id="increaseDice" class="btn btn-outline-secondary">+</button>
+								</div>
+							</div>
+							<div class="col-6">
+								<button id="addPlayer" class="btn btn-primary">+ بازیکن</button>
+								<button id="removePlayer" class="btn btn-danger">- بازیکن</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div>
+
+	</div>
+
+	<script type="text/javascript" charset="utf-8">
+		$(document).ready(function() {
+			var playerCount = 4;
+			var diceCount = 1;
+			var currentPlayer = 1;
+			function updatePlayers() {
+				$("#players").empty();
+				$(".playerCount").text(playerCount);
+				for (let i = 1; i <= playerCount; i++) {
+					$("#players").append(`<button class="btn btn-outline-primary m-2 player" data-player="${i}">نوبت بازیکن ${i}</button>`);
+				}
+			}
+			function updateDiceCount() {
+				$(".diceCount").text(diceCount);
+			}
+			function changePlayer() {
+				$(".player").removeClass("btn-primary").addClass("btn-outline-primary");
+				$(`[data-player="${currentPlayer}"]`).removeClass("btn-outline-primary").addClass("btn-primary");
+			}
+
+			$("#addPlayer").click(function() {
+				playerCount++;
+				updatePlayers();
+				changePlayer();
+			});
+			$("#removePlayer").click(function() {
+				if (playerCount > 1) {
+					playerCount--;
+					updatePlayers();
+					if (currentPlayer > playerCount) {
+						currentPlayer = playerCount;
+					}
+					changePlayer();
+				}
+			});
+
+			$("#increaseDice").click(function() {
+				diceCount++;
+				updateDiceCount();
+			});
+			$("#decreaseDice").click(function() {
+				if (diceCount > 1) {
+					diceCount--;
+					updateDiceCount();
+				}
+			});
+
+			$("#rollDice").click(function() {
+				let total = 0;
+				for (let i = 0; i < diceCount; i++) {
+					total += Math.floor(Math.random() * 6) + 1;
+				}
+				$("#diceResult").html(`نتیجه پرتاب: ${total}`);
+				changePlayer();
+				currentPlayer++;
+				if (currentPlayer > playerCount) {
+					currentPlayer = 1;
+				}
+			});
+			updatePlayers();
+			updateDiceCount();
+			changePlayer();
+		});
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
