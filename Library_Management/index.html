@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library Management | مدیریت کتابخانه</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+  <style>
+    .library-card {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container my-5">
+    <h1 class="text-center mb-4">Library Management</h1>
+    <button class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#managementModal">
+      <i class="bi bi-gear"></i> Manage
+    </button>
+    <div id="libraryList" class="row">
+      <!-- Library cards will be dynamically added here -->
+    </div>
+  </div>
+
+  <!-- Library Details Modal -->
+  <div class="modal fade" id="libraryModal" tabindex="-1" aria-labelledby="libraryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="libraryModalLabel">Library Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <img id="libraryImage" src="" alt="Library Image" class="img-fluid">
+          </div>
+          <h3 id="libraryName"></h3>
+          <div id="libraryDescription"></div>
+          <button class="btn btn-primary mt-3" id="copyLink">
+            <i class="bi bi-link"></i> Copy Link
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Management Modal -->
+  <div class="modal fade" id="managementModal" tabindex="-1" aria-labelledby="managementModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="managementModalLabel">Manage Libraries</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="nav nav-tabs" id="managementTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="create-tab" data-bs-toggle="tab" data-bs-target="#create" type="button" role="tab" aria-controls="create" aria-selected="true">Create</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="delete-tab" data-bs-toggle="tab" data-bs-target="#delete" type="button" role="tab" aria-controls="delete" aria-selected="false">Delete</button>
+            </li>
+          </ul>
+          <div class="tab-content" id="managementTabsContent">
+            <div class="tab-pane fade show active" id="create" role="tabpanel" aria-labelledby="create-tab">
+              <form id="createForm" class="mt-3">
+                <div class="mb-3">
+                  <label for="libraryNameInput" class="form-label">Library Name</label>
+                  <input type="text" class="form-control" id="libraryNameInput" required>
+                </div>
+                <div class="mb-3">
+                  <label for="libraryImageInput" class="form-label">Library Image URL</label>
+                  <input type="text" class="form-control" id="libraryImageInput">
+                </div>
+                <div class="mb-3">
+                  <label for="libraryDescriptionInput" class="form-label">Library Description (Markdown)</label>
+                  <textarea class="form-control" id="libraryDescriptionInput" rows="3"></textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="downloadUrlInput" class="form-label">Download URL</label>
+                  <input type="text" class="form-control" id="downloadUrlInput">
+                </div>
+                <div class="mb-3">
+                  <label for="codeUrlInput" class="form-label">Code URL</label>
+                  <input type="text" class="form-control" id="codeUrlInput">
+                </div>
+                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              </form>
+            </div>
+            <div class="tab-pane fade" id="delete" role="tabpanel" aria-labelledby="delete-tab">
+              <ul class="list-group mt-3" id="deleteList">
+                <!-- Library delete items will be dynamically added here -->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/13.0.1/markdown-it.min.js"></script>
+  <script>
+const md = window.markdownit();
+
+function loadLibraries() {
+  const storedLibraries = localStorage.getItem('libraries');
+  return storedLibraries ? JSON.parse(storedLibraries) : [];
+}
+
+let libraries = loadLibraries() || [];
+
+function saveLibraries() {
+  localStorage.setItem('libraries', JSON.stringify(libraries));
+}
+
+function renderLibraries() {
+  $('#libraryList').empty();
+  libraries.forEach(library => {
+    const card = $('<div class="col-md-4 mb-4"></div>');
+    const cardBody = $('<div class="card library-card"></div>');
+    const cardBodyDiv = $('<div class="card-body"></div>');
+    const title = $('<h5 class="card-title">' + library.name + '</h5>');
+
+    if (library.imageUrl) {
+      const img = $('<img src="' + library.imageUrl + '" class="card-img-top" alt="Library Image">');
+      cardBody.append(img);
+    }
+
+    const buttonGroup = $('<div class="btn-group btn-group-sm mb-3"></div>');
+
+    if (library.downloadUrl) {
+      const downloadButton = $('<a href="' + library.downloadUrl + '" class="btn btn-primary" target="_blank"><i class="bi bi-download"></i> Download</a>');
+      buttonGroup.append(downloadButton);
+    }
+
+    if (library.codeUrl) {
+      const codeButton = $('<a href="' + library.codeUrl + '" class="btn btn-secondary" target="_blank"><i class="bi bi-code"></i> View Code</a>');
+      buttonGroup.append(codeButton);
+    }
+
+    cardBodyDiv.append(title, buttonGroup);
+    cardBody.append(cardBodyDiv);
+    card.append(cardBody);
+    $('#libraryList').append(card);
+
+    cardBody.click(function() {
+      $('#libraryName').text(library.name);
+      $('#libraryImage').attr('src', library.imageUrl);
+      $('#libraryDescription').html(md.render(library.description));
+      $('#copyLink').attr('data-clipboard-text', window.location.href);
+      new bootstrap.Modal($('#libraryModal')).show();
+    });
+  });
+}
+
+renderLibraries();
+
+$('#createForm').submit(function(e) {
+  e.preventDefault();
+  const libraryName = $('#libraryNameInput').val().trim();
+  const libraryImageUrl = $('#libraryImageInput').val().trim();
+  const libraryDescription = $('#libraryDescriptionInput').val().trim();
+  const downloadUrl = $('#downloadUrlInput').val().trim();
+  const codeUrl = $('#codeUrlInput').val().trim();
+
+  if (!libraryName) {
+    alert('Please enter a library name.');
+    return;
+  }
+
+  const library = {
+    name: libraryName,
+    imageUrl: libraryImageUrl,
+    description: libraryDescription,
+    downloadUrl: downloadUrl,
+    codeUrl: codeUrl
+  };
+
+  libraries.push(library);
+  saveLibraries();
+  renderLibraries();
+  $('#createForm')[0].reset();
+  new bootstrap.Modal($('#managementModal')).hide();
+});
+
+$('#managementTabs a').on('click', function(e) {
+  e.preventDefault();
+  $(this).tab('show');
+});
+
+$('#delete-tab').on('shown.bs.tab', function() {
+  $('#deleteList').empty();
+  libraries.forEach((library, index) => {
+    const listItem = $('<li class="list-group-item d-flex justify-content-between align-items-center"></li>');
+    listItem.text(library.name);
+    const deleteButton = $('<button class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> Delete</button>');
+    deleteButton.click(function() {
+      libraries.splice(index, 1);
+       $('#deleteList').empty(this);
+      saveLibraries();
+      renderLibraries();
+    });
+    listItem.append(deleteButton);
+    $('#deleteList').append(listItem);
+  });
+});
+
+</script>
+</body>
+    </html>
