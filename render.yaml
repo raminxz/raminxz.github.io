@@ -1,0 +1,14 @@
+# Exported from Render on 2025-05-05T13:47:41Z
+services:
+- type: web
+  name: raminxz.github.io
+  runtime: static
+  repo: https://github.com/raminxz/raminxz.github.io
+  buildCommand: rxz
+  staticPublishPath: codss/raminz
+  domains:
+  - www.raminxz.com
+  - raminxz.com
+  autoDeploy: false
+  rootDir: ramxz
+version: "1"
