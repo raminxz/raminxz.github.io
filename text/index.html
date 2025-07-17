@@ -103,6 +103,28 @@
 
   function initEditor(content) {
     const theme = localStorage.getItem("hugerteTheme") || "dark";
+    toolbar: "styleselect | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | table | emoticons codesample media | fullscreen",
+
+style_formats: [
+  { title: "عنوان اصلی", block: "h1" },
+  { title: "زیرعنوان", block: "h2" },
+  { title: "عنوان کوچک", block: "h3" },
+  { title: "متن عادی", block: "p" },
+  { title: "نکته هشدار", block: "p", classes: "alert alert-warning" },
+  { title: "یادداشت مهم", block: "p", classes: "alert alert-info" },
+  { title: "کد برنامه", block: "pre", classes: "bg-dark text-white p-2 rounded" }
+],
+
+content_style: `
+  body { font-family: Vazirmatn,sans-serif; font-size:14px; direction: rtl; text-align: right; }
+  .alert { padding: .5rem 1rem; border-radius: .5rem; margin: .5rem 0; }
+  .alert-warning { background-color: #fff3cd; color: #856404; }
+  .alert-info { background-color: #d1ecf1; color: #0c5460; }
+  .bg-dark { background-color: #212529; }
+  .text-white { color: white; }
+  .p-2 { padding: .5rem; }
+  .rounded { border-radius: .25rem; }
+`
     tinymce.init({
       selector: "#hugerte-editor",
       language: "fa",
@@ -125,6 +147,7 @@
     });
   }
 
+  
   $(document).ready(function () {
     const theme = localStorage.getItem("hugerteTheme") || "dark";
     $("html").attr("data-bs-theme", theme);
