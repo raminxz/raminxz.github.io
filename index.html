@@ -98,8 +98,8 @@ nav.menu a.admin-link{border:1px solid var(--nost-gold-soft);color:var(--nost-go
 .card{position:relative;border-radius:var(--radius);overflow:hidden;background:var(--surface);border:1px solid var(--border);
   box-shadow:var(--shadow-card);cursor:pointer;transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .4s;animation:reveal .6s var(--ease) both}
 .card:hover{transform:translateY(-8px);box-shadow:0 30px 60px -20px rgba(0,0,0,.9),0 8px 24px rgba(0,0,0,.5);border-color:var(--border-strong)}
-.card .media{position:relative;aspect-ratio:16/11;overflow:hidden;background:var(--bg-2)}
-.card .media img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease),filter .6s;filter:brightness(.92) saturate(.92)}
+.card .media{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--bg-2);}
+.card .media img{width:100%;height:100%;object-fit:contain;transition:transform 1s var(--ease),filter .6s;filter:brightness(.92) saturate(.92);}
 .card:hover .media img{transform:scale(1.07);filter:brightness(1.02) saturate(1)}
 .card .media::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(10,10,12,.85),transparent 55%)}
 .yr-badge{position:absolute;top:14px;inset-inline-start:14px;z-index:2;font-size:.75rem;font-weight:700;color:#fff;padding:6px 13px;border-radius:999px;
@@ -226,7 +226,6 @@ footer{border-top:1px solid var(--border);margin-top:50px;padding:36px 0 22px}
 <header>
   <div class="container nav">
     <a href="#top" class="brand" aria-label="گالری خاطرات">
-      <span class="brand-mark"><i class="ti ti-clock-hour-4"></i></span>
       <span>
         <span class="brand-name">گالری خاطرات</span>
         <span class="brand-sub">دلتنگیِ شیرین</span>
@@ -262,7 +261,7 @@ footer{border-top:1px solid var(--border);margin-top:50px;padding:36px 0 22px}
   <div class="search-bar">
     <span class="search-ico"><i class="ti ti-search"></i></span>
     <input type="text" id="searchInput" class="search-input" placeholder="جستجو کنید... (مثلاً: «دریا»، «رامین»، «۱۳۹۹»)">
-    <div class="search-hint"><i class="ti ti-info-circle"></i> جستجو در تمامی فیلدهای خاطره (عنوان، توضیحات، تگ‌ها و تاریخ شمسی یا میلادی) انجام می‌شود.</div>
+    <div class="search-hint"><i class="ti ti-info-circle"></i> جستجو در تمامی فیلدهای خاطره (عنوان، توضیحات، تگ‌ها و تاریخ شمسی) انجام می‌شود.</div>
   </div>
 
   <div class="grid" id="grid" aria-live="polite"></div>
@@ -498,7 +497,7 @@ function dbDel(key,cb){ openDb(function(db){ if(!db){cb&&cb();return;} try{var t
 /* ---------- data store ---------- */
 function defaultData(){
   return {
-    about:{title:'درباره این گالری', text:'این گالری بر پایه یک پژوهش جامع در زمینه تجربه کاربری طراحی شده است تا دو حس به‌ظاهر متناقض — «بغضِ خوشحالی» و «دلتنگی» — را در قالب یک نوستالژیِ شیرین یکپارچه کند. تمِ تیره‌ی لوکس با فونت شبنم، تقویم شمسی، جستجوی هوشمند و ذخیره‌سازی محلی در مرورگر، تجربه‌ای آرام و شخصی می‌سازد. این متن را از بخش مدیریت ویرایش کنید.'},
+    about:{title:'درباره این گالری', text:'این گالری بر پایه یک پژوهش جامع در زمینه تجربه کاربری '},
     memories:[{
     "id": 1,
     "image": { "kind": "path", "src": "images/memory-1.png" },
