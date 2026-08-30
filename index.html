@@ -67,7 +67,6 @@ nav.menu a.admin-link{border:1px solid var(--nost-gold-soft);color:var(--nost-go
   -webkit-background-clip:text;background-clip:text;color:transparent}
 .hero h1 em{font-style:normal;color:var(--nost-pink)}
 .hero p.lead{max-width:660px;margin:20px auto 0;color:var(--text-muted);font-size:clamp(1rem,2.2vw,1.2rem)}
-.hero-actions{margin-top:34px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 .btn{padding:13px 28px;border-radius:999px;font-size:1rem;font-weight:700;transition:.35s var(--ease);display:inline-flex;align-items:center;gap:10px;justify-content:center}
 .btn-primary{background:linear-gradient(135deg,var(--lux-violet),var(--lux-teal));color:#fff;box-shadow:0 12px 30px -10px rgba(109,91,208,.7)}
 .btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 38px -10px rgba(109,91,208,.85)}
@@ -246,27 +245,24 @@ footer{border-top:1px solid var(--border);margin-top:50px;padding:36px 0 22px}
 <!-- ============ HERO ============ -->
 <section class="hero">
   <div class="container">
-    <span class="eyebrow"><i class="ti ti-sparkles"></i> تجربه‌ای لوکس از گذشته</span>
+    <span class="eyebrow"><i class="ti ti-sparkles"></i> 
+«تقدیم به رفیق و دوست قدیمی، ARMIN.M»</span>
     <h1>هر خاطره، یک <em>بغضِ خوشحالی</em><br>است که دلتنگِ لبخند توست</h1>
-    <p class="lead">به گالری خاطرات خوش آمدید. تاریکیِ لوکسِ پس‌زمینه، نورِ ملایمِ لحظه‌های از‌دست‌رفته را زنده می‌کند و دلتنگی به شیرین‌ترین شکلِ خود بدل می‌شود.</p>
-    <div class="hero-actions">
-      <a href="#gallery" class="btn btn-primary"><i class="ti ti-arrow-down"></i> ورود به گالری</a>
-      <a href="#" class="btn btn-ghost" onclick="openAdmin();return false;"><i class="ti ti-tool"></i> مدیریت خاطرات</a>
-    </div>
+    <p class="lead">این گالری، هدیه‌ای کوچک از سفرِ بزرگِ کودکیِ توست؛ جایی که در تاریکیِ شب، نورِ خنده‌های تو می‌درخشد. این‌جا می‌خواهی بدانی که تمامِ آن روزهای ساده و بی‌دغدغه، هرگز از یاد نرفته‌اند و حالا با تمامِ وجود، به تو بازگردانده می‌شوند.</p>
   </div>
 </section>
 
 <!-- ============ GALLERY + SEARCH ============ -->
 <main id="gallery" class="container section">
   <div class="section-head">
-    <h2 class="sec-title"><span class="deco"></span><i class="ti ti-heart-filled" style="color:var(--nost-pink)"></i> خاطرات من</h2>
+    <h2 class="sec-title"><span class="deco"></span><i class="ti ti-heart-filled" style="color:var(--nost-pink)"></i> خاطرات</h2>
     <p class="sec-sub">جستجو در عنوان، زیرعنوان، توضیحات، تگ‌ها و تاریخِ خاطرات.</p>
   </div>
 
   <div class="search-bar">
     <span class="search-ico"><i class="ti ti-search"></i></span>
-    <input type="text" id="searchInput" class="search-input" placeholder="جستجو کنید... (مثلاً: «بهار»، «خانواده»، «۱۴۰۲»)">
-    <div class="search-hint"><i class="ti ti-info-circle"></i> جستجو بر اساس عنوان، زیرعنوان، توضیحات، تگ‌ها و تاریخ (هم به‌صورت شمسی و هم میلادی)</div>
+    <input type="text" id="searchInput" class="search-input" placeholder="جستجو کنید... (مثلاً: «دریا»، «رامین»، «۱۳۹۹»)">
+    <div class="search-hint"><i class="ti ti-info-circle"></i> جستجو در تمامی فیلدهای خاطره (عنوان، توضیحات، تگ‌ها و تاریخ شمسی یا میلادی) انجام می‌شود.</div>
   </div>
 
   <div class="grid" id="grid" aria-live="polite"></div>
@@ -285,9 +281,9 @@ footer{border-top:1px solid var(--border);margin-top:50px;padding:36px 0 22px}
   <div class="container">
     <div class="foot">
       <span>© ۱۴۰۵ گالری خاطرات — طراحی‌شده با <span class="heart">♥</span> برای لحظه‌های ماندگار</span>
-      <span><i class="ti ti-brand-flask"></i> نسخه‌ی مستقل · jQuery · بدون سرور</span>
+      
     </div>
-    <div class="credit"><i class="ti ti-tools"></i> طراحی‌شده توسط تیم <span class="team">webramin</span></div>
+    <div class="credit"><i class="ti ti-tools"></i> طراحی‌شده توسط  <span class="team">Ramin.Rodbari</span></div>
   </div>
 </footer>
 
