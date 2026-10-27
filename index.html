@@ -2,9 +2,11 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#121013" />
-<title>آکوردیوم — آموزش آکوردهای پیانو</title>
+<title>آکوردیوم ۳ — آموزش و ساخت آکورد پیانو</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<meta name="description" content="آموزش آکوردهای پیانو، تشخیص آکورد و تمرین شنیداری؛ تک‌فایلی و قابل اجرا به‌صورت آفلاین">
 <style>
   :root{
     --bg:#100e11;
@@ -181,7 +183,7 @@
   nav.tabs button.on svg{stroke:var(--acc-2)}
 
   .toast{
-    position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(14px);
+    position:fixed;bottom:calc(96px + env(safe-area-inset-bottom, 0px));left:50%;transform:translateX(-50%) translateY(14px);
     background:#2a2329;border:1px solid var(--line);color:var(--txt);
     padding:10px 16px;border-radius:99px;font-size:13px;opacity:0;pointer-events:none;
     transition:.25s;z-index:50;box-shadow:var(--shadow)
@@ -201,6 +203,24 @@
     .keyboard{height:168px}
   }
 </style>
+
+<style id="redesign-v2">
+:root{--bg:#0b1020;--bg-2:#10182a;--panel:#131e32;--panel-2:#1a2942;--line:#2a3b58;--txt:#f1f6ff;--txt-2:#b8c7dc;--txt-3:#9aacc6;--acc:#6d7cff;--acc-2:#80e3d0;--acc-soft:rgba(109,124,255,.16);--gold:#ffd27d;--green:#65d6a7;--red:#ff778b;--radius:20px;--shadow:0 16px 42px rgba(0,0,0,.28);--ff:"Vazirmatn","IRANSans",Tahoma,system-ui,sans-serif}
+html,body{background:var(--bg);color:var(--txt)}body{background:radial-gradient(900px 420px at 10% -5%,rgba(109,124,255,.19),transparent 65%),radial-gradient(700px 500px at 100% 50%,rgba(54,202,180,.09),transparent 70%),var(--bg)}
+.shell{max-width:900px;padding:20px 16px 24px}header.app{padding:20px 8px 22px}header.app h1{font-size:clamp(27px,5vw,36px);letter-spacing:-.7px}header.app p{max-width:520px;color:var(--txt-2)}.brand{color:var(--acc-2);font-weight:700}.brand .dot{background:var(--acc-2);box-shadow:0 0 16px rgba(128,227,208,.7)}
+.card,.kbwrap{background:linear-gradient(145deg,rgba(22,34,57,.96),rgba(15,24,42,.98));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.card{padding:17px;margin-bottom:15px}.label{color:var(--txt-3)}.label b{color:var(--txt)}
+.btn{background:#192842;border-color:#30415f;color:#d7e2f3;border-radius:13px;min-height:42px}.btn:hover{border-color:var(--acc);color:#fff}.btn.on{background:linear-gradient(135deg,#6676ff,#5966dc);border-color:#7f8aff;box-shadow:0 8px 22px rgba(91,105,235,.25)}.btn.light{background:#eff6ff;color:#15213a}.btn.ghost{background:transparent}.hintbox{border-radius:15px;border-color:#2a3c5b;background:rgba(7,13,26,.3);line-height:1.95}.readout{border:1px solid #334668!important;background:linear-gradient(135deg,rgba(109,124,255,.15),rgba(35,194,174,.07))!important;border-radius:22px!important;padding:22px!important}.readout .name{font-size:clamp(30px,6vw,42px)!important;color:#fff!important}.readout .fa{color:var(--acc-2)!important}.playbar{gap:9px}.playbar .btn{box-shadow:0 6px 20px rgba(0,0,0,.16)}
+.kbwrap{background:linear-gradient(180deg,#1b2942,#101a2d);padding:12px}.keyboard{height:clamp(160px,28vw,205px);min-width:500px}.key.w{background:linear-gradient(180deg,#fff 0%,#eaf0f8 75%,#d4deea 100%);border-color:#bac8d8}.key.b{background:linear-gradient(180deg,#2b3954,#10182a 85%);border-color:#354968;box-shadow:0 5px 8px rgba(0,0,0,.35)}.key.act{background:linear-gradient(180deg,#9bfff0,#50cdb8 80%,#2a9f96)!important}.key.hl{background:linear-gradient(180deg,#c1c8ff,#7887ff 80%,#5964cb)!important}.key:focus-visible{outline:3px solid var(--gold);outline-offset:2px;z-index:8}.kbscroll{border-radius:10px}.tabbar,nav{backdrop-filter:blur(18px)}
+input[type=range]{accent-color:var(--acc)}.toast{bottom:calc(96px + env(safe-area-inset-bottom, 0px))!important}.hidden{display:none!important}button:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-offset:3px}
+@media(max-width:520px){.shell{padding:12px 10px 18px}.card{padding:13px}.playbar{display:grid;grid-template-columns:1fr 1fr}.readout{padding:18px!important}.kbwrap{padding:8px}.keyboard{height:170px}}
+</style>
+
+
+<style id="music-studio-v3">
+.ti{font-size:1.1em;line-height:1;vertical-align:-.12em}.toolrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.toolrow .btn{flex:1 1 auto}.prog-entry{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;margin:7px 0;padding:9px;border:1px solid var(--line);border-radius:14px;background:rgba(5,12,25,.22)}.prog-entry .btn{min-width:44px}.prog-info{min-width:0}.prog-info .chordline{font-family:var(--ffm);direction:ltr;text-align:right;color:var(--acc-2);font-size:14px;overflow-wrap:anywhere}.prog-info small{display:block;color:var(--txt-3);font-size:11px;margin-top:4px}.midi-btn{white-space:nowrap}.studio-input{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}.studio-input input,.studio-select{min-width:0;width:100%;background:var(--bg-2);color:var(--txt);border:1px solid var(--line);border-radius:12px;padding:12px;font:inherit}.chord-bank,.sequence-list{display:flex;flex-wrap:wrap;gap:8px}.chord-chip{display:flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:12px;padding:8px 10px;background:#172640;color:var(--txt);direction:ltr;font-family:var(--ffm)}.chord-chip small{font-family:var(--ff);direction:rtl;color:var(--txt-3)}.sequence-list{min-height:62px;padding:10px;border:1px dashed #3c5073;border-radius:15px;align-items:flex-start}.seq-item{display:flex;flex-direction:column;gap:7px;min-width:94px;padding:9px;border-radius:13px;border:1px solid #344968;background:linear-gradient(145deg,#1d3150,#142238);direction:ltr}.seq-item.selected{border-color:var(--acc-2);box-shadow:0 0 0 2px rgba(128,227,208,.13)}.seq-item .seq-name{font-weight:800;color:var(--acc-2);font-family:var(--ffm);text-align:center}.seq-item .seq-controls{display:flex;gap:4px;justify-content:center}.seq-item .seq-controls button{background:rgba(255,255,255,.07);border-radius:7px;padding:4px 6px;color:var(--txt-2)}.seq-item select{width:100%;background:#0d1728;color:var(--txt);border:1px solid #344968;border-radius:8px;padding:5px}.studio-status{font-size:12px;color:var(--txt-3);line-height:1.9;margin-top:8px}.rec-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);margin-inline-end:5px;box-shadow:0 0 0 4px rgba(255,119,139,.12)}.pressed-live{filter:brightness(1.2);outline:3px solid var(--gold);outline-offset:-3px}.genre-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.genre-tag{font-size:10px;color:var(--gold);margin-top:3px}.kbd-hint{font-size:11px;color:var(--txt-3);margin-top:7px}
+@media(max-width:420px){.studio-input{grid-template-columns:1fr}.prog-entry{grid-template-columns:minmax(0,1fr) auto}.seq-item{min-width:83px}.genre-grid{grid-template-columns:1fr}}
+</style>
+
 </head>
 <body>
 
@@ -277,8 +297,37 @@
     <div class="card">
       <div class="label"><b>آکوردهای هم‌خانواده و پیشنهاد ادامه</b><span>روی هرکدام بزن تا بشنوی</span></div>
       <div class="prog" id="familyBox" style="margin-bottom:10px"></div>
-      <div class="label" style="margin-top:4px"><b>پیش‌روی‌های محبوب در این گام</b></div>
+      <div class="label" style="margin-top:4px"><b>پیش‌روی‌های محبوب در این گام</b><span>با خروجی MIDI</span></div>
       <div class="grid" id="progBox"></div>
+      <div class="hintbox" style="margin-top:10px">پیشنهادها با توجه به حس آکورد انتخابی دسته‌بندی شده‌اند. هر پیش‌روی را می‌توان شنید یا به‌صورت فایل MIDI دریافت کرد.</div>
+    </div>
+
+    <div class="card" id="sequenceStudio">
+      <div class="label"><b><i class="ti ti-piano"></i> استودیوی ساخت توالی آکورد</b><span>چیدمان و خروجی MIDI</span></div>
+      <div class="toolrow" style="margin-bottom:10px">
+        <label style="flex:1 1 110px;font-size:12px;color:var(--txt-3)">سرعت BPM <b id="seqBpmLabel">۱۰۰</b><input id="seqBpm" type="range" min="45" max="200" value="100" style="display:block;margin-top:10px"></label>
+        <label style="flex:1 1 110px;font-size:12px;color:var(--txt-3)">اکتاو MIDI<select id="seqOctave" class="studio-select" style="margin-top:5px"><option value="3">پایین</option><option value="4" selected>میانی</option><option value="5">بالا</option></select></label>
+      </div>
+      <div class="label"><b>۱. افزودن آکورد</b><span>مثلاً Am، Fm، Gm، Cmaj7</span></div>
+      <div class="studio-input"><input id="chordSearch" list="chordCatalog" autocomplete="off" placeholder="نام آکورد را وارد یا جست‌وجو کن…"><datalist id="chordCatalog"></datalist><button class="btn on" id="addChordBtn"><i class="ti ti-plus"></i> افزودن</button></div>
+      <div class="chord-bank" id="chordBank" style="margin-top:9px"></div>
+      <div class="label" style="margin-top:17px"><b>۲. ترتیب آکوردها</b><span id="seqCount">۰ آکورد</span></div>
+      <div class="sequence-list" id="sequenceList"><span class="studio-status">هنوز آکوردی اضافه نشده؛ از بخش جست‌وجو شروع کن.</span></div>
+      <div class="kbd-hint">برای ویرایش، مدت هر آکورد را از منوی آن تغییر بده؛ با فلش‌ها جابه‌جا کن یا حذفش کن. روی یک آکورد بزن تا نقطهٔ شروع پخش/ضبط مشخص شود.</div>
+      <div class="toolrow" style="margin-top:12px">
+        <button class="btn" id="seqRecord"><i class="ti ti-player-record"></i> ضبط زمان‌بندی</button>
+        <button class="btn" id="seqPlay"><i class="ti ti-player-play"></i> پخش از ابتدا</button>
+        <button class="btn" id="seqPlayFrom"><i class="ti ti-player-skip-forward"></i> از انتخاب</button>
+        <button class="btn" id="seqStop"><i class="ti ti-player-stop"></i> توقف</button>
+        <button class="btn on midi-btn" id="seqMidi"><i class="ti ti-file-music"></i> خروجی MIDI</button>
+      </div>
+      <div class="toolrow" style="margin-top:8px">
+        <button class="btn sm ghost" id="seqContinue"><i class="ti ti-player-track-next"></i> ادامه ضبط از انتخاب</button>
+        <button class="btn sm ghost" id="seqClear"><i class="ti ti-trash"></i> پاک‌کردن توالی</button>
+        <button class="btn sm ghost" id="seqSave"><i class="ti ti-device-floppy"></i> ذخیره در مرورگر</button>
+        <button class="btn sm ghost" id="seqLoad"><i class="ti ti-folder-open"></i> بازیابی</button>
+      </div>
+      <div id="seqStatus" class="studio-status" aria-live="polite">آمادهٔ ساخت توالی هستی. «ضبط زمان‌بندی» با کلیک روی آکوردهای ردیف بالا، فاصلهٔ زمانی کلیک‌ها را به ضرب تبدیل می‌کند.</div>
     </div>
   </section>
 
@@ -338,6 +387,7 @@
   <!-- ============ TAB: REFERENCE ============ -->
   <section id="tab-ref" class="hidden">
     <div class="card">
+      <div class="hintbox" style="margin-bottom:10px"><i class="ti ti-keyboard"></i> در صفحهٔ مرجع، فشردن کلیدهای کیبورد فیزیکی به‌صورت لحظه‌ای روی کلاویه‌ها مشخص می‌شود. میانبرها: A/W/S/E/D/F/T/G/Y/H/U/J/K/O/L/P و ;</div>
       <div class="label"><b>مرجع کامل آکوردها</b><span id="refCount"></span></div>
       <div class="chips" style="margin-bottom:10px" id="refFilter"></div>
       <div class="reflist">
@@ -589,7 +639,7 @@ function renderKeyboard(){
     wsemis.forEach((s,si)=>{
       const midi = midiOf(oct,s);
       const k=document.createElement("div");
-      k.className="key w"; k.dataset.midi=midi;
+      k.className="key w"; k.dataset.midi=midi; k.setAttribute("role","button"); k.tabIndex=0; k.setAttribute("aria-label", `${LETTERS[si]}${oct} piano key`);
       k.innerHTML = `<span class="deg"></span><span class="fing"></span><span class="lbl">${S.showNames?LETTERS[si]:""}</span>`;
       if(si===0) k.insertAdjacentHTML("beforeend",`<span class="octlbl">${LETTERS[si]}${oct}</span>`);
       whites.appendChild(k);
@@ -602,7 +652,7 @@ function renderKeyboard(){
   KB.appendChild(whites);
   blacks.forEach(b=>{
     const k=document.createElement("div");
-    k.className="key b"; k.dataset.midi=b.midi;
+    k.className="key b"; k.dataset.midi=b.midi; k.setAttribute("role","button"); k.tabIndex=0; k.setAttribute("aria-label", `${SIMPLE_PC_SHARP[b.midi%12]} piano key`);
     k.style.left = `calc(${b.left}% - ${bw/2}%)`;
     const pc=b.midi%12;
     k.innerHTML=`<span class="deg"></span><span class="fing"></span><span class="lbl">${S.showNames?SIMPLE_PC_SHARP[pc]:""}</span>`;
@@ -615,11 +665,16 @@ function renderKeyboard(){
 let keyEls = {};
 function bindKeys(){
   keyEls={};
-  KB.querySelectorAll(".key").forEach(k=>{ keyEls[k.dataset.midi]=k; });
+  KB.querySelectorAll(".key").forEach(k=>{
+    keyEls[k.dataset.midi]=k;
+    k.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();hitKey(+k.dataset.midi);}});
+  });
 }
 
-/* --- تعامل لمسی/ماوسی --- */
-let pointerDown=false;
+/* --- تعامل لمسی/ماوسی: چندلمسی + محدودسازی نرخ رویداد --- */
+const activePointers = new Map();
+const pointerLastAt = new Map();
+const POINTER_THROTTLE_MS = 30;
 function keyFromPoint(x,y){
   const el = document.elementFromPoint(x,y);
   if(!el) return null;
@@ -627,16 +682,23 @@ function keyFromPoint(x,y){
   return k ? +k.dataset.midi : null;
 }
 KB.addEventListener("pointerdown", e=>{
-  pointerDown=true; KB.setPointerCapture(e.pointerId);
-  const m=keyFromPoint(e.clientX,e.clientY); if(m!=null) hitKey(m);
+  const m=keyFromPoint(e.clientX,e.clientY);
+  activePointers.set(e.pointerId,{midi:m,last:m});
+  pointerLastAt.set(e.pointerId,0);
+  if(m!=null){hitKey(m);}
 });
 KB.addEventListener("pointermove", e=>{
-  if(!pointerDown || S.tab==="detect") return;
+  const state=activePointers.get(e.pointerId);
+  if(!state || S.tab==="detect") return;
+  const now=performance.now();
+  if(now-(pointerLastAt.get(e.pointerId)||0)<POINTER_THROTTLE_MS) return;
+  pointerLastAt.set(e.pointerId,now);
   const m=keyFromPoint(e.clientX,e.clientY);
-  if(m!=null && m!==lastGlide){ lastGlide=m; hitKey(m,true); }
+  if(m!=null && m!==state.last){state.last=m;hitKey(m,true);}
 });
-let lastGlide=null;
-window.addEventListener("pointerup", ()=>{ pointerDown=false; lastGlide=null; });
+function releasePointer(e){activePointers.delete(e.pointerId);pointerLastAt.delete(e.pointerId);}
+window.addEventListener("pointerup",releasePointer);
+window.addEventListener("pointercancel",releasePointer);
 
 function flash(midi){
   const el=keyEls[midi]; if(!el) return;
@@ -700,6 +762,7 @@ function paint(){
   });
   if(S.tab==="detect"){
     S.detect.forEach(m=>{ const k=keyEls[m]; if(k) k.classList.add("act"); });
+    S.pressed.forEach(m=>keyEls[m]?.classList.add("pressed-live"));
     return;
   }
   if(S.tab==="practice"){
@@ -707,6 +770,7 @@ function paint(){
       S.practice.pressedOk?.forEach(m=>keyEls[m]?.classList.add("ok"));
       S.practice.pressedBad?.forEach(m=>keyEls[m]?.classList.add("bad"));
     }
+    S.pressed.forEach(m=>keyEls[m]?.classList.add("pressed-live"));
     return;
   }
   const {notes,midis} = currentChordMidis();
@@ -851,21 +915,33 @@ function buildFamily(){
     b.onclick=()=>{ playPcChord(pc,q); b.classList.add("playing"); setTimeout(()=>b.classList.remove("playing"),400); };
     fam.appendChild(b);
   });
-  const PROGS=[
-    {n:"I – V – vi – IV",d:"محبوب‌ترین پیش‌روی پاپ",deg:[[0,"maj"],[4,"maj"],[5,"min"],[3,"maj"]]},
-    {n:"ii – V – I",d:"کادانس اصلی جز",deg:[[1,"min7"],[4,"dom7"],[0,"maj7"]]},
-    {n:"vi – IV – I – V",d:"حس نوستالژیک",deg:[[5,"min"],[3,"maj"],[0,"maj"],[4,"maj"]]},
-    {n:"I – vi – IV – V",d:"دوپ‌واپ کلاسیک",deg:[[0,"maj"],[5,"min"],[3,"maj"],[4,"maj"]]},
+  const minorMood = ["min","min7","min9","madd9","mMaj7","min6"].includes(S.qual);
+  const PROGS = minorMood ? [
+    {n:"بالاد احساسی",style:"احساسی · پیانو و وکال",deg:[[0,"min"],[5,"maj"],[3,"maj"],[4,"maj"]]},
+    {n:"پاپ مینور",style:"پاپ · مدرن",deg:[[0,"min"],[3,"maj"],[5,"maj"],[4,"min"]]},
+    {n:"سینمایی",style:"سینمایی · کشش عاطفی",deg:[[0,"min"],[2,"maj"],[3,"min"],[6,"maj"]]},
+    {n:"لوفای آرام",style:"Lo-fi · نرم",deg:[[0,"min7"],[3,"maj7"],[5,"min7"],[4,"min7"]]},
+    {n:"راک مینور",style:"راک · پرقدرت",deg:[[0,"min"],[6,"maj"],[3,"min"],[4,"min"]]},
+    {n:"جز ملایم",style:"Jazz · رنگی",deg:[[1,"m7b5"],[4,"dom7"],[0,"min7"],[0,"min6"]]}
+  ] : [
+    {n:"پاپ جهانی",style:"Pop · پرانرژی و آشنا",deg:[[0,"maj"],[4,"maj"],[5,"min"],[3,"maj"]]},
+    {n:"پاپ احساسی",style:"پاپ · نوستالژیک",deg:[[5,"min"],[3,"maj"],[0,"maj"],[4,"maj"]]},
+    {n:"بالاد آرام",style:"احساسی · پیانو",deg:[[0,"maj7"],[5,"min7"],[3,"maj7"],[4,"dom7"]]},
+    {n:"راک و سرود",style:"Rock · باز و قدرتمند",deg:[[0,"maj"],[3,"maj"],[4,"maj"],[0,"maj"]]},
+    {n:"جز استاندارد",style:"Jazz · ii–V–I",deg:[[1,"min7"],[4,"dom7"],[0,"maj7"]]},
+    {n:"سینمایی",style:"Cinematic · باشکوه",deg:[[0,"maj"],[2,"min"],[5,"min"],[4,"maj"]]},
+    {n:"آر اند بی",style:"R&B · سول و نرم",deg:[[1,"min7"],[4,"dom7"],[0,"maj7"],[5,"min7"]]},
+    {n:"لوفای",style:"Lo-fi · آرام و تکرارشونده",deg:[[0,"maj7"],[5,"min7"],[1,"min7"],[4,"dom7"]]}
   ];
   const box=document.getElementById("progBox"); box.innerHTML="";
   PROGS.forEach(p=>{
-    const row=document.createElement("button");
-    row.className="btn sm";
-    row.style.justifyContent="space-between";
-    const names=p.deg.map(([d,q])=>pcName((keyPc+MAJOR_SCALE[d])%12,prefSharp)+QUALITIES[q].sym).join(" → ");
-    row.innerHTML=`<span style="text-align:right"><span style="direction:ltr;display:inline-block;color:var(--acc-2);font-family:var(--ffm)">${names}</span>
-      <div style="font-size:11px;color:var(--txt-3);margin-top:3px">${p.n} · ${p.d}</div></span><span>▶︎</span>`;
-    row.onclick=()=>playProgression(p.deg.map(([d,q])=>[(keyPc+MAJOR_SCALE[d])%12,q]), row);
+    const progression=p.deg.map(([d,q])=>[(keyPc+MAJOR_SCALE[d])%12,q]);
+    const names=progression.map(([pc,q])=>pcName(pc,prefSharp)+QUALITIES[q].sym).join(" → ");
+    const row=document.createElement("div"); row.className="prog-entry";
+    row.innerHTML=`<div class="prog-info"><div class="chordline">${names}</div><small>${p.n} · ${p.style}</small></div><div class="toolrow" style="flex-wrap:nowrap"><button class="btn sm" title="پخش" aria-label="پخش پیش‌روی"><i class="ti ti-player-play"></i></button><button class="btn sm ghost midi-btn" title="دانلود MIDI" aria-label="دانلود MIDI"><i class="ti ti-file-music"></i> MIDI</button></div>`;
+    const [playBtn,midiBtn]=row.querySelectorAll("button");
+    playBtn.onclick=()=>playProgression(progression,row);
+    midiBtn.onclick=()=>downloadMidi(progression.map(([pc,q])=>({pc,q,beats:2})),S.tempo,`progression-${PROGS.indexOf(p)+1}`,4);
     box.appendChild(row);
   });
 }
@@ -906,9 +982,11 @@ function playArp(){
   const {midis}=currentChordMidis();
   stopAll(true);
   const step=60/S.tempo/2;
-  const seq=[...midis, ...midis.slice(0,-1).reverse()];
+  // الگوی دقیق رفت‌وبرگشت: ۱، ۳، ۵، ۳، ۱؛ نت آخر همان نت آغازین است.
+  const triad=midis.length>=3?[midis[0],midis[1],midis[2]]:[...midis];
+  const seq=triad.length>=3?[triad[0],triad[1],triad[2],triad[1],triad[0]]:[...triad,...triad.slice(0,-1).reverse()];
   seq.forEach((m,i)=>{
-    const t=setTimeout(()=>{ Audio_.note(m,1.1); flashHold(m,step*900); }, i*step*1000);
+    const t=setTimeout(()=>{ Audio_.note(m,Math.max(.28,step*.92),0,1); flashHold(m,Math.max(180,step*850)); }, i*step*1000);
     S.arpTimer.push(t);
   });
 }
@@ -916,8 +994,8 @@ function stopAll(clearLoop=true){
   S.arpTimer.forEach(clearTimeout);
   S.arpTimer=[];
   Audio_.stopActive();
-  if(clearLoop && S.loopTimer){
-    clearInterval(S.loopTimer);
+  if(clearLoop){
+    if(S.loopTimer) clearInterval(S.loopTimer);
     S.loopTimer=null;
     S.loop=false;
     const loopButton=document.getElementById("btnLoop");
@@ -931,7 +1009,7 @@ document.getElementById("btnLoop").onclick=e=>{
   Audio_.resume();
   if(S.loop){ stopAll(true); return; }
   S.loop=true; e.currentTarget.classList.add("on");
-  playChord();
+  playChord(true);
   S.loopTimer=setInterval(()=>playChord(true), (60/S.tempo)*4*1000);
 };
 
@@ -1071,8 +1149,9 @@ function detectFrom(midis){
   return {html, root:top.root, k:top.k};
 }
 function pcNameFa(pc){
-  const n=SIMPLE_PC_SHARP[((pc%12)+12)%12];
-  return FA_LETTER[n[0]]+(n.length>1?" دیز":"");
+  const n=SIMPLE_PC[((pc%12)+12)%12];
+  if(n.length>1) return FA_LETTER[n[0]]+" بمل";
+  return FA_LETTER[n[0]];
 }
 let lastDetect=null;
 function runDetect(){
@@ -1080,7 +1159,7 @@ function runDetect(){
   lastDetect=r;
   document.getElementById("detResult").innerHTML=r.html;
 }
-document.getElementById("detClear").onclick=()=>{ S.detect.clear(); paint(); runDetect(); };
+document.getElementById("detClear").onclick=()=>{ S.detect.clear(); lastDetect=null; document.getElementById("detResult").textContent="هنوز نتی انتخاب نشده است."; paint(); };
 document.getElementById("detPlay").onclick=()=>{ Audio_.resume(); Audio_.chord([...S.detect].sort((a,b)=>a-b),1.9,.014); };
 document.getElementById("detSend").onclick=()=>{
   if(!lastDetect||lastDetect.root===undefined){ toast("اول چند نت انتخاب کن"); return; }
@@ -1115,6 +1194,7 @@ document.getElementById("qReplay").onclick=()=>{Audio_.resume();replayQuestion()
 
 function randOf(a){ return a[Math.floor(Math.random()*a.length)]; }
 function newQuestion(){
+  clearTimeout(earNextTimer); earNextTimer=null;
   const quals=LVL[P.lvl];
   const rootPc=Math.floor(Math.random()*12);
   const k=randOf(quals);
@@ -1150,7 +1230,7 @@ function newQuestion(){
     document.getElementById("qSub").innerHTML=`این آکورد را روی کلاویه بزن (${FA_DIGITS(P.target.length)} نت لازم است) — ترتیب مهم نیست.`;
     const hint=document.createElement("button");
     hint.className="btn"; hint.textContent="💡 نمایش جواب";
-    hint.onclick=()=>{ showPlayAnswer(); };
+    hint.onclick=()=>{ if(!P.locked){P.locked=true; showPlayAnswer();} };
     const skip=document.createElement("button");
     skip.className="btn"; skip.textContent="⤼ رد کن";
     skip.onclick=()=>newQuestion();
@@ -1163,6 +1243,7 @@ function replayQuestion(){
   const midis=pcChordMidis(P.answer.rootPc,P.answer.k);
   if(P.mode==="ear") Audio_.chord(midis,1.9,.02); else Audio_.chord(midis,1.6,.02);
 }
+let earNextTimer=null;
 function answerEar(o,btn){
   if(P.locked) return; P.locked=true;
   const ok = o.rootPc===P.answer.rootPc && o.k===P.answer.k;
@@ -1177,7 +1258,7 @@ function answerEar(o,btn){
   document.getElementById("qSub").innerHTML = ok
     ? `آفرین! <b>${pcName(P.answer.rootPc,false)+QUALITIES[P.answer.k].sym}</b> — ${QUALITIES[P.answer.k].fa}`
     : `جواب درست: <b>${pcName(P.answer.rootPc,false)+QUALITIES[P.answer.k].sym}</b> — ${describeMood(P.answer.k)}`;
-  setTimeout(()=>{ if(P.mode==="ear") newQuestion(); }, 1600);
+  clearTimeout(earNextTimer); earNextTimer=setTimeout(()=>{ if(P.mode==="ear" && P.locked) newQuestion(); }, 1600);
 }
 function handlePlayAnswer(midi){
   if(!P.answer||P.locked) return;
@@ -1189,7 +1270,7 @@ function handlePlayAnswer(midi){
     P.locked=true; scoreUp(true); Audio_.click(true);
     document.getElementById("qSub").innerHTML="✅ درست بود! سؤال بعدی…";
     setTimeout(newQuestion,1200);
-  } else if(P.pressedBad.size>=2){
+  } else if(P.pressedBad.size>=1){
     P.locked=true; scoreUp(false); Audio_.click(false);
     showPlayAnswer();
     setTimeout(newQuestion,2200);
@@ -1246,10 +1327,124 @@ function renderRef(){
 }
 
 /* ============================================================
+   10.5) استودیوی توالی آکورد + خروجی MIDI استاندارد
+   ============================================================ */
+const seqState={items:[],selected:0,recording:false,recordStarted:0,lastTap:0,playTimers:[],playIndex:0};
+const ROOT_PC={C:0,'C#':1,Db:1,D:2,'D#':3,Eb:3,E:4,F:5,'F#':6,Gb:6,G:7,'G#':8,Ab:8,A:9,'A#':10,Bb:10,B:11};
+const ROOT_ORDER=['C','C#','Db','D','D#','Eb','E','F','F#','Gb','G','G#','Ab','A','A#','Bb','B'];
+function qualityAliases(){return {'':'maj','maj':'maj','major':'maj','m':'min','min':'min','minor':'min','dim':'dim','aug':'aug','sus2':'sus2','sus4':'sus4','5':'five','power':'five','7':'dom7','dom7':'dom7','maj7':'maj7','m7':'min7','min7':'min7','mmaj7':'mMaj7','mmaj':'mMaj7','m7b5':'m7b5','ø':'m7b5','dim7':'dim7','7#5':'aug7','aug7':'aug7','7sus4':'sev4','6':'six','m6':'min6','add9':'add9','m(add9)':'madd9','madd9':'madd9','9':'nine','maj9':'maj9','m9':'min9','min9':'min9','6/9':'six9'};}
+function parseChordName(raw){
+  const text=String(raw||'').trim().replace(/♭/g,'b').replace(/♯/g,'#').replace(/\s+/g,'');
+  const match=text.match(/^(C#|Db|D#|Eb|F#|Gb|G#|Ab|A#|Bb|C|D|E|F|G|A|B)(.*)$/i);
+  if(!match)return null;
+  const root=match[1][0].toUpperCase()+match[1].slice(1); const suffix=match[2].toLowerCase();
+  const aliases=qualityAliases(); const q=aliases[suffix];
+  if(!q||!QUALITIES[q])return null;
+  return {pc:ROOT_PC[root],q,name:root+QUALITIES[q].sym};
+}
+function chordDisplayName(item){return pcName(item.pc,true)+QUALITIES[item.q].sym;}
+function renderChordCatalog(){
+  const dl=document.getElementById('chordCatalog'); dl.innerHTML='';
+  ROOT_ORDER.forEach(root=>QKEYS.forEach(q=>{const o=document.createElement('option');o.value=root+QUALITIES[q].sym;dl.appendChild(o);}));
+  renderChordBank();
+}
+function renderChordBank(){
+  const bank=document.getElementById('chordBank');bank.innerHTML='';
+  const roots=[S.rootLabel||'C','Am','F','Gm'];
+  const choices=[`${S.rootLabel}maj`,`${S.rootLabel}m`,`${pcName((pcOf(S.rootLetter,S.rootAcc)+5)%12,true)}maj`,`${pcName((pcOf(S.rootLetter,S.rootAcc)+7)%12,true)}7`];
+  [...new Set([...choices,'Am','Fm','Gm','Cmaj7','Dm7','G7'])].slice(0,9).forEach(n=>{
+    const parsed=parseChordName(n);if(!parsed)return;
+    const b=document.createElement('button');b.className='chord-chip';b.innerHTML=`<i class="ti ti-plus"></i> ${chordDisplayName(parsed)}`;
+    b.title='افزودن '+chordDisplayName(parsed);
+    b.onclick=()=>addSequenceChord(parsed);
+    bank.appendChild(b);
+  });
+}
+function addSequenceChord(parsed,beats=2,at=null){
+  const item={id:Date.now()+Math.random(),pc:parsed.pc,q:parsed.q,name:chordDisplayName(parsed),beats:Math.max(1,beats||2)};
+  if(seqState.recording){
+    const now=performance.now();
+    if(seqState.lastTap){const elapsed=(now-seqState.lastTap)/(60000/seqBpm());const quant=Math.max(1,Math.round(elapsed));if(seqState.items.length)seqState.items[seqState.items.length-1].beats=Math.min(8,quant);}
+    seqState.lastTap=now;
+  }
+  if(at===null)seqState.items.push(item);else seqState.items.splice(at,0,item);
+  seqState.selected=seqState.items.findIndex(x=>x.id===item.id);renderSequence();
+  if(seqState.recording){playSequenceChord(item);document.getElementById('seqStatus').innerHTML=`<span class="rec-dot"></span>در حال ضبط زمان‌بندی · ${item.name} ثبت شد.`;}
+}
+function seqBpm(){return +document.getElementById('seqBpm').value||100;}
+function renderSequence(){
+  const box=document.getElementById('sequenceList');box.innerHTML='';
+  if(!seqState.items.length){box.innerHTML='<span class="studio-status">هنوز آکوردی اضافه نشده؛ از بخش جست‌وجو شروع کن.</span>';}
+  seqState.items.forEach((it,i)=>{
+    const el=document.createElement('div');el.className='seq-item'+(i===seqState.selected?' selected':'');el.tabIndex=0;
+    el.innerHTML=`<button class="seq-name" title="انتخاب نقطهٔ شروع">${it.name}</button><select aria-label="مدت آکورد به ضرب"><option value="1">۱ ضرب</option><option value="2">۲ ضرب</option><option value="3">۳ ضرب</option><option value="4">۴ ضرب</option><option value="8">۸ ضرب</option></select><div class="seq-controls"><button data-act="left" title="انتقال به چپ"><i class="ti ti-arrow-left"></i></button><button data-act="right" title="انتقال به راست"><i class="ti ti-arrow-right"></i></button><button data-act="copy" title="تکثیر"><i class="ti ti-copy"></i></button><button data-act="del" title="حذف"><i class="ti ti-trash"></i></button></div>`;
+    const sel=el.querySelector('select');sel.value=String(it.beats);sel.onchange=()=>{it.beats=+sel.value;};
+    el.querySelector('.seq-name').onclick=()=>{seqState.selected=i;renderSequence();playSequenceChord(it);};
+    el.querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>{
+      const act=b.dataset.act;
+      if(act==='left'&&i>0){[seqState.items[i-1],seqState.items[i]]=[seqState.items[i],seqState.items[i-1]];seqState.selected=i-1;}
+      if(act==='right'&&i<seqState.items.length-1){[seqState.items[i+1],seqState.items[i]]=[seqState.items[i],seqState.items[i+1]];seqState.selected=i+1;}
+      if(act==='copy'){seqState.items.splice(i+1,0,{...it,id:Date.now()+Math.random()});seqState.selected=i+1;}
+      if(act==='del'){seqState.items.splice(i,1);seqState.selected=Math.min(i,seqState.items.length-1);}
+      renderSequence();
+    });
+    box.appendChild(el);
+  });
+  document.getElementById('seqCount').textContent=FA_DIGITS(seqState.items.length)+' آکورد';
+}
+function playSequenceChord(it){const oct=+(document.getElementById('seqOctave')?.value||4);const base=midiOf(oct,0)+it.pc;const mids=QUALITIES[it.q].iv.map(x=>base+x[1]);Audio_.resume();Audio_.chord(mids,Math.max(.35,(60/seqBpm())*it.beats*.9),.012);}
+function stopSequence(){seqState.playTimers.forEach(clearTimeout);seqState.playTimers=[];seqState.recording=false;document.getElementById('seqRecord').classList.remove('on');document.getElementById('seqStatus').textContent='پخش/ضبط متوقف شد.';}
+function playSequence(from=0){
+  stopSequence();if(!seqState.items.length){toast('ابتدا چند آکورد اضافه کن');return;}Audio_.resume();
+  const beat=60/seqBpm();let offset=0;
+  seqState.items.slice(Math.max(0,from)).forEach((it,j)=>{const i=Math.max(0,from)+j;const delay=offset*beat*1000;seqState.playTimers.push(setTimeout(()=>{seqState.selected=i;renderSequence();playSequenceChord(it);},delay));offset+=it.beats;});
+  seqState.playTimers.push(setTimeout(()=>{document.getElementById('seqStatus').textContent='پخش توالی تمام شد.';},offset*beat*1000+80));
+}
+function startSequenceRecording(fromSelected=false){
+  stopSequence();
+  if(!seqState.items.length){toast('اول از بخش جست‌وجو یک آکورد اضافه کن');return;}
+  if(fromSelected&&seqState.selected>=0)seqState.items=seqState.items.slice(0,seqState.selected+1);
+  seqState.recording=true;seqState.recordStarted=performance.now();seqState.lastTap=0;
+  document.getElementById('seqRecord').classList.add('on');
+  document.getElementById('seqStatus').innerHTML='<span class="rec-dot"></span>ضبط فعال است؛ روی آکوردهای بالا بزن تا به توالی اضافه شوند. فاصلهٔ کلیک‌ها به نزدیک‌ترین ضرب تبدیل می‌شود.';
+}
+function downloadMidi(items,bpm=100,filename='chord-sequence',octave=4){
+  if(!items||!items.length){toast('برای خروجی MIDI ابتدا آکورد انتخاب کن');return;}
+  const ppq=480, events=[];let tick=0;const tempo=Math.round(60000000/Math.max(30,Math.min(300,bpm)));
+  events.push({tick:0,bytes:[0xFF,0x51,0x03,(tempo>>16)&255,(tempo>>8)&255,tempo&255],order:-2});
+  items.forEach(it=>{
+    const start=tick, dur=Math.max(1,it.beats||2)*ppq;
+    const base=(Math.max(1,Math.min(7,+octave||4)+1))*12+(it.pc||0);const notes=QUALITIES[it.q].iv.map(x=>Math.min(120,base+x[1]));
+    notes.forEach(n=>events.push({tick:start,bytes:[0x90,n,92],order:0}));
+    notes.forEach(n=>events.push({tick:start+dur-12,bytes:[0x80,n,0],order:-1}));
+    tick+=dur;
+  });
+  events.push({tick:tick+1,bytes:[0xFF,0x2F,0x00],order:9});events.sort((a,b)=>a.tick-b.tick||a.order-b.order);
+  function vlq(v){v=Math.max(0,Math.floor(v));let buffer=v&0x7f;const out=[];while((v>>=7)){buffer<<=8;buffer|=((v&0x7f)|0x80);}while(true){out.push(buffer&255);if(buffer&0x80)buffer>>=8;else break;}return out;}
+  const track=[];let prev=0;events.forEach(e=>{track.push(...vlq(e.tick-prev),...e.bytes);prev=e.tick;});
+  const be16=n=>[(n>>8)&255,n&255],be32=n=>[(n>>>24)&255,(n>>>16)&255,(n>>>8)&255,n&255];
+  const bytes=[...Array.from('MThd').map(c=>c.charCodeAt(0)),...be32(6),...be16(0),...be16(1),...be16(ppq),...Array.from('MTrk').map(c=>c.charCodeAt(0)),...be32(track.length),...track];
+  const blob=new Blob([new Uint8Array(bytes)],{type:'audio/midi'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename.toLowerCase().replace(/[^a-z0-9\-]+/g,'-')+'.mid';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);toast('فایل MIDI آماده شد');
+}
+document.getElementById('addChordBtn').onclick=()=>{const parsed=parseChordName(document.getElementById('chordSearch').value);if(!parsed){toast('نام آکورد شناخته نشد؛ نمونه: Am یا Cmaj7');return;}addSequenceChord(parsed);document.getElementById('chordSearch').value='';};
+document.getElementById('chordSearch').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();document.getElementById('addChordBtn').click();}});
+document.getElementById('seqBpm').oninput=e=>{document.getElementById('seqBpmLabel').textContent=FA_DIGITS(e.target.value);};
+document.getElementById('seqRecord').onclick=()=>{if(seqState.recording){seqState.recording=false;document.getElementById('seqRecord').classList.remove('on');document.getElementById('seqStatus').textContent='ضبط زمان‌بندی پایان یافت؛ می‌توانی پخش یا MIDI بگیری.';}else startSequenceRecording(false);};
+document.getElementById('seqContinue').onclick=()=>startSequenceRecording(true);
+document.getElementById('seqPlay').onclick=()=>playSequence(0);
+document.getElementById('seqPlayFrom').onclick=()=>playSequence(Math.max(0,seqState.selected));
+document.getElementById('seqStop').onclick=stopSequence;
+document.getElementById('seqClear').onclick=()=>{stopSequence();seqState.items=[];seqState.selected=0;renderSequence();};
+document.getElementById('seqMidi').onclick=()=>downloadMidi(seqState.items,seqBpm(),'my-chord-sequence',+document.getElementById('seqOctave').value);
+document.getElementById('seqSave').onclick=()=>{localStorage.setItem('accordium-sequence-v3',JSON.stringify({items:seqState.items,bpm:seqBpm()}));toast('توالی در مرورگر ذخیره شد');};
+document.getElementById('seqLoad').onclick=()=>{try{const data=JSON.parse(localStorage.getItem('accordium-sequence-v3')||'null');if(!data)throw 0;seqState.items=data.items||[];seqState.selected=0;if(data.bpm)document.getElementById('seqBpm').value=data.bpm;document.getElementById('seqBpmLabel').textContent=FA_DIGITS(seqBpm());renderSequence();toast('توالی بازیابی شد');}catch(e){toast('ذخیره‌ای برای بازیابی وجود ندارد');}};
+renderChordCatalog();renderSequence();
+
+/* ============================================================
    11) تب‌ها، تنظیمات، کیبورد کامپیوتر
    ============================================================ */
 const TABMETA={
-  build:["آکوردهای پیانو و کیبورد","ریشه و حالت را انتخاب کن تا آکورد را ببینی، بشنوی و طرز گرفتنش را یاد بگیری."],
+  build:["آکوردهای پیانو و استودیوی توالی","آکورد بساز، پیش‌روی‌های سبک‌محور را بشنو و توالی دلخواهت را به MIDI تبدیل کن."],
   detect:["تشخیص آکورد","هر نتی می‌خواهی روی کلاویه بزن؛ من نام آکورد و حالتش را می‌گویم."],
   practice:["تمرین و آزمون","گوشت را تربیت کن و انگشت‌هایت را روی آکوردها سریع کن."],
   ref:["مرجع و تنظیمات","جدول کامل آکوردها به‌همراه نت‌ها و فرمول‌ها."]
@@ -1291,26 +1486,31 @@ document.getElementById("vol").oninput=e=>{
 document.getElementById("tempo").oninput=e=>{
   S.tempo=+e.target.value;
   document.getElementById("tempoVal").textContent=FA_DIGITS(S.tempo)+" BPM";
+  if(S.loop && S.loopTimer){clearInterval(S.loopTimer); S.loopTimer=setInterval(()=>playChord(true),(60/S.tempo)*4*1000);}
 };
 
 /* کیبورد کامپیوتر */
 const KEYMAP={a:0,w:1,s:2,e:3,d:4,f:5,t:6,g:7,y:8,h:9,u:10,j:11,k:12,o:13,l:14,p:15,";":16};
 let kbShift=0;
+const physicalKeyMidis=new Map();
 window.addEventListener("keydown",e=>{
-  if(!S.pcKeys||e.repeat||e.metaKey||e.ctrlKey) return;
+  if(!S.pcKeys||e.repeat||e.metaKey||e.ctrlKey||e.altKey) return;
+  if(e.target && e.target.matches && e.target.matches("input,textarea,select,[contenteditable=true]")) return;
   const k=e.key.toLowerCase();
   if(k==="z"){kbShift=Math.max(-12,kbShift-12);toast("اکتاو پایین");return;}
   if(k==="x"){kbShift=Math.min(12,kbShift+12);toast("اکتاو بالا");return;}
   if(k===" "){e.preventDefault();S.tab==="build"?playChord():replayQuestion();return;}
   if(KEYMAP[k]===undefined) return;
+  e.preventDefault();
   const midi=midiOf(S.baseOct,0)+KEYMAP[k]+kbShift;
-  if(S.pressed.has(midi))return; S.pressed.add(midi);
-  hitKey(midi);
+  if(S.pressed.has(midi))return; S.pressed.add(midi); physicalKeyMidis.set(k,midi);
+  hitKey(midi); paint();
 });
 window.addEventListener("keyup",e=>{
   const k=e.key.toLowerCase();
-  if(KEYMAP[k]===undefined) return;
-  S.pressed.delete(midiOf(S.baseOct,0)+KEYMAP[k]+kbShift);
+  const midi=physicalKeyMidis.get(k);
+  if(midi===undefined) return;
+  S.pressed.delete(midi); physicalKeyMidis.delete(k); paint();
 });
 
 let toastT=null;
@@ -1324,7 +1524,7 @@ function toast(msg){
    12) شروع
    ============================================================ */
 renderRoots(); renderQuals(); renderInvs(); renderKeyboard(); refresh();
-document.addEventListener("pointerdown",()=>Audio_.resume(),{once:true});
+document.addEventListener("pointerdown",()=>Audio_.resume());
 setTimeout(()=>toast("برای شنیدن صدا یک‌بار روی صفحه بزن 🎹"),700);
 </script>
 </body>
