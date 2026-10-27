@@ -1,734 +1,1531 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>عددشکن | معبد اعداد</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;900&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#121013" />
+<title>آکوردیوم ۳ — آموزش و ساخت آکورد پیانو</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<meta name="description" content="آموزش آکوردهای پیانو، تشخیص آکورد و تمرین شنیداری؛ تک‌فایلی و قابل اجرا به‌صورت آفلاین">
 <style>
   :root{
-    --bg-void:#0a0910;
-    --bg-stone:#171420;
-    --bg-stone-2:#211c2c;
-    --gold:#caa24a;
-    --gold-bright:#f0cd7a;
-    --violet:#8a6bff;
-    --cyan:#4fe3d6;
-    --crack:#050409;
-    --danger:#c95d63;
-    --text-soft:#cfc9de;
-    --text-dim:#8d84a6;
+    --bg:#100e11;
+    --bg-2:#171418;
+    --panel:#1d191e;
+    --panel-2:#241f26;
+    --line:#332c36;
+    --txt:#f3eef4;
+    --txt-2:#b6a9ba;
+    --txt-3:#7e7382;
+    --acc:#c05576;
+    --acc-2:#e0819c;
+    --acc-soft:rgba(192,85,118,.16);
+    --gold:#e2b169;
+    --green:#57b894;
+    --red:#e2686d;
+    --radius:16px;
+    --shadow:0 10px 30px rgba(0,0,0,.45);
+    --ff: "Vazirmatn","IRANSans","Segoe UI",Tahoma,system-ui,-apple-system,sans-serif;
+    --ffm:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
   }
-  *{box-sizing:border-box;}
-  html,body{ margin:0; padding:0; min-height:100vh; background:var(--bg-void); color:var(--text-soft);
-    font-family:'Vazirmatn', sans-serif; overflow-x:hidden; }
-
-  .ambient{ position:fixed; inset:0; z-index:0; pointer-events:none;
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--txt);font-family:var(--ff)}
+  body{
+    min-height:100vh;
     background:
-      radial-gradient(circle at 12% 8%, rgba(202,162,74,0.10), transparent 40%),
-      radial-gradient(circle at 88% 15%, rgba(138,107,255,0.12), transparent 45%),
-      radial-gradient(circle at 50% 100%, rgba(79,227,214,0.06), transparent 50%),
-      var(--bg-void); }
-  .ambient .num{ position:absolute; font-weight:900; color:rgba(202,162,74,0.045);
-    font-size:9rem; user-select:none; animation:drift 22s ease-in-out infinite; }
-  @keyframes drift{ 0%,100%{transform:translateY(0) rotate(0deg);} 50%{transform:translateY(-30px) rotate(3deg);} }
+      radial-gradient(1200px 600px at 50% -10%, rgba(192,85,118,.13), transparent 60%),
+      radial-gradient(800px 500px at 90% 110%, rgba(96,80,160,.10), transparent 60%),
+      var(--bg);
+    padding-bottom:86px;
+  }
+  .shell{max-width:760px;margin:0 auto;padding:18px 14px 10px}
+  ::selection{background:var(--acc);color:#fff}
 
-  .app{ position:relative; z-index:1; max-width:1200px; margin:0 auto; padding:2rem 1.2rem 4rem; }
-  header{ text-align:center; margin-bottom:1.4rem; }
-  header .eyebrow{ letter-spacing:.35em; font-size:.7rem; color:var(--gold); text-transform:uppercase; opacity:.85; }
-  header h1{ font-size:2.4rem; font-weight:900; margin:.3rem 0 .2rem;
-    background:linear-gradient(90deg, var(--gold-bright), var(--gold) 40%, var(--cyan));
-    -webkit-background-clip:text; background-clip:text; color:transparent; }
-  header p{ color:var(--text-dim); font-size:.9rem; margin:0; }
+  /* ---------- header ---------- */
+  header.app{text-align:center;padding:12px 6px 18px}
+  .brand{display:inline-flex;align-items:center;gap:9px;font-size:13px;color:var(--txt-3);letter-spacing:.4px;margin-bottom:10px}
+  .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--acc);box-shadow:0 0 12px var(--acc)}
+  header.app h1{margin:0;font-size:26px;font-weight:800;letter-spacing:-.3px}
+  header.app p{margin:9px auto 0;max-width:430px;font-size:14px;line-height:1.9;color:var(--txt-2)}
 
-  /* ---------- setup wizard ---------- */
-  .wizard{ max-width:520px; margin:0 auto; background:linear-gradient(160deg, var(--bg-stone), #14111c);
-    border:1px solid rgba(202,162,74,.2); border-radius:18px; padding:1.8rem 1.6rem; position:relative; z-index:2; }
-  .wizard .step-label{ font-size:.75rem; color:var(--cyan); letter-spacing:.15em; margin-bottom:.3rem; }
-  .wizard h2{ margin:.1rem 0 1.1rem; font-size:1.3rem; color:var(--gold-bright); }
-  .choice-row{ display:flex; gap:.6rem; flex-wrap:wrap; margin-bottom:1rem; }
-  .choice-btn{ flex:1; min-width:110px; background:var(--bg-stone-2); border:1.5px solid rgba(255,255,255,.08);
-    color:var(--text-soft); border-radius:12px; padding:.8rem .6rem; font-family:inherit; font-size:.95rem;
-    cursor:pointer; text-align:center; transition:all .2s; }
-  .choice-btn.selected{ border-color:var(--gold); background:rgba(202,162,74,.12); color:var(--gold-bright); }
-  .choice-btn:hover{ transform:translateY(-2px); }
-  .name-inputs{ display:flex; flex-direction:column; gap:.6rem; margin-bottom:1rem; }
-  .name-inputs input{ background:var(--bg-stone-2); border:1.5px solid rgba(255,255,255,.1); border-radius:10px;
-    padding:.6rem .8rem; color:var(--text-soft); font-family:inherit; font-size:.95rem; }
-  .name-inputs input:focus{ outline:none; border-color:var(--cyan); }
-  .toggle-row{ display:flex; align-items:center; justify-content:space-between; background:var(--bg-stone-2);
-    border-radius:12px; padding:.7rem 1rem; margin-bottom:.7rem; }
-  .toggle-row span.label{ font-size:.9rem; }
-  .switch{ display:flex; border-radius:99px; background:rgba(255,255,255,.06); padding:3px; }
-  .switch button{ border:none; background:transparent; color:var(--text-dim); font-family:inherit; font-size:.82rem;
-    padding:.4rem .8rem; border-radius:99px; cursor:pointer; }
-  .switch button.on{ background:var(--gold); color:#241a06; font-weight:700; }
-  .wizard-nav{ display:flex; justify-content:space-between; margin-top:1.4rem; }
-  .nav-btn{ border:none; border-radius:99px; padding:.65rem 1.6rem; font-family:inherit; font-weight:700;
-    cursor:pointer; font-size:.9rem; }
-  .nav-btn.next{ background:linear-gradient(160deg, var(--gold-bright), var(--gold)); color:#241a06; }
-  .nav-btn.back{ background:transparent; color:var(--text-dim); border:1px solid rgba(255,255,255,.12); }
-  .nav-btn:disabled{ opacity:.35; cursor:not-allowed; }
-  .hidden{ display:none !important; }
+  /* ---------- generic ---------- */
+  .card{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:var(--radius);padding:14px;margin-bottom:14px}
+  .label{font-size:12.5px;color:var(--txt-3);margin:0 2px 8px;display:flex;justify-content:space-between;align-items:center}
+  .label b{color:var(--txt-2);font-weight:600}
+  .grid{display:grid;gap:8px}
+  .seg{display:grid;grid-auto-flow:column;gap:8px}
+  button{font-family:inherit;color:inherit;cursor:pointer;border:0;background:none}
+  .btn{
+    background:var(--panel-2);border:1px solid var(--line);border-radius:12px;
+    padding:12px 10px;font-size:15px;font-weight:600;color:var(--txt-2);
+    transition:transform .12s ease, background .16s, color .16s, border-color .16s, box-shadow .16s;
+    display:flex;align-items:center;justify-content:center;gap:6px;
+  }
+  .btn:hover{border-color:#4a3f4e;color:var(--txt)}
+  .btn:active{transform:scale(.97)}
+  .btn.on{background:var(--acc);border-color:var(--acc);color:#fff;box-shadow:0 6px 18px rgba(192,85,118,.35)}
+  .btn.light{background:#f4efe9;border-color:#f4efe9;color:#1a1419}
+  .btn.ghost{background:transparent}
+  .btn.sm{padding:9px 10px;font-size:13px;border-radius:10px}
+  .btn.icon{padding:10px 12px;font-size:13px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chips .btn{flex:1 1 auto;min-width:62px}
+  .mono{font-family:var(--ffm);letter-spacing:.5px}
+  .hidden{display:none !important}
 
-  /* ---------- game area ---------- */
-  .game-area{ display:flex; gap:1rem; align-items:flex-start; justify-content:center; flex-wrap:wrap; }
-  .game-area.horizontal{ flex-direction:row; }
-  .game-area.vertical{ flex-direction:column; align-items:center; }
+  /* ---------- keyboard ---------- */
+  .kbwrap{
+    background:linear-gradient(180deg,#2a2329,#191419);
+    border:1px solid var(--line);border-radius:18px;padding:10px 10px 12px;
+    box-shadow:var(--shadow);margin-bottom:14px;
+  }
+  .kbtop{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;padding:0 3px}
+  .kbtop .now{font-family:var(--ffm);font-size:13px;color:var(--acc-2);min-height:18px;direction:ltr}
+  .kbscroll{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:thin;padding-bottom:2px}
+  .kbscroll::-webkit-scrollbar{height:6px}
+  .kbscroll::-webkit-scrollbar-thumb{background:#3b333e;border-radius:4px}
+  .keyboard{position:relative;direction:ltr;height:190px;min-width:520px;user-select:none;touch-action:none}
+  .whites{display:flex;height:100%;gap:0}
+  .key{position:relative;border-radius:0 0 7px 7px;transition:transform .05s, filter .08s}
+  .key.w{
+    flex:1 1 0;background:linear-gradient(180deg,#fffdfa 0%,#f2ece3 72%,#ded6cb 100%);
+    border:1px solid #cdc4bb;border-top:0;margin-right:-1px;
+    box-shadow:inset 0 -6px 8px -6px rgba(0,0,0,.35);
+    display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px;
+    font-size:11px;color:#a79c95;font-weight:600;
+  }
+  .key.b{
+    position:absolute;top:0;height:62%;width:var(--bw);z-index:3;
+    background:linear-gradient(180deg,#3d353c 0%,#211c22 62%,#151116 100%);
+    border-radius:0 0 6px 6px;border:1px solid #0c0a0d;
+    box-shadow:0 5px 8px rgba(0,0,0,.55), inset 0 -4px 6px -3px rgba(255,255,255,.12);
+    display:flex;align-items:flex-end;justify-content:center;padding-bottom:7px;
+    font-size:10px;color:#7c7280;font-weight:600;
+  }
+  .key.w.act{background:linear-gradient(180deg,#e59ab2 0%,var(--acc) 60%,#8e3a55 100%);color:#ffe9f0;border-color:#8e3a55}
+  .key.b.act{background:linear-gradient(180deg,#c2637f 0%,#963f5d 70%,#68273d 100%);color:#ffdfe9}
+  .key.w.hl{background:linear-gradient(180deg,#f6dfa8 0%,#e0ab5c 65%,#b9873c 100%);color:#4a3512;border-color:#b9873c}
+  .key.b.hl{background:linear-gradient(180deg,#d6a765 0%,#a8783c 70%,#755227 100%);color:#3a2a0f}
+  .key.w.ok{background:linear-gradient(180deg,#a5e2c8 0%,var(--green) 65%,#2f7a5e 100%);color:#0d2e22;border-color:#2f7a5e}
+  .key.b.ok{background:linear-gradient(180deg,#66c3a1 0%,#39876c 70%,#245944 100%);color:#e9fff6}
+  .key.w.bad{background:linear-gradient(180deg,#f0a7a9 0%,var(--red) 65%,#8f3538 100%);color:#fff}
+  .key.b.bad{background:linear-gradient(180deg,#c96e71 0%,#8f3538 80%,#6a2527 100%);color:#fff}
+  .key .fing{
+    display:none;position:absolute;top:auto;bottom:26px;left:50%;transform:translateX(-50%);
+    width:19px;height:19px;border-radius:50%;background:#1c161b;color:#ffd9e4;
+    font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;
+    border:1px solid rgba(255,255,255,.18);
+  }
+  .key.b .fing{bottom:22px;background:#f4efe9;color:#241f26;border-color:#c9bfb6}
+  .key .deg{position:absolute;top:8px;left:50%;transform:translateX(-50%);font-size:9.5px;color:rgba(255,255,255,.75);font-weight:700;letter-spacing:.3px}
+  .key.w .deg{color:rgba(60,40,50,.62)}
+  .key.w.act .deg,.key.w.hl .deg,.key.w.ok .deg{color:rgba(30,15,25,.8)}
+  .octlbl{position:absolute;bottom:-1px;left:2px;font-size:9px;color:#b3a89f;opacity:.75}
 
-  .player-board{ background:linear-gradient(160deg, var(--bg-stone), var(--bg-stone-2));
-    border:1.5px solid rgba(255,255,255,.08); border-radius:16px; padding:.9rem; width:230px;
-    transition:box-shadow .3s, border-color .3s; position:relative; }
-  .player-board.active{ box-shadow:0 0 0 1px var(--pc, var(--gold)), 0 0 26px rgba(202,162,74,.2); }
-  .player-board.finished{ opacity:.55; }
-  .pb-header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:.6rem; }
-  .pb-header .pname{ font-weight:700; font-size:.95rem; color:var(--pc, var(--gold-bright)); }
-  .pb-header .premain{ font-size:.75rem; color:var(--text-dim); }
-  .pb-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:.4rem; }
-  .tile{ aspect-ratio:1/1; border-radius:9px; display:flex; align-items:center; justify-content:center;
-    font-size:1.15rem; font-weight:700; color:var(--text-soft);
-    background:linear-gradient(155deg, #262032, #1a1622); border:1px solid rgba(202,162,74,.15);
-    position:relative; overflow:hidden; transition:transform .2s, box-shadow .2s, border-color .2s; }
-  .tile.selectable{ cursor:pointer; border-color:var(--cyan);
-    box-shadow:0 0 0 1px rgba(79,227,214,.35), 0 0 16px rgba(79,227,214,.18); animation:pulseTile 1.6s ease-in-out infinite; }
-  @keyframes pulseTile{ 0%,100%{box-shadow:0 0 0 1px rgba(79,227,214,.35), 0 0 12px rgba(79,227,214,.15);}
-    50%{box-shadow:0 0 0 1px rgba(79,227,214,.6), 0 0 22px rgba(79,227,214,.35);} }
-  .tile.selectable:hover{ transform:translateY(-2px); }
-  .tile.broken{ color:var(--text-dim); cursor:default; animation:none;
-    background:repeating-linear-gradient(115deg, rgba(0,0,0,.55) 0 2px, transparent 2px 9px),
-      radial-gradient(circle at 50% 40%, #14111c, var(--crack));
-    box-shadow:inset 0 5px 12px rgba(0,0,0,.7); border-color:rgba(120,110,140,.15); }
-  .tile.broken span{ opacity:.35; text-decoration:line-through; }
-  .tile .shard{ position:absolute; width:8px; height:8px; background:var(--gold-bright); border-radius:2px;
-    top:50%; left:50%; opacity:0; pointer-events:none; }
-  .tile.shattering .shard{ animation:fly .6s ease-out forwards; }
-  @keyframes fly{ 0%{opacity:1; transform:translate(-50%,-50%) scale(1) rotate(0deg);}
-    100%{opacity:0; transform:translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(.2) rotate(var(--dr));} }
-  .tile.shattering{ animation:flash .5s ease-out; }
-  @keyframes flash{ 0%{background:var(--bg-stone);} 25%{background:radial-gradient(circle, var(--gold-bright), var(--gold));} 100%{background:var(--bg-stone);} }
+  /* ---------- readout ---------- */
+  .readout{
+    background:linear-gradient(180deg,#221c23,#191419);border:1px solid var(--line);
+    border-radius:var(--radius);padding:16px 14px;text-align:center;margin-bottom:14px;position:relative;overflow:hidden;
+  }
+  .readout::before{content:"";position:absolute;inset:-40% -10% auto;height:120px;background:radial-gradient(closest-side,rgba(192,85,118,.22),transparent);pointer-events:none}
+  .readout .name{font-size:30px;font-weight:800;color:var(--acc-2);direction:ltr;letter-spacing:.5px;line-height:1.25}
+  .readout .fa{font-size:13px;color:var(--txt-3);margin-top:3px}
+  .readout .notes{font-family:var(--ffm);font-size:19px;margin-top:9px;direction:ltr;color:var(--txt);letter-spacing:1px}
+  .readout .meta{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:11px}
+  .tag{font-size:11.5px;background:var(--panel-2);border:1px solid var(--line);color:var(--txt-2);border-radius:99px;padding:5px 11px}
+  .tag.acc{background:var(--acc-soft);border-color:rgba(192,85,118,.45);color:var(--acc-2)}
+  .tag.warn{background:rgba(226,177,105,.12);border-color:rgba(226,177,105,.4);color:var(--gold)}
 
-  /* ---------- dice / center card ---------- */
-  .dice-card{ background:linear-gradient(160deg, var(--bg-stone), #14111c); border:1px solid rgba(202,162,74,.18);
-    border-radius:18px; padding:1.4rem 1.1rem; display:flex; flex-direction:column; align-items:center; gap:1rem;
-    width:260px; }
-  .turn-banner{ font-size:.95rem; font-weight:700; color:var(--pc,var(--gold-bright)); text-align:center; }
-  .dice-row{ display:flex; gap:1.6rem; perspective:600px; }
-  .die{ width:56px; height:56px; position:relative; transform-style:preserve-3d;
-    transition:transform 1.1s cubic-bezier(.3,1.4,.4,1); }
-  .die .face{ position:absolute; width:56px; height:56px; background:linear-gradient(160deg,#2c2638,#1c1826);
-    border:1px solid rgba(202,162,74,.35); border-radius:9px; display:grid;
-    grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(3,1fr); padding:7px;
-    box-shadow:inset 0 0 10px rgba(0,0,0,.5), 0 0 14px rgba(138,107,255,.08); }
-  .die .dot{ align-self:center; justify-self:center; width:8px; height:8px; border-radius:50%;
-    background:radial-gradient(circle at 30% 30%, var(--gold-bright), var(--gold)); box-shadow:0 0 5px rgba(240,205,122,.6); opacity:0; }
-  .face-front{ transform:translateZ(28px); } .face-back{ transform:rotateY(180deg) translateZ(28px); }
-  .face-right{ transform:rotateY(90deg) translateZ(28px); } .face-left{ transform:rotateY(-90deg) translateZ(28px); }
-  .face-top{ transform:rotateX(90deg) translateZ(28px); } .face-bottom{ transform:rotateX(-90deg) translateZ(28px); }
-  .p1 .d5{opacity:1;} .p2 .d1{opacity:1;} .p2 .d9{opacity:1;}
-  .p3 .d1{opacity:1;} .p3 .d5{opacity:1;} .p3 .d9{opacity:1;}
-  .p4 .d1{opacity:1;} .p4 .d3{opacity:1;} .p4 .d7{opacity:1;} .p4 .d9{opacity:1;}
-  .p5 .d1{opacity:1;} .p5 .d3{opacity:1;} .p5 .d5{opacity:1;} .p5 .d7{opacity:1;} .p5 .d9{opacity:1;}
-  .p6 .d1{opacity:1;} .p6 .d3{opacity:1;} .p6 .d4{opacity:1;} .p6 .d6{opacity:1;} .p6 .d7{opacity:1;} .p6 .d9{opacity:1;}
+  .playbar{display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:8px;margin-bottom:14px}
+  .playbar .btn{padding:13px 8px}
 
-  .manual-dice{ display:flex; gap:.8rem; align-items:center; }
-  .manual-dice select{ background:var(--bg-stone-2); color:var(--text-soft); border:1.5px solid rgba(255,255,255,.12);
-    border-radius:10px; padding:.5rem .6rem; font-family:inherit; font-size:1rem; }
+  .hintbox{font-size:13.5px;line-height:2;color:var(--txt-2)}
+  .hintbox b{color:var(--txt)}
+  .hintbox .k{display:inline-block;background:var(--panel-2);border:1px solid var(--line);border-radius:6px;padding:1px 7px;font-family:var(--ffm);font-size:12px;color:var(--acc-2);direction:ltr}
+  ul.steps{margin:6px 0 0;padding:0 18px 0 0}
+  ul.steps li{margin:5px 0;font-size:13.5px;line-height:1.95;color:var(--txt-2)}
 
-  .roll-btn, .confirm-btn{ background:linear-gradient(160deg, var(--gold-bright), var(--gold)); color:#2a1f08;
-    border:none; border-radius:99px; font-family:inherit; font-weight:700; font-size:.92rem; padding:.65rem 1.7rem;
-    cursor:pointer; box-shadow:0 8px 20px rgba(202,162,74,.22); transition:transform .2s; }
-  .roll-btn:hover:not(:disabled), .confirm-btn:hover{ transform:translateY(-2px); }
-  .roll-btn:disabled{ opacity:.4; cursor:not-allowed; }
+  /* ---------- tables / reference ---------- */
+  table.ref{width:100%;border-collapse:collapse;font-size:13px}
+  table.ref th,table.ref td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:right}
+  table.ref th{color:var(--txt-3);font-weight:600;font-size:12px;position:sticky;top:0;background:var(--panel)}
+  table.ref td.n{font-family:var(--ffm);direction:ltr;text-align:left;color:var(--acc-2)}
+  table.ref tr:hover td{background:rgba(255,255,255,.03)}
+  .reflist{max-height:420px;overflow:auto}
 
-  .skip-btn{ background:transparent; border:1.5px solid rgba(201,93,99,.5); color:var(--danger);
-    border-radius:99px; padding:.5rem 1.3rem; font-family:inherit; font-size:.85rem; cursor:pointer; transition:all .2s; }
-  .skip-btn:hover{ background:rgba(201,93,99,.12); }
+  /* ---------- practice ---------- */
+  .quizq{text-align:center;padding:18px 10px}
+  .quizq .big{font-size:34px;font-weight:800;color:var(--acc-2);direction:ltr}
+  .quizq .sub{color:var(--txt-2);font-size:14px;margin-top:8px;line-height:1.9}
+  .opts{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:6px}
+  .opts .btn{padding:14px 8px;font-size:16px;direction:ltr;font-weight:700}
+  .opts .btn.good{background:rgba(87,184,148,.18);border-color:var(--green);color:#9fe6cb}
+  .opts .btn.wrong{background:rgba(226,104,109,.16);border-color:var(--red);color:#f3b3b5}
+  .score{display:flex;gap:10px;justify-content:center;font-size:12.5px;color:var(--txt-3)}
+  .score b{color:var(--txt)}
 
-  .ops{ display:flex; flex-wrap:wrap; justify-content:center; gap:.55rem; min-height:2.4rem; }
-  .op-btn{ background:var(--bg-stone-2); color:var(--text-soft); border:1px solid rgba(79,227,214,.4);
-    border-radius:10px; padding:.5rem .85rem; font-family:inherit; font-size:.85rem; cursor:pointer; transition:all .2s; }
-  .op-btn:hover{ background:rgba(79,227,214,.15); transform:translateY(-2px); }
-  .op-btn.invalid{ opacity:.35; border-color:rgba(255,255,255,.1); cursor:not-allowed; }
-  .op-btn.invalid:hover{ transform:none; background:var(--bg-stone-2); }
+  /* ---------- progression ---------- */
+  .prog{display:flex;gap:8px;flex-wrap:wrap}
+  .prog .btn{flex:1 1 70px;direction:ltr;font-family:var(--ffm)}
+  .prog .btn.playing{background:var(--gold);border-color:var(--gold);color:#2a1e08}
 
-  .message{ text-align:center; min-height:1.3rem; color:var(--text-dim); font-size:.85rem; }
-  .message.highlight{ color:var(--gold-bright); }
+  /* ---------- tabs ---------- */
+  nav.tabs{
+    position:fixed;bottom:0;left:0;right:0;z-index:40;
+    background:rgba(18,15,19,.92);backdrop-filter:blur(14px);
+    border-top:1px solid var(--line);
+    display:grid;grid-template-columns:repeat(4,1fr);
+    padding:8px 6px calc(8px + env(safe-area-inset-bottom));
+  }
+  nav.tabs button{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 2px;color:var(--txt-3);font-size:11.5px;font-weight:600;border-radius:12px}
+  nav.tabs button svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  nav.tabs button.on{color:var(--acc-2)}
+  nav.tabs button.on svg{stroke:var(--acc-2)}
 
-  .overlay{ position:fixed; inset:0; background:rgba(6,5,10,.86); display:none; align-items:center; justify-content:center;
-    z-index:20; backdrop-filter:blur(3px); }
-  .overlay.show{ display:flex; }
-  .overlay .card{ background:linear-gradient(160deg, var(--bg-stone), #16121e); border:1px solid var(--gold);
-    border-radius:20px; padding:2.2rem 2.4rem; text-align:center; max-width:380px; box-shadow:0 0 60px rgba(202,162,74,.2); }
-  .overlay h2{ font-size:1.7rem; margin:0 0 .5rem; background:linear-gradient(90deg, var(--gold-bright), var(--cyan));
-    -webkit-background-clip:text; background-clip:text; color:transparent; }
-  .overlay p{ color:var(--text-dim); margin:.3rem 0 1.4rem; }
-  .overlay button{ background:var(--gold); color:#241a06; border:none; border-radius:99px; padding:.7rem 1.8rem;
-    font-family:inherit; font-weight:700; cursor:pointer; }
-
-  footer.rules{ margin-top:2rem; font-size:.8rem; color:var(--text-dim); text-align:center; line-height:1.9; }
-  .top-actions{ text-align:center; margin-bottom:1rem; }
-  .link-btn{ background:none; border:none; color:var(--text-dim); font-family:inherit; font-size:.8rem;
-    text-decoration:underline; cursor:pointer; }
-
-  @media(max-width:560px){
-    .player-board{ width:100%; max-width:320px; }
-    header h1{ font-size:2rem; }
+  .toast{
+    position:fixed;bottom:calc(96px + env(safe-area-inset-bottom, 0px));left:50%;transform:translateX(-50%) translateY(14px);
+    background:#2a2329;border:1px solid var(--line);color:var(--txt);
+    padding:10px 16px;border-radius:99px;font-size:13px;opacity:0;pointer-events:none;
+    transition:.25s;z-index:50;box-shadow:var(--shadow)
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .switchrow{display:flex;align-items:center;justify-content:space-between;padding:9px 2px;font-size:13.5px;color:var(--txt-2);border-bottom:1px solid var(--line)}
+  .switchrow:last-child{border-bottom:0}
+  .sw{width:46px;height:26px;border-radius:99px;background:var(--panel-2);border:1px solid var(--line);position:relative;transition:.2s;flex:0 0 auto}
+  .sw::after{content:"";position:absolute;top:2px;right:2px;width:20px;height:20px;border-radius:50%;background:var(--txt-3);transition:.2s}
+  .sw.on{background:var(--acc-soft);border-color:var(--acc)}
+  .sw.on::after{right:22px;background:var(--acc-2)}
+  input[type=range]{-webkit-appearance:none;width:100%;height:4px;border-radius:4px;background:var(--line);outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--acc-2);border:3px solid #241f26;box-shadow:0 2px 6px rgba(0,0,0,.5)}
+  @media(max-width:420px){
+    header.app h1{font-size:22px}
+    .readout .name{font-size:26px}
+    .keyboard{height:168px}
   }
 </style>
+
+<style id="redesign-v2">
+:root{--bg:#0b1020;--bg-2:#10182a;--panel:#131e32;--panel-2:#1a2942;--line:#2a3b58;--txt:#f1f6ff;--txt-2:#b8c7dc;--txt-3:#9aacc6;--acc:#6d7cff;--acc-2:#80e3d0;--acc-soft:rgba(109,124,255,.16);--gold:#ffd27d;--green:#65d6a7;--red:#ff778b;--radius:20px;--shadow:0 16px 42px rgba(0,0,0,.28);--ff:"Vazirmatn","IRANSans",Tahoma,system-ui,sans-serif}
+html,body{background:var(--bg);color:var(--txt)}body{background:radial-gradient(900px 420px at 10% -5%,rgba(109,124,255,.19),transparent 65%),radial-gradient(700px 500px at 100% 50%,rgba(54,202,180,.09),transparent 70%),var(--bg)}
+.shell{max-width:900px;padding:20px 16px 24px}header.app{padding:20px 8px 22px}header.app h1{font-size:clamp(27px,5vw,36px);letter-spacing:-.7px}header.app p{max-width:520px;color:var(--txt-2)}.brand{color:var(--acc-2);font-weight:700}.brand .dot{background:var(--acc-2);box-shadow:0 0 16px rgba(128,227,208,.7)}
+.card,.kbwrap{background:linear-gradient(145deg,rgba(22,34,57,.96),rgba(15,24,42,.98));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.card{padding:17px;margin-bottom:15px}.label{color:var(--txt-3)}.label b{color:var(--txt)}
+.btn{background:#192842;border-color:#30415f;color:#d7e2f3;border-radius:13px;min-height:42px}.btn:hover{border-color:var(--acc);color:#fff}.btn.on{background:linear-gradient(135deg,#6676ff,#5966dc);border-color:#7f8aff;box-shadow:0 8px 22px rgba(91,105,235,.25)}.btn.light{background:#eff6ff;color:#15213a}.btn.ghost{background:transparent}.hintbox{border-radius:15px;border-color:#2a3c5b;background:rgba(7,13,26,.3);line-height:1.95}.readout{border:1px solid #334668!important;background:linear-gradient(135deg,rgba(109,124,255,.15),rgba(35,194,174,.07))!important;border-radius:22px!important;padding:22px!important}.readout .name{font-size:clamp(30px,6vw,42px)!important;color:#fff!important}.readout .fa{color:var(--acc-2)!important}.playbar{gap:9px}.playbar .btn{box-shadow:0 6px 20px rgba(0,0,0,.16)}
+.kbwrap{background:linear-gradient(180deg,#1b2942,#101a2d);padding:12px}.keyboard{height:clamp(160px,28vw,205px);min-width:500px}.key.w{background:linear-gradient(180deg,#fff 0%,#eaf0f8 75%,#d4deea 100%);border-color:#bac8d8}.key.b{background:linear-gradient(180deg,#2b3954,#10182a 85%);border-color:#354968;box-shadow:0 5px 8px rgba(0,0,0,.35)}.key.act{background:linear-gradient(180deg,#9bfff0,#50cdb8 80%,#2a9f96)!important}.key.hl{background:linear-gradient(180deg,#c1c8ff,#7887ff 80%,#5964cb)!important}.key:focus-visible{outline:3px solid var(--gold);outline-offset:2px;z-index:8}.kbscroll{border-radius:10px}.tabbar,nav{backdrop-filter:blur(18px)}
+input[type=range]{accent-color:var(--acc)}.toast{bottom:calc(96px + env(safe-area-inset-bottom, 0px))!important}.hidden{display:none!important}button:focus-visible,input:focus-visible{outline:2px solid var(--acc-2);outline-offset:3px}
+@media(max-width:520px){.shell{padding:12px 10px 18px}.card{padding:13px}.playbar{display:grid;grid-template-columns:1fr 1fr}.readout{padding:18px!important}.kbwrap{padding:8px}.keyboard{height:170px}}
+</style>
+
+
+<style id="music-studio-v3">
+.ti{font-size:1.1em;line-height:1;vertical-align:-.12em}.toolrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.toolrow .btn{flex:1 1 auto}.prog-entry{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;margin:7px 0;padding:9px;border:1px solid var(--line);border-radius:14px;background:rgba(5,12,25,.22)}.prog-entry .btn{min-width:44px}.prog-info{min-width:0}.prog-info .chordline{font-family:var(--ffm);direction:ltr;text-align:right;color:var(--acc-2);font-size:14px;overflow-wrap:anywhere}.prog-info small{display:block;color:var(--txt-3);font-size:11px;margin-top:4px}.midi-btn{white-space:nowrap}.studio-input{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}.studio-input input,.studio-select{min-width:0;width:100%;background:var(--bg-2);color:var(--txt);border:1px solid var(--line);border-radius:12px;padding:12px;font:inherit}.chord-bank,.sequence-list{display:flex;flex-wrap:wrap;gap:8px}.chord-chip{display:flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:12px;padding:8px 10px;background:#172640;color:var(--txt);direction:ltr;font-family:var(--ffm)}.chord-chip small{font-family:var(--ff);direction:rtl;color:var(--txt-3)}.sequence-list{min-height:62px;padding:10px;border:1px dashed #3c5073;border-radius:15px;align-items:flex-start}.seq-item{display:flex;flex-direction:column;gap:7px;min-width:94px;padding:9px;border-radius:13px;border:1px solid #344968;background:linear-gradient(145deg,#1d3150,#142238);direction:ltr}.seq-item.selected{border-color:var(--acc-2);box-shadow:0 0 0 2px rgba(128,227,208,.13)}.seq-item .seq-name{font-weight:800;color:var(--acc-2);font-family:var(--ffm);text-align:center}.seq-item .seq-controls{display:flex;gap:4px;justify-content:center}.seq-item .seq-controls button{background:rgba(255,255,255,.07);border-radius:7px;padding:4px 6px;color:var(--txt-2)}.seq-item select{width:100%;background:#0d1728;color:var(--txt);border:1px solid #344968;border-radius:8px;padding:5px}.studio-status{font-size:12px;color:var(--txt-3);line-height:1.9;margin-top:8px}.rec-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);margin-inline-end:5px;box-shadow:0 0 0 4px rgba(255,119,139,.12)}.pressed-live{filter:brightness(1.2);outline:3px solid var(--gold);outline-offset:-3px}.genre-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.genre-tag{font-size:10px;color:var(--gold);margin-top:3px}.kbd-hint{font-size:11px;color:var(--txt-3);margin-top:7px}
+@media(max-width:420px){.studio-input{grid-template-columns:1fr}.prog-entry{grid-template-columns:minmax(0,1fr) auto}.seq-item{min-width:83px}.genre-grid{grid-template-columns:1fr}}
+</style>
+
 </head>
 <body>
 
-<div class="ambient" id="ambient"></div>
-
-<div class="app">
-  <header>
-    <div class="eyebrow">معبد اعداد</div>
-    <h1>عددشکن</h1>
-    <p id="subtitle">هر بازیکن ۱۲ سنگ اختصاصی دارد؛ هر کس زودتر سنگ‌های خود را بشکند، برنده‌ی معبد است.</p>
+<div class="shell">
+  <header class="app">
+    <div class="brand"><span class="dot"></span><span>آکوردیوم · مربی آکورد پیانو</span></div>
+    <h1 id="pageTitle">آکوردهای پیانو و کیبورد</h1>
+    <p id="pageSub">حالت و ریشه را انتخاب کن تا آکورد را روی کلاویه ببینی، بشنوی و طرز گرفتنش را یاد بگیری.</p>
   </header>
 
-  <!-- ================= SETUP WIZARD ================= -->
-  <div class="wizard" id="wizard">
+  <!-- ============ TAB: BUILDER ============ -->
+  <section id="tab-build">
+    <div class="card">
+      <div class="label"><b>۱. ریشهٔ آکورد</b><span>کلیدهای سفید و سیاه</span></div>
+      <div class="chips" id="rootsWhite" style="margin-bottom:8px"></div>
+      <div class="chips" id="rootsBlack"></div>
+    </div>
 
-    <div class="wizard-step" data-step="0">
-      <div class="step-label">مرحله ۱ از ۴</div>
-      <h2>چند نفر بازی می‌کنید؟</h2>
-      <div class="choice-row" id="countChoices">
-        <button class="choice-btn" data-count="2">۲ نفره</button>
-        <button class="choice-btn" data-count="3">۳ نفره</button>
-        <button class="choice-btn" data-count="4">۴ نفره</button>
+    <div class="card">
+      <div class="label"><b>۲. حالت (کیفیت) آکورد</b><span id="qualCount"></span></div>
+      <div class="seg" style="grid-auto-flow:column;margin-bottom:9px">
+        <button class="btn sm on" data-fam="basic">پایه</button>
+        <button class="btn sm" data-fam="seventh">هفتم‌ها</button>
+        <button class="btn sm" data-fam="color">رنگی</button>
+      </div>
+      <div class="chips" id="quals"></div>
+    </div>
+
+    <div class="card">
+      <div class="label"><b>۳. معکوس (Inversion)</b><span>جای نت‌ها را جابه‌جا کن</span></div>
+      <div class="seg" id="invs"></div>
+    </div>
+  </section>
+
+  <!-- ============ SHARED KEYBOARD ============ -->
+  <div class="kbwrap">
+    <div class="kbtop">
+      <div class="now" id="nowPlaying">—</div>
+      <div style="display:flex;gap:6px">
+        <button class="btn sm ghost" id="octDown">− اکتاو</button>
+        <button class="btn sm ghost" id="octUp">+ اکتاو</button>
       </div>
     </div>
-
-    <div class="wizard-step hidden" data-step="1">
-      <div class="step-label">مرحله ۲ از ۴</div>
-      <h2>نام بازیکنان را وارد کنید</h2>
-      <div class="name-inputs" id="nameInputs"></div>
-    </div>
-
-    <div class="wizard-step hidden" data-step="2">
-      <div class="step-label">مرحله ۳ از ۴</div>
-      <h2>چیدمان صفحه چگونه باشد؟</h2>
-      <div class="choice-row" id="layoutChoices">
-        <button class="choice-btn" data-layout="horizontal">افقی (سنگ‌ها راست و چپ، تاس وسط)</button>
-        <button class="choice-btn" data-layout="vertical">عمودی (سنگ‌ها بالا و پایین، تاس وسط)</button>
-      </div>
-    </div>
-
-    <div class="wizard-step hidden" data-step="3">
-      <div class="step-label">مرحله ۴ از ۴</div>
-      <h2>قوانین بازی</h2>
-      <div class="toggle-row">
-        <span class="label">ضرب دو تاس مجاز باشد؟</span>
-        <div class="switch" id="multiplySwitch">
-          <button data-val="yes" class="on">مجاز</button>
-          <button data-val="no">ممنوع</button>
-        </div>
-      </div>
-      <div class="toggle-row">
-        <span class="label">حالت تاس</span>
-        <div class="switch" id="diceModeSwitch">
-          <button data-val="virtual" class="on">تاس مجازی</button>
-          <button data-val="manual">تاس خودمان</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="wizard-nav">
-      <button class="nav-btn back hidden" id="backBtn">قبلی</button>
-      <button class="nav-btn next" id="nextBtn" disabled>بعدی</button>
-    </div>
+    <div class="kbscroll" id="kbscroll"><div class="keyboard" id="keyboard"></div></div>
   </div>
 
-  <!-- ================= GAME AREA ================= -->
-  <div id="gameWrap" class="hidden">
-    <div class="top-actions"><button class="link-btn" id="restartLink">شروع بازی جدید با تنظیمات دیگر</button></div>
-    <div class="game-area" id="gameArea"></div>
-    <footer class="rules">
-      در نوبت خود، جمع یا تفریق (و در صورت مجاز بودن، ضرب) دو عدد تاس را حساب کنید؛
-      اگر نتیجه روی یکی از سنگ‌های <b>خودتان</b> باز بود، آن را بشکنید. اگر گزینه‌ی معتبری نبود، نوبت رد می‌شود.
-    </footer>
+  <!-- ============ READOUT ============ -->
+  <div class="readout" id="readout">
+    <div class="name" id="chName">C major</div>
+    <div class="fa" id="chFa">دو ماژور</div>
+    <div class="notes" id="chNotes">C – E – G</div>
+    <div class="meta" id="chMeta"></div>
   </div>
+
+  <div class="playbar" id="playbar">
+    <button class="btn on" id="btnPlay">▶︎ پخش آکورد</button>
+    <button class="btn" id="btnArp">آرپژ</button>
+    <button class="btn" id="btnLoop">تکرار</button>
+    <button class="btn icon" id="btnStop">■</button>
+  </div>
+
+  <!-- ============ TAB: BUILDER extras ============ -->
+  <section id="tab-build2">
+    <div class="card">
+      <div class="label"><b>راهنمای گرفتن آکورد</b><span>دست راست</span></div>
+      <div class="hintbox" id="fingerHint"></div>
+    </div>
+
+    <div class="card">
+      <div class="label"><b>ساختمان آکورد</b><span>فاصله‌ها بر حسب نیم‌پرده</span></div>
+      <div class="hintbox" id="formulaBox"></div>
+    </div>
+
+    <div class="card">
+      <div class="label"><b>آکوردهای هم‌خانواده و پیشنهاد ادامه</b><span>روی هرکدام بزن تا بشنوی</span></div>
+      <div class="prog" id="familyBox" style="margin-bottom:10px"></div>
+      <div class="label" style="margin-top:4px"><b>پیش‌روی‌های محبوب در این گام</b><span>با خروجی MIDI</span></div>
+      <div class="grid" id="progBox"></div>
+      <div class="hintbox" style="margin-top:10px">پیشنهادها با توجه به حس آکورد انتخابی دسته‌بندی شده‌اند. هر پیش‌روی را می‌توان شنید یا به‌صورت فایل MIDI دریافت کرد.</div>
+    </div>
+
+    <div class="card" id="sequenceStudio">
+      <div class="label"><b><i class="ti ti-piano"></i> استودیوی ساخت توالی آکورد</b><span>چیدمان و خروجی MIDI</span></div>
+      <div class="toolrow" style="margin-bottom:10px">
+        <label style="flex:1 1 110px;font-size:12px;color:var(--txt-3)">سرعت BPM <b id="seqBpmLabel">۱۰۰</b><input id="seqBpm" type="range" min="45" max="200" value="100" style="display:block;margin-top:10px"></label>
+        <label style="flex:1 1 110px;font-size:12px;color:var(--txt-3)">اکتاو MIDI<select id="seqOctave" class="studio-select" style="margin-top:5px"><option value="3">پایین</option><option value="4" selected>میانی</option><option value="5">بالا</option></select></label>
+      </div>
+      <div class="label"><b>۱. افزودن آکورد</b><span>مثلاً Am، Fm، Gm، Cmaj7</span></div>
+      <div class="studio-input"><input id="chordSearch" list="chordCatalog" autocomplete="off" placeholder="نام آکورد را وارد یا جست‌وجو کن…"><datalist id="chordCatalog"></datalist><button class="btn on" id="addChordBtn"><i class="ti ti-plus"></i> افزودن</button></div>
+      <div class="chord-bank" id="chordBank" style="margin-top:9px"></div>
+      <div class="label" style="margin-top:17px"><b>۲. ترتیب آکوردها</b><span id="seqCount">۰ آکورد</span></div>
+      <div class="sequence-list" id="sequenceList"><span class="studio-status">هنوز آکوردی اضافه نشده؛ از بخش جست‌وجو شروع کن.</span></div>
+      <div class="kbd-hint">برای ویرایش، مدت هر آکورد را از منوی آن تغییر بده؛ با فلش‌ها جابه‌جا کن یا حذفش کن. روی یک آکورد بزن تا نقطهٔ شروع پخش/ضبط مشخص شود.</div>
+      <div class="toolrow" style="margin-top:12px">
+        <button class="btn" id="seqRecord"><i class="ti ti-player-record"></i> ضبط زمان‌بندی</button>
+        <button class="btn" id="seqPlay"><i class="ti ti-player-play"></i> پخش از ابتدا</button>
+        <button class="btn" id="seqPlayFrom"><i class="ti ti-player-skip-forward"></i> از انتخاب</button>
+        <button class="btn" id="seqStop"><i class="ti ti-player-stop"></i> توقف</button>
+        <button class="btn on midi-btn" id="seqMidi"><i class="ti ti-file-music"></i> خروجی MIDI</button>
+      </div>
+      <div class="toolrow" style="margin-top:8px">
+        <button class="btn sm ghost" id="seqContinue"><i class="ti ti-player-track-next"></i> ادامه ضبط از انتخاب</button>
+        <button class="btn sm ghost" id="seqClear"><i class="ti ti-trash"></i> پاک‌کردن توالی</button>
+        <button class="btn sm ghost" id="seqSave"><i class="ti ti-device-floppy"></i> ذخیره در مرورگر</button>
+        <button class="btn sm ghost" id="seqLoad"><i class="ti ti-folder-open"></i> بازیابی</button>
+      </div>
+      <div id="seqStatus" class="studio-status" aria-live="polite">آمادهٔ ساخت توالی هستی. «ضبط زمان‌بندی» با کلیک روی آکوردهای ردیف بالا، فاصلهٔ زمانی کلیک‌ها را به ضرب تبدیل می‌کند.</div>
+    </div>
+  </section>
+
+  <!-- ============ TAB: DETECT ============ -->
+  <section id="tab-detect" class="hidden">
+    <div class="card">
+      <div class="label"><b>چند نت را روی کلاویه بزن</b><span>نامش را می‌گویم</span></div>
+      <div class="hintbox">
+        در این حالت هر کلیدی که بزنی <b>انتخاب</b> می‌ماند و برنامه بلافاصله نام آکورد را تشخیص می‌دهد.
+        دوباره زدن همان کلید، آن را برمی‌دارد. بم‌ترین نت به‌عنوان <b>باس</b> در نام‌گذاری (آکورد اسلش) استفاده می‌شود.
+      </div>
+      <div class="seg" style="margin-top:11px">
+        <button class="btn sm" id="detClear">پاک کردن</button>
+        <button class="btn sm" id="detPlay">پخش انتخاب</button>
+        <button class="btn sm" id="detSend">بردن به سازنده</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="label"><b>نتیجهٔ تحلیل</b></div>
+      <div id="detResult" class="hintbox">هنوز نتی انتخاب نشده است.</div>
+    </div>
+  </section>
+
+  <!-- ============ TAB: PRACTICE ============ -->
+  <section id="tab-practice" class="hidden">
+    <div class="card">
+      <div class="seg" style="margin-bottom:10px">
+        <button class="btn sm on" data-mode="ear">تمرین گوش</button>
+        <button class="btn sm" data-mode="play">تمرین نواختن</button>
+      </div>
+      <div class="label"><b>سطح</b><span id="lvlName">مقدماتی</span></div>
+      <div class="seg">
+        <button class="btn sm on" data-lvl="1">۱ · ماژور/مینور</button>
+        <button class="btn sm" data-lvl="2">۲ + کاسته/افزوده</button>
+        <button class="btn sm" data-lvl="3">۳ + هفتم‌ها</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="quizq">
+        <div class="big" id="qMain">آماده‌ای؟</div>
+        <div class="sub" id="qSub">یک حالت را انتخاب کن و «سؤال بعدی» را بزن.</div>
+      </div>
+      <div class="opts" id="qOpts"></div>
+      <div class="seg" style="margin-top:10px">
+        <button class="btn sm" id="qReplay">🔊 پخش دوباره</button>
+        <button class="btn sm on" id="qNext">سؤال بعدی</button>
+      </div>
+      <div class="score" style="margin-top:12px">
+        <span>درست: <b id="scOk">۰</b></span><span>·</span>
+        <span>غلط: <b id="scNo">۰</b></span><span>·</span>
+        <span>بهترین زنجیره: <b id="scBest">۰</b></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TAB: REFERENCE ============ -->
+  <section id="tab-ref" class="hidden">
+    <div class="card">
+      <div class="hintbox" style="margin-bottom:10px"><i class="ti ti-keyboard"></i> در صفحهٔ مرجع، فشردن کلیدهای کیبورد فیزیکی به‌صورت لحظه‌ای روی کلاویه‌ها مشخص می‌شود. میانبرها: A/W/S/E/D/F/T/G/Y/H/U/J/K/O/L/P و ;</div>
+      <div class="label"><b>مرجع کامل آکوردها</b><span id="refCount"></span></div>
+      <div class="chips" style="margin-bottom:10px" id="refFilter"></div>
+      <div class="reflist">
+        <table class="ref" id="refTable">
+          <thead><tr><th style="width:96px">آکورد</th><th>نت‌ها</th><th style="width:76px">فرمول</th><th style="width:44px"></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="label"><b>واژه‌نامه و نکته‌ها</b></div>
+      <ul class="steps">
+        <li><b>ماژور</b> = ریشه + ۴ نیم‌پرده + ۳ نیم‌پرده (حس شاد و باز).</li>
+        <li><b>مینور</b> = ریشه + ۳ نیم‌پرده + ۴ نیم‌پرده (حس غمگین و نرم).</li>
+        <li><b>کاسته (dim)</b> = ۳ + ۳ ، پرتنش؛ <b>افزوده (aug)</b> = ۴ + ۴ ، معلق و مرموز.</li>
+        <li><b>سوس (sus2/sus4)</b>: نت سوم برداشته و با دوم یا چهارم جایگزین می‌شود؛ نه شاد است نه غمگین.</li>
+        <li>نام‌های هم‌صدا: <span class="k">F#</span> و <span class="k">Gb</span> یک کلید هستند ولی املای متفاوت دارند؛ در تئوری نام درست را گام تعیین می‌کند.</li>
+        <li>روی کیبوردهای کوچک اگر دستت نمی‌رسد، آکورد را <b>معکوس</b> کن تا نزدیک‌ترین شکل را بگیری.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="label"><b>تنظیمات</b></div>
+      <div class="switchrow"><span>نمایش نام نت روی کلیدها</span><div class="sw on" id="swNames"></div></div>
+      <div class="switchrow"><span>نمایش شمارهٔ انگشت</span><div class="sw on" id="swFing"></div></div>
+      <div class="switchrow"><span>نمایش درجهٔ آکورد (R،3،5)</span><div class="sw on" id="swDeg"></div></div>
+      <div class="switchrow"><span>نواختن با کیبورد کامپیوتر</span><div class="sw on" id="swKeys"></div></div>
+      <div class="switchrow" style="display:block">
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px"><span>بلندی صدا</span><b id="volVal" class="mono">70٪</b></div>
+        <input type="range" id="vol" min="0" max="100" value="70">
+      </div>
+      <div class="switchrow" style="display:block;border-bottom:0">
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px"><span>سرعت آرپژ / تکرار</span><b id="tempoVal" class="mono">۱۰۰ BPM</b></div>
+        <input type="range" id="tempo" min="50" max="180" value="100">
+      </div>
+    </div>
+    <div style="text-align:center;color:var(--txt-3);font-size:11.5px;padding:6px 0 4px">
+      ساخته‌شده با Web Audio API · بدون نیاز به اینترنت
+    </div>
+  </section>
 </div>
 
-<div class="overlay" id="overlay">
-  <div class="card">
-    <h2 id="resultTitle">پایان بازی</h2>
-    <p id="resultText"></p>
-    <button id="restartBtn">بازی دوباره</button>
-  </div>
-</div>
+<nav class="tabs">
+  <button class="on" data-tab="build"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 5v8M12 5v8M16 5v8"/></svg><span>سازنده</span></button>
+  <button data-tab="detect"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span>تشخیص</span></button>
+  <button data-tab="practice"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6.1.8-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6L3.3 9.4l6.1-.8z"/></svg><span>تمرین</span></button>
+  <button data-tab="ref"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 016.5 3H19v15H6.5A2.5 2.5 0 004 20.5z"/><path d="M4 20.5A2.5 2.5 0 016.5 18H19v3H6.5A2.5 2.5 0 014 20.5z"/></svg><span>مرجع</span></button>
+</nav>
+
+<div class="toast" id="toast"></div>
 
 <script>
-(function(){
-  const toFa = n => n.toString().replace(/[0-9]/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
-  const PLAYER_COLORS = ['#f0cd7a','#4fe3d6','#8a6bff','#e893a8'];
+"use strict";
+/* ============================================================
+   0) پایه‌های تئوری موسیقی
+   ============================================================ */
+const LETTERS = ["C","D","E","F","G","A","B"];
+const LETTER_SEMI = [0,2,4,5,7,9,11];
+const FA_LETTER = {C:"دو",D:"ر",E:"می",F:"فا",G:"سل",A:"لا",B:"سی"};
+const ACC_FA = {"-2":" دوبل‌بمل","-1":" بمل","0":"","1":" دیز","2":" دوبل‌دیز"};
+const ACC_TXT = {"-2":"bb","-1":"b","0":"","1":"#","2":"##"};
 
-  // ---------------- ambient background numbers ----------------
-  const ambient = document.getElementById('ambient');
-  for(let i=0;i<6;i++){
-    const el = document.createElement('div');
-    el.className='num';
-    el.textContent = (Math.floor(Math.random()*12)+1);
-    el.style.top = (Math.random()*90)+'%';
-    el.style.left = (Math.random()*90)+'%';
-    el.style.animationDelay = (Math.random()*8)+'s';
-    el.style.animationDuration = (16+Math.random()*10)+'s';
-    ambient.appendChild(el);
-  }
+function noteName(l,a){ return LETTERS[l] + ACC_TXT[a]; }
+function noteFa(l,a){ return FA_LETTER[LETTERS[l]] + ACC_FA[a]; }
+function pcOf(l,a){ return (LETTER_SEMI[l] + a + 120) % 12; }
 
-  // ================= SETUP WIZARD =================
-  const wizard = document.getElementById('wizard');
-  const gameWrap = document.getElementById('gameWrap');
-  const nextBtn = document.getElementById('nextBtn');
-  const backBtn = document.getElementById('backBtn');
-  const steps = [...document.querySelectorAll('.wizard-step')];
-  let stepIndex = 0;
+// ریشه‌ها: [letterIndex, accidental]
+const ROOTS_W = [["C",0,0],["D",1,0],["E",2,0],["F",3,0],["G",4,0],["A",5,0],["B",6,0]];
+const ROOTS_B = [["Db",1,-1],["Eb",2,-1],["Gb",4,-1],["Ab",5,-1],["Bb",6,-1],
+                 ["C#",0,1],["D#",1,1],["F#",3,1],["G#",4,1],["A#",5,1]];
 
-  let setup = { count:null, names:[], layout:null, multiplyAllowed:true, diceMode:'virtual' };
+// کیفیت‌ها: intervals = [ [degreeStep, semitones], ... ]
+const QUALITIES = {
+  maj:   {sym:"",       en:"major",            fa:"ماژور",              fam:"basic",  iv:[[0,0],[2,4],[4,7]],            f:"1 - 3 - 5"},
+  min:   {sym:"m",      en:"minor",            fa:"مینور",              fam:"basic",  iv:[[0,0],[2,3],[4,7]],            f:"1 - b3 - 5"},
+  dim:   {sym:"dim",    en:"diminished",       fa:"کاسته",              fam:"basic",  iv:[[0,0],[2,3],[4,6]],            f:"1 - b3 - b5"},
+  aug:   {sym:"aug",    en:"augmented",        fa:"افزوده",             fam:"basic",  iv:[[0,0],[2,4],[4,8]],            f:"1 - 3 - #5"},
+  sus2:  {sym:"sus2",   en:"suspended 2nd",    fa:"سوس ۲",              fam:"basic",  iv:[[0,0],[1,2],[4,7]],            f:"1 - 2 - 5"},
+  sus4:  {sym:"sus4",   en:"suspended 4th",    fa:"سوس ۴",              fam:"basic",  iv:[[0,0],[3,5],[4,7]],            f:"1 - 4 - 5"},
+  five:  {sym:"5",      en:"power chord",      fa:"پاور کورد",          fam:"basic",  iv:[[0,0],[4,7]],                  f:"1 - 5"},
+  dom7:  {sym:"7",      en:"dominant 7th",     fa:"هفتم غالب",          fam:"seventh",iv:[[0,0],[2,4],[4,7],[6,10]],     f:"1 - 3 - 5 - b7"},
+  maj7:  {sym:"maj7",   en:"major 7th",        fa:"ماژور هفتم",         fam:"seventh",iv:[[0,0],[2,4],[4,7],[6,11]],     f:"1 - 3 - 5 - 7"},
+  min7:  {sym:"m7",     en:"minor 7th",        fa:"مینور هفتم",         fam:"seventh",iv:[[0,0],[2,3],[4,7],[6,10]],     f:"1 - b3 - 5 - b7"},
+  mMaj7: {sym:"mMaj7",  en:"minor major 7th",  fa:"مینور ماژور هفتم",   fam:"seventh",iv:[[0,0],[2,3],[4,7],[6,11]],     f:"1 - b3 - 5 - 7"},
+  m7b5:  {sym:"m7b5",   en:"half-diminished",  fa:"نیم‌کاسته",          fam:"seventh",iv:[[0,0],[2,3],[4,6],[6,10]],     f:"1 - b3 - b5 - b7"},
+  dim7:  {sym:"dim7",   en:"diminished 7th",   fa:"کاستهٔ هفتم",        fam:"seventh",iv:[[0,0],[2,3],[4,6],[6,9]],      f:"1 - b3 - b5 - bb7"},
+  aug7:  {sym:"7#5",    en:"augmented 7th",    fa:"هفتم افزوده",        fam:"seventh",iv:[[0,0],[2,4],[4,8],[6,10]],     f:"1 - 3 - #5 - b7"},
+  sev4:  {sym:"7sus4",  en:"7 suspended 4th",  fa:"هفتم سوس ۴",         fam:"seventh",iv:[[0,0],[3,5],[4,7],[6,10]],     f:"1 - 4 - 5 - b7"},
+  six:   {sym:"6",      en:"major 6th",        fa:"ششم ماژور",          fam:"color",  iv:[[0,0],[2,4],[4,7],[5,9]],      f:"1 - 3 - 5 - 6"},
+  min6:  {sym:"m6",     en:"minor 6th",        fa:"ششم مینور",          fam:"color",  iv:[[0,0],[2,3],[4,7],[5,9]],      f:"1 - b3 - 5 - 6"},
+  add9:  {sym:"add9",   en:"added 9th",        fa:"با نهم افزوده",      fam:"color",  iv:[[0,0],[2,4],[4,7],[8,14]],     f:"1 - 3 - 5 - 9"},
+  madd9: {sym:"m(add9)",en:"minor added 9th",  fa:"مینور با نهم",       fam:"color",  iv:[[0,0],[2,3],[4,7],[8,14]],     f:"1 - b3 - 5 - 9"},
+  nine:  {sym:"9",      en:"dominant 9th",     fa:"نهم غالب",           fam:"color",  iv:[[0,0],[2,4],[4,7],[6,10],[8,14]], f:"1 - 3 - 5 - b7 - 9"},
+  maj9:  {sym:"maj9",   en:"major 9th",        fa:"ماژور نهم",          fam:"color",  iv:[[0,0],[2,4],[4,7],[6,11],[8,14]], f:"1 - 3 - 5 - 7 - 9"},
+  min9:  {sym:"m9",     en:"minor 9th",        fa:"مینور نهم",          fam:"color",  iv:[[0,0],[2,3],[4,7],[6,10],[8,14]], f:"1 - b3 - 5 - b7 - 9"},
+  six9:  {sym:"6/9",    en:"six nine",         fa:"شش‌نهم",             fam:"color",  iv:[[0,0],[2,4],[4,7],[5,9],[8,14]],  f:"1 - 3 - 5 - 6 - 9"},
+};
+const QKEYS = Object.keys(QUALITIES);
 
-  function showStep(i){
-    steps.forEach(s=> s.classList.toggle('hidden', Number(s.dataset.step)!==i));
-    backBtn.classList.toggle('hidden', i===0);
-    nextBtn.textContent = (i===3) ? 'شروع بازی' : 'بعدی';
-    validateStep(i);
-  }
+const FA_DIGITS = s => String(s).replace(/\d/g,d=>"۰۱۲۳۴۵۶۷۸۹"[d]);
 
-  function validateStep(i){
-    if(i===0) nextBtn.disabled = !setup.count;
-    else if(i===1) nextBtn.disabled = false;
-    else if(i===2) nextBtn.disabled = !setup.layout;
-    else nextBtn.disabled = false;
-  }
-
-  document.getElementById('countChoices').addEventListener('click', e=>{
-    const btn = e.target.closest('.choice-btn'); if(!btn) return;
-    setup.count = Number(btn.dataset.count);
-    [...btn.parentElement.children].forEach(b=>b.classList.remove('selected'));
-    btn.classList.add('selected');
-    buildNameInputs();
-    validateStep(0);
+/** نت‌های آکورد را با املای تئوریک درست می‌سازد */
+function buildChord(rootLetter, rootAcc, qKey){
+  const q = QUALITIES[qKey];
+  return q.iv.map(([dstep,semi])=>{
+    const li = (rootLetter + dstep) % 7;
+    const octJump = Math.floor((rootLetter + dstep)/7);
+    const naturalSemi = LETTER_SEMI[li] + octJump*12;
+    const target = LETTER_SEMI[rootLetter] + rootAcc + semi;
+    const acc = target - naturalSemi;
+    return {letter:li, acc, semi, name:noteName(li,acc), fa:noteFa(li,acc), pc:(target%12+120)%12};
   });
+}
+function chordIsWeird(notes){ return notes.some(n=>Math.abs(n.acc)>1); }
 
-  function buildNameInputs(){
-    const wrap = document.getElementById('nameInputs');
-    wrap.innerHTML = '';
-    setup.names = [];
-    for(let i=0;i<setup.count;i++){
-      const input = document.createElement('input');
-      input.type='text';
-      input.placeholder = `بازیکن ${toFa(i+1)}`;
-      input.dataset.idx = i;
-      input.addEventListener('input', ()=>{ setup.names[i] = input.value.trim(); });
-      wrap.appendChild(input);
-      setup.names[i] = '';
+/** نام ساده‌ترین معادل هم‌صدا برای ریشه‌ای که املایش پیچیده می‌شود */
+const SIMPLE_PC = ["C","Db","D","Eb","E","F","Gb","G","Ab","A","Bb","B"];
+const SIMPLE_PC_SHARP = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
+function pcName(pc,prefSharp){ return (prefSharp?SIMPLE_PC_SHARP:SIMPLE_PC)[((pc%12)+12)%12]; }
+
+/* ============================================================
+   1) موتور صدا (Web Audio) — تُن شبه‌پیانو
+   ============================================================ */
+const Audio_ = {
+  ctx:null, master:null, comp:null, volume:0.7, active:new Set(),
+  init(){
+    if(this.ctx) return;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    this.ctx = new AC();
+    this.comp = this.ctx.createDynamicsCompressor();
+    this.comp.threshold.value=-16; this.comp.ratio.value=4; this.comp.attack.value=.004; this.comp.release.value=.25;
+    this.master = this.ctx.createGain();
+    this.master.gain.value = this.volume;
+    this.comp.connect(this.master); this.master.connect(this.ctx.destination);
+  },
+  resume(){
+    this.init();
+    if(this.ctx.state==="suspended") this.ctx.resume();
+  },
+  freq(midi){ return 440*Math.pow(2,(midi-69)/12); },
+  note(midi, dur=1.6, when=0, vel=1){
+    this.resume();
+    const t0 = this.ctx.currentTime + Math.max(0, when), f = this.freq(midi);
+    const out = this.ctx.createGain();
+    const lp = this.ctx.createBiquadFilter();
+    const sources = [];
+    const voice = {out, sources};
+    this.active.add(voice);
+
+    lp.type="lowpass";
+    lp.frequency.setValueAtTime(Math.min(9000, f*8+1200), t0);
+    lp.frequency.exponentialRampToValueAtTime(Math.max(500, f*3), t0+Math.max(.03,dur*.85));
+    out.connect(lp); lp.connect(this.comp);
+
+    const peak = Math.max(.0001, 0.30*vel*Math.pow(0.5, Math.max(0,(midi-60))/40));
+    out.gain.setValueAtTime(0.0001, t0);
+    out.gain.exponentialRampToValueAtTime(peak, t0+0.008);
+    out.gain.exponentialRampToValueAtTime(Math.max(.0001,peak*0.42), t0+Math.min(.16,Math.max(.02,dur*.25)));
+    out.gain.exponentialRampToValueAtTime(0.0001, t0+Math.max(.04,dur));
+
+    const parts = [[1,1,"triangle",0],[2,0.34,"sine",4],[3,0.15,"sine",-5],[4,0.07,"sine",7]];
+    parts.forEach(([mult,amp,type,det])=>{
+      const o=this.ctx.createOscillator(), g=this.ctx.createGain();
+      o.type=type; o.frequency.value=f*mult; o.detune.value=det;
+      g.gain.value=amp; o.connect(g); g.connect(out);
+      o.onended=()=>{ try{o.disconnect();g.disconnect();}catch(e){} };
+      o.start(t0); o.stop(t0+Math.max(.05,dur)+.05); sources.push(o);
+    });
+
+    // ضربهٔ چکش؛ از همان مسیر خروجی عبور می‌کند تا هنگام توقف قطع شود.
+    const nb = this.ctx.createBuffer(1, 1500, this.ctx.sampleRate);
+    const d = nb.getChannelData(0);
+    for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,6);
+    const ns=this.ctx.createBufferSource(), ng=this.ctx.createGain(), nf=this.ctx.createBiquadFilter();
+    nf.type="bandpass"; nf.frequency.value=Math.min(12000,Math.max(100,f*3)); ng.gain.value=0.05*vel;
+    ns.buffer=nb; ns.connect(nf); nf.connect(ng); ng.connect(out);
+    ns.onended=()=>{ try{ns.disconnect();nf.disconnect();ng.disconnect();}catch(e){} };
+    ns.start(t0); sources.push(ns);
+
+    const cleanupDelay = Math.max(100, (when + dur + .15)*1000);
+    setTimeout(()=>this.active.delete(voice), cleanupDelay);
+    return voice;
+  },
+  chord(midis, dur=1.9, spread=0){
+    this.resume();
+    midis.forEach((m,i)=>this.note(m, Math.max(.05,dur-i*.02), i*spread, Math.max(.1,1-i*.04)));
+  },
+  stopActive(){
+    if(!this.ctx) return;
+    const now=this.ctx.currentTime;
+    for(const voice of this.active){
+      try{
+        const gain=voice.out.gain;
+        gain.cancelScheduledValues(now);
+        gain.setValueAtTime(Math.max(.0001,gain.value),now);
+        gain.linearRampToValueAtTime(.0001,now+.035);
+      }catch(e){}
+      voice.sources.forEach(source=>{try{source.stop(now+.04);}catch(e){}});
     }
+    this.active.clear();
+  },
+  setVol(v){ this.volume=v; if(this.master) this.master.gain.setTargetAtTime(v, this.ctx.currentTime, .02); },
+  click(ok){
+    this.resume();
+    const t=this.ctx.currentTime, o=this.ctx.createOscillator(), g=this.ctx.createGain();
+    o.type="sine"; o.frequency.setValueAtTime(ok?660:200,t);
+    o.frequency.exponentialRampToValueAtTime(ok?1320:120,t+.12);
+    g.gain.setValueAtTime(.12,t); g.gain.exponentialRampToValueAtTime(.0001,t+.22);
+    o.connect(g); g.connect(this.comp); o.start(t); o.stop(t+.25);
+    o.onended=()=>{try{o.disconnect();g.disconnect();}catch(e){}};
   }
+};
 
-  document.getElementById('layoutChoices').addEventListener('click', e=>{
-    const btn = e.target.closest('.choice-btn'); if(!btn) return;
-    setup.layout = btn.dataset.layout;
-    [...btn.parentElement.children].forEach(b=>b.classList.remove('selected'));
-    btn.classList.add('selected');
-    validateStep(2);
-  });
+/* ============================================================
+   2) وضعیت برنامه
+   ============================================================ */
+const S = {
+  tab:"build",
+  rootLetter:0, rootAcc:0, rootLabel:"C",
+  qual:"maj", inv:0, fam:"basic",
+  baseOct:4, kbStartOct:3, kbOcts:3,
+  showNames:true, showFing:true, showDeg:true, pcKeys:true,
+  tempo:100, loop:false, loopTimer:null, arpTimer:[],
+  detect:new Set(),            // midi های انتخابی در حالت تشخیص
+  practice:{mode:"ear",lvl:1,answer:null,opts:[],ok:0,no:0,streak:0,best:0,locked:false,target:[]},
+  pressed:new Set()
+};
 
-  document.getElementById('multiplySwitch').addEventListener('click', e=>{
-    const btn = e.target.closest('button'); if(!btn) return;
-    setup.multiplyAllowed = (btn.dataset.val === 'yes');
-    [...btn.parentElement.children].forEach(b=>b.classList.remove('on'));
-    btn.classList.add('on');
-  });
-  document.getElementById('diceModeSwitch').addEventListener('click', e=>{
-    const btn = e.target.closest('button'); if(!btn) return;
-    setup.diceMode = btn.dataset.val;
-    [...btn.parentElement.children].forEach(b=>b.classList.remove('on'));
-    btn.classList.add('on');
-  });
+/* ============================================================
+   3) ساخت کلاویه
+   ============================================================ */
+const KB = document.getElementById("keyboard");
+const BLACK_AFTER = {0:1, 2:3, 5:6, 7:8, 9:10}; // semitone پایه -> کلید سیاه
+function midiOf(oct, semi){ return (oct+1)*12 + semi; }
 
-  nextBtn.addEventListener('click', ()=>{
-    if(stepIndex < 3){
-      stepIndex++;
-      showStep(stepIndex);
-    } else {
-      // finalize names with defaults
-      setup.names = setup.names.map((n,i)=> n && n.length ? n : `بازیکن ${toFa(i+1)}`);
-      startGame(setup);
+function renderKeyboard(){
+  KB.innerHTML="";
+  const whites = document.createElement("div");
+  whites.className="whites";
+  const wsemis=[0,2,4,5,7,9,11];
+  let whiteCount = S.kbOcts*7;
+  const bw = (100/whiteCount)*0.62;
+  KB.style.setProperty("--bw", bw+"%");
+  let wIndex=0;
+  const blacks=[];
+  for(let o=0;o<S.kbOcts;o++){
+    const oct = S.kbStartOct+o;
+    wsemis.forEach((s,si)=>{
+      const midi = midiOf(oct,s);
+      const k=document.createElement("div");
+      k.className="key w"; k.dataset.midi=midi; k.setAttribute("role","button"); k.tabIndex=0; k.setAttribute("aria-label", `${LETTERS[si]}${oct} piano key`);
+      k.innerHTML = `<span class="deg"></span><span class="fing"></span><span class="lbl">${S.showNames?LETTERS[si]:""}</span>`;
+      if(si===0) k.insertAdjacentHTML("beforeend",`<span class="octlbl">${LETTERS[si]}${oct}</span>`);
+      whites.appendChild(k);
+      if(BLACK_AFTER[s]!==undefined){
+        blacks.push({midi:midiOf(oct,BLACK_AFTER[s]), left:(wIndex+1)*(100/whiteCount)});
+      }
+      wIndex++;
+    });
+  }
+  KB.appendChild(whites);
+  blacks.forEach(b=>{
+    const k=document.createElement("div");
+    k.className="key b"; k.dataset.midi=b.midi; k.setAttribute("role","button"); k.tabIndex=0; k.setAttribute("aria-label", `${SIMPLE_PC_SHARP[b.midi%12]} piano key`);
+    k.style.left = `calc(${b.left}% - ${bw/2}%)`;
+    const pc=b.midi%12;
+    k.innerHTML=`<span class="deg"></span><span class="fing"></span><span class="lbl">${S.showNames?SIMPLE_PC_SHARP[pc]:""}</span>`;
+    KB.appendChild(k);
+  });
+  bindKeys();
+  paint();
+}
+
+let keyEls = {};
+function bindKeys(){
+  keyEls={};
+  KB.querySelectorAll(".key").forEach(k=>{
+    keyEls[k.dataset.midi]=k;
+    k.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();hitKey(+k.dataset.midi);}});
+  });
+}
+
+/* --- تعامل لمسی/ماوسی: چندلمسی + محدودسازی نرخ رویداد --- */
+const activePointers = new Map();
+const pointerLastAt = new Map();
+const POINTER_THROTTLE_MS = 30;
+function keyFromPoint(x,y){
+  const el = document.elementFromPoint(x,y);
+  if(!el) return null;
+  const k = el.closest(".key");
+  return k ? +k.dataset.midi : null;
+}
+KB.addEventListener("pointerdown", e=>{
+  const m=keyFromPoint(e.clientX,e.clientY);
+  activePointers.set(e.pointerId,{midi:m,last:m});
+  pointerLastAt.set(e.pointerId,0);
+  if(m!=null){hitKey(m);}
+});
+KB.addEventListener("pointermove", e=>{
+  const state=activePointers.get(e.pointerId);
+  if(!state || S.tab==="detect") return;
+  const now=performance.now();
+  if(now-(pointerLastAt.get(e.pointerId)||0)<POINTER_THROTTLE_MS) return;
+  pointerLastAt.set(e.pointerId,now);
+  const m=keyFromPoint(e.clientX,e.clientY);
+  if(m!=null && m!==state.last){state.last=m;hitKey(m,true);}
+});
+function releasePointer(e){activePointers.delete(e.pointerId);pointerLastAt.delete(e.pointerId);}
+window.addEventListener("pointerup",releasePointer);
+window.addEventListener("pointercancel",releasePointer);
+
+function flash(midi){
+  const el=keyEls[midi]; if(!el) return;
+  el.classList.add("act");
+  setTimeout(()=>{ if(!S.detect.has(midi)) el.classList.remove("act"); },230);
+}
+function hitKey(midi, glide){
+  Audio_.note(midi, 1.7, 0, glide?0.7:1);
+  showNow(midi);
+  if(S.tab==="detect"){
+    if(S.detect.has(midi)) S.detect.delete(midi); else S.detect.add(midi);
+    paint(); runDetect();
+  } else if(S.tab==="practice" && S.practice.mode==="play"){
+    handlePlayAnswer(midi);
+    flash(midi);
+  } else {
+    flash(midi);
+  }
+}
+function showNow(midi){
+  const pc=midi%12, oct=Math.floor(midi/12)-1;
+  const nm=SIMPLE_PC_SHARP[pc];
+  const fa = FA_LETTER[nm[0]] + (nm.length>1?" دیز":"");
+  document.getElementById("nowPlaying").textContent = `${nm}${oct}  ·  ${fa}`;
+}
+
+/* ============================================================
+   4) رسم وضعیت روی کلاویه
+   ============================================================ */
+function kbRange(){ return [midiOf(S.kbStartOct,0), midiOf(S.kbStartOct+S.kbOcts-1,11)]; }
+function fitToKeyboard(midis){
+  const [lo,hi]=kbRange();
+  let out=[...midis];
+  let guard=0;
+  while(Math.max(...out)>hi && guard++<4) out=out.map(m=>m-12);
+  guard=0;
+  while(Math.min(...out)<lo && guard++<4) out=out.map(m=>m+12);
+  return out;
+}
+function currentChordMidis(){
+  const notes = buildChord(S.rootLetter,S.rootAcc,S.qual);
+  const rootMidi = midiOf(S.baseOct, pcOf(S.rootLetter,S.rootAcc));
+  let midis = notes.map(n=>rootMidi + n.semi);
+  for(let i=0;i<S.inv;i++){ const x=midis.shift(); midis.push(x+12); }
+  midis = fitToKeyboard(midis);
+  return {notes, midis};
+}
+const FINGERS = {
+  3:{0:[1,3,5],1:[1,2,5],2:[1,3,5]},
+  4:{0:[1,2,3,5],1:[1,2,3,5],2:[1,2,4,5],3:[1,2,3,5]},
+  5:{0:[1,2,3,4,5],1:[1,2,3,4,5],2:[1,2,3,4,5],3:[1,2,3,4,5],4:[1,2,3,4,5]}
+};
+const DEGLBL = ["R","3","5","7","9","11"];
+
+function paint(){
+  Object.values(keyEls).forEach(k=>{
+    k.classList.remove("act","hl","ok","bad");
+    const f=k.querySelector(".fing"), d=k.querySelector(".deg");
+    if(f){f.textContent="";f.style.display="none";}
+    if(d){d.textContent="";}
+  });
+  if(S.tab==="detect"){
+    S.detect.forEach(m=>{ const k=keyEls[m]; if(k) k.classList.add("act"); });
+    S.pressed.forEach(m=>keyEls[m]?.classList.add("pressed-live"));
+    return;
+  }
+  if(S.tab==="practice"){
+    if(S.practice.mode==="play"){
+      S.practice.pressedOk?.forEach(m=>keyEls[m]?.classList.add("ok"));
+      S.practice.pressedBad?.forEach(m=>keyEls[m]?.classList.add("bad"));
+    }
+    S.pressed.forEach(m=>keyEls[m]?.classList.add("pressed-live"));
+    return;
+  }
+  const {notes,midis} = currentChordMidis();
+  const q = QUALITIES[S.qual];
+  const fing = (FINGERS[midis.length]||{})[S.inv] || [];
+  // درجهٔ هر نت بر اساس ترتیب اصلی آکورد
+  const orderPc = notes.map(n=>n.pc);
+  midis.forEach((m,i)=>{
+    const k=keyEls[m];
+    if(!k){ return; }
+    k.classList.add("act");
+    if(S.showFing && fing[i]){
+      const f=k.querySelector(".fing"); f.textContent=FA_DIGITS(fing[i]); f.style.display="flex";
+    }
+    if(S.showDeg){
+      const idx = orderPc.indexOf(m%12);
+      const lbl = idx>=0 ? (q.f.split(" - ")[idx]||DEGLBL[idx]) : "";
+      k.querySelector(".deg").textContent = lbl==="1" ? "R" : lbl;
     }
   });
-  backBtn.addEventListener('click', ()=>{
-    if(stepIndex>0){ stepIndex--; showStep(stepIndex); }
-  });
+  // اگر آکورد بیرون از محدودهٔ دید افتاد، فقط نوار کلاویه را افقی اسکرول کن
+  scrollKeysIntoView(midis);
+}
 
-  showStep(0);
+function scrollKeysIntoView(midis){
+  const wrap=document.getElementById("kbscroll");
+  if(!wrap||!midis.length) return;
+  const els=midis.map(m=>keyEls[m]).filter(Boolean);
+  if(!els.length) return;
+  const wr=wrap.getBoundingClientRect();
+  const lefts=els.map(e=>e.getBoundingClientRect().left-wr.left+wrap.scrollLeft);
+  const rights=els.map((e,i)=>lefts[i]+e.getBoundingClientRect().width);
+  const min=Math.min(...lefts), max=Math.max(...rights);
+  if(min<wrap.scrollLeft) wrap.scrollTo({left:Math.max(0,min-14),behavior:"smooth"});
+  else if(max>wrap.scrollLeft+wrap.clientWidth) wrap.scrollTo({left:max-wrap.clientWidth+14,behavior:"smooth"});
+}
 
-  // ================= GAME STATE =================
-  const gameArea = document.getElementById('gameArea');
-  const overlay = document.getElementById('overlay');
-  const resultTitle = document.getElementById('resultTitle');
-  const resultText = document.getElementById('resultText');
-  const restartBtn = document.getElementById('restartBtn');
-  const restartLink = document.getElementById('restartLink');
+/* ============================================================
+   5) خروجی متنی آکورد + راهنما
+   ============================================================ */
+function chordLabel(){
+  const q=QUALITIES[S.qual];
+  const root=noteName(S.rootLetter,S.rootAcc);
+  return {root, sym:root+q.sym, en:root+" "+q.en, fa:noteFa(S.rootLetter,S.rootAcc)+" "+q.fa};
+}
+function updateReadout(){
+  const {notes,midis}=currentChordMidis();
+  const q=QUALITIES[S.qual], L=chordLabel();
+  const bassPc = midis[0]%12;
+  const rootPc = pcOf(S.rootLetter,S.rootAcc);
+  const slash = (S.inv>0) ? "/"+ notes.find(n=>n.pc===bassPc)?.name : "";
 
-  const SHOW = {
-    1:'rotateX(0deg) rotateY(0deg)', 6:'rotateX(0deg) rotateY(180deg)',
-    2:'rotateX(0deg) rotateY(-90deg)', 5:'rotateX(0deg) rotateY(90deg)',
-    3:'rotateX(-90deg) rotateY(0deg)', 4:'rotateX(90deg) rotateY(0deg)'
+  document.getElementById("chName").textContent = L.sym + slash;
+  document.getElementById("chFa").textContent = L.fa + (S.inv? " · معکوس "+FA_DIGITS(S.inv) : " · حالت پایه");
+  // نت‌ها به ترتیب نواخته‌شده
+  const ordered = midis.map(m=>{ const n=notes.find(nn=>nn.pc===((m%12)+12)%12); return n?n.name:SIMPLE_PC_SHARP[m%12]; });
+  document.getElementById("chNotes").textContent = ordered.join("  –  ");
+
+  const meta=document.getElementById("chMeta"); meta.innerHTML="";
+  const add=(t,cls)=>{const s=document.createElement("span");s.className="tag "+(cls||"");s.textContent=t;meta.appendChild(s);};
+  add(q.f,"acc");
+  add(notes.length===3?"سه‌صدایی":notes.length===4?"چهارصدایی":notes.length===2?"دوصدایی":"پنج‌صدایی");
+  add("نام فارسی نت‌ها: "+notes.map(n=>n.fa).join("، "));
+  if(chordIsWeird(notes)){
+    const enh = pcName(rootPc, S.rootAcc>0?false:true);
+    add(`املای سخت — معادل ساده‌تر: ${enh}${q.sym}`,"warn");
+  }
+  buildFingerHint(midis.length);
+  buildFormula(notes,q);
+  buildFamily();
+}
+
+function buildFingerHint(n){
+  const {midis,notes}=currentChordMidis();
+  const fingR=(FINGERS[n]||{})[S.inv]||[];
+  const names = midis.map(m=>{ const nn=notes.find(x=>x.pc===m%12); return nn?nn.name:SIMPLE_PC_SHARP[m%12]; });
+  const rows = names.map((nm,i)=>`<li>انگشت <span class="k">${FA_DIGITS(fingR[i]||"-")}</span> روی <span class="k">${nm}</span></li>`).join("");
+  const invTxt = S.inv===0 ? "نت ریشه در پایین است؛ صداییِ باثبات و «خانه»." :
+                 S.inv===1 ? "نت سوم در پایین است؛ نرم‌تر و مناسب وصل‌کردن آکوردها." :
+                 S.inv===2 ? "نت پنجم در پایین است؛ حس معلق و رو به جلو." :
+                             "نت هفتم در پایین است؛ کشش زیاد برای حل‌شدن.";
+  document.getElementById("fingerHint").innerHTML = `
+    <b>دست راست (از پایین به بالا):</b>
+    <ul class="steps">${rows}</ul>
+    <div style="margin-top:8px">${invTxt}</div>
+    <div style="margin-top:6px;color:var(--txt-3)">دست چپ همان کلیدها با انگشت‌های ${FA_DIGITS(5)}، ${FA_DIGITS(3)} و ${FA_DIGITS(1)} (شست روی بالاترین نت).</div>
+    <div style="margin-top:6px;color:var(--txt-3)">مچ را صاف نگه دار، انگشت‌ها گرد؛ هر سه/چهار نت را دقیقاً هم‌زمان پایین بیاور.</div>`;
+}
+function buildFormula(notes,q){
+  const steps = notes.map((n,i)=> i===0 ? `<span class="k">${n.name}</span> ریشه`
+    : `<span class="k">${n.name}</span> (+${FA_DIGITS(n.semi)} نیم‌پرده)`).join(" ← ");
+  const gaps = notes.slice(1).map((n,i)=>FA_DIGITS(n.semi-notes[i].semi)).join(" + ");
+  document.getElementById("formulaBox").innerHTML = `
+    <div>${steps}</div>
+    <div style="margin-top:8px">فاصله‌های پشت‌سرهم: <b>${gaps}</b> نیم‌پرده</div>
+    <div style="margin-top:6px">فرمول درجه‌ای: <b class="mono" style="direction:ltr;display:inline-block">${q.f}</b> — ${q.fa} (${q.en})</div>
+    <div style="margin-top:6px;color:var(--txt-3)">${describeMood(S.qual)}</div>`;
+}
+function describeMood(k){
+  const M={
+    maj:"حس روشن، پایدار و شاد. ستون فقرات اکثر ترانه‌های پاپ.",
+    min:"حس غمگین، درونی و آرام؛ فقط یک نیم‌پرده پایین‌تر بودن نت سوم این تفاوت را می‌سازد.",
+    dim:"پرتنش و ناپایدار؛ معمولاً گذری است و به آکورد بعدی وصل می‌شود.",
+    aug:"معلق و رازآلود؛ در پایان جمله‌ها برای غافلگیری استفاده می‌شود.",
+    sus2:"باز و شناور؛ چون نت سوم ندارد نه شاد است نه غمگین.",
+    sus4:"کشیده و منتظر؛ معمولاً به ماژور یا مینور همان ریشه حل می‌شود.",
+    five:"فقط ریشه و پنجم؛ خنثی و قدرتمند، عالی برای بافت‌های راک.",
+    dom7:"بلوزی و پرکشش؛ می‌خواهد به آکورد یک درجه پایین‌تر (پنجم پایین) حل شود.",
+    maj7:"لطیف، رؤیایی و جَزی؛ برای بالادها عالی است.",
+    min7:"نرم و خنک؛ ستون آکوردهای سول، آر اند بی و جز.",
+    mMaj7:"مرموز و سینمایی؛ در موسیقی فیلم زیاد شنیده می‌شود.",
+    m7b5:"دروازهٔ ورود به مینور؛ در کادانس ii-V-i مینور نقش کلیدی دارد.",
+    dim7:"کاملاً متقارن؛ از هر نتش می‌توان به گام دیگری پرید.",
+    aug7:"تنش مضاعف؛ نسخهٔ پرحرارت‌تر آکورد هفتم غالب.",
+    sev4:"معلق و ریتمیک؛ در پاپ و گاسپل بسیار رایج است.",
+    six:"شیرین و قدیمی؛ حس پایان‌بندی‌های دههٔ پنجاه.",
+    min6:"مینور با یک درخشش؛ در تانگو و جز شنیده می‌شود.",
+    add9:"ماژور با یک قطرهٔ درخشش، بدون تنش هفتم.",
+    madd9:"مینور با فضای باز و مدرن.",
+    nine:"غالبِ رنگی‌شده؛ فانکی و پرانرژی.",
+    maj9:"بسیار لطیف و مدرن؛ محبوب نئوسول.",
+    min9:"عمیق و مخملی؛ محبوب آر اند بی.",
+    six9:"پایان‌بندی نرم و بی‌تنش؛ جایگزین شیک آکورد ماژور."
   };
+  return M[k]||"";
+}
 
-  let players, currentIndex, hasRolled, gameOver, config;
+/* ---- خانواده و پیش‌روی‌ها ---- */
+const MAJOR_SCALE=[0,2,4,5,7,9,11];
+const DIATONIC=[["maj","I"],["min","ii"],["min","iii"],["maj","IV"],["dom7","V7"],["min","vi"],["m7b5","vii°"]];
+function buildFamily(){
+  const rootPc=pcOf(S.rootLetter,S.rootAcc);
+  const isMinorish = ["min","min7","min9","min6","madd9","mMaj7"].includes(S.qual);
+  const keyPc = isMinorish ? (rootPc+3)%12 : rootPc;     // مینور نسبی → گام ماژور
+  const prefSharp = S.rootAcc>0;
+  const fam=document.getElementById("familyBox"); fam.innerHTML="";
+  DIATONIC.forEach(([q,rn],i)=>{
+    const pc=(keyPc+MAJOR_SCALE[i])%12;
+    const b=document.createElement("button");
+    b.className="btn sm";
+    b.innerHTML=`${pcName(pc,prefSharp)}${QUALITIES[q].sym}<span style="opacity:.5;font-size:10px;margin-inline-start:4px">${rn}</span>`;
+    b.onclick=()=>{ playPcChord(pc,q); b.classList.add("playing"); setTimeout(()=>b.classList.remove("playing"),400); };
+    fam.appendChild(b);
+  });
+  const minorMood = ["min","min7","min9","madd9","mMaj7","min6"].includes(S.qual);
+  const PROGS = minorMood ? [
+    {n:"بالاد احساسی",style:"احساسی · پیانو و وکال",deg:[[0,"min"],[5,"maj"],[3,"maj"],[4,"maj"]]},
+    {n:"پاپ مینور",style:"پاپ · مدرن",deg:[[0,"min"],[3,"maj"],[5,"maj"],[4,"min"]]},
+    {n:"سینمایی",style:"سینمایی · کشش عاطفی",deg:[[0,"min"],[2,"maj"],[3,"min"],[6,"maj"]]},
+    {n:"لوفای آرام",style:"Lo-fi · نرم",deg:[[0,"min7"],[3,"maj7"],[5,"min7"],[4,"min7"]]},
+    {n:"راک مینور",style:"راک · پرقدرت",deg:[[0,"min"],[6,"maj"],[3,"min"],[4,"min"]]},
+    {n:"جز ملایم",style:"Jazz · رنگی",deg:[[1,"m7b5"],[4,"dom7"],[0,"min7"],[0,"min6"]]}
+  ] : [
+    {n:"پاپ جهانی",style:"Pop · پرانرژی و آشنا",deg:[[0,"maj"],[4,"maj"],[5,"min"],[3,"maj"]]},
+    {n:"پاپ احساسی",style:"پاپ · نوستالژیک",deg:[[5,"min"],[3,"maj"],[0,"maj"],[4,"maj"]]},
+    {n:"بالاد آرام",style:"احساسی · پیانو",deg:[[0,"maj7"],[5,"min7"],[3,"maj7"],[4,"dom7"]]},
+    {n:"راک و سرود",style:"Rock · باز و قدرتمند",deg:[[0,"maj"],[3,"maj"],[4,"maj"],[0,"maj"]]},
+    {n:"جز استاندارد",style:"Jazz · ii–V–I",deg:[[1,"min7"],[4,"dom7"],[0,"maj7"]]},
+    {n:"سینمایی",style:"Cinematic · باشکوه",deg:[[0,"maj"],[2,"min"],[5,"min"],[4,"maj"]]},
+    {n:"آر اند بی",style:"R&B · سول و نرم",deg:[[1,"min7"],[4,"dom7"],[0,"maj7"],[5,"min7"]]},
+    {n:"لوفای",style:"Lo-fi · آرام و تکرارشونده",deg:[[0,"maj7"],[5,"min7"],[1,"min7"],[4,"dom7"]]}
+  ];
+  const box=document.getElementById("progBox"); box.innerHTML="";
+  PROGS.forEach(p=>{
+    const progression=p.deg.map(([d,q])=>[(keyPc+MAJOR_SCALE[d])%12,q]);
+    const names=progression.map(([pc,q])=>pcName(pc,prefSharp)+QUALITIES[q].sym).join(" → ");
+    const row=document.createElement("div"); row.className="prog-entry";
+    row.innerHTML=`<div class="prog-info"><div class="chordline">${names}</div><small>${p.n} · ${p.style}</small></div><div class="toolrow" style="flex-wrap:nowrap"><button class="btn sm" title="پخش" aria-label="پخش پیش‌روی"><i class="ti ti-player-play"></i></button><button class="btn sm ghost midi-btn" title="دانلود MIDI" aria-label="دانلود MIDI"><i class="ti ti-file-music"></i> MIDI</button></div>`;
+    const [playBtn,midiBtn]=row.querySelectorAll("button");
+    playBtn.onclick=()=>playProgression(progression,row);
+    midiBtn.onclick=()=>downloadMidi(progression.map(([pc,q])=>({pc,q,beats:2})),S.tempo,`progression-${PROGS.indexOf(p)+1}`,4);
+    box.appendChild(row);
+  });
+}
+function pcChordMidis(pc,q){
+  const base=midiOf(S.baseOct,pc);
+  const semis=QUALITIES[q].iv.map(x=>x[1]);
+  let midis=semis.map(s=>base+s);
+  while(midis[0]>midiOf(S.baseOct,7)) midis=midis.map(m=>m-12);
+  return fitToKeyboard(midis);
+}
+function playPcChord(pc,q){ stopAll(false); Audio_.chord(pcChordMidis(pc,q),1.8,0.012); }
+function playProgression(list,row){
+  stopAll(false);
+  const beat=60/S.tempo*2;
+  list.forEach(([pc,q],i)=>{
+    const t=setTimeout(()=>{
+      Audio_.chord(pcChordMidis(pc,q), beat*0.95, 0.012);
+      if(row){row.classList.add("playing");setTimeout(()=>row.classList.remove("playing"),beat*800);}
+    }, i*beat*1000);
+    S.arpTimer.push(t);
+  });
+}
 
-  function startGame(cfg){
-    config = cfg;
-    players = cfg.names.map((name,i)=>({
-      id:i, name, color: PLAYER_COLORS[i % PLAYER_COLORS.length],
-      board: Array.from({length:12}, (_,n)=>({num:n+1, broken:false})),
-      finished:false
-    }));
-    currentIndex = 0;
-    hasRolled = false;
-    gameOver = false;
-
-    wizard.classList.add('hidden');
-    gameWrap.classList.remove('hidden');
-    renderGameArea();
-    setActivePlayerUI();
+/* ============================================================
+   6) پخش
+   ============================================================ */
+function playChord(fromLoop=false){
+  const {midis}=currentChordMidis();
+  stopAll(!fromLoop);
+  Audio_.chord(midis, 2.0, 0.014);
+  midis.forEach(m=>flashHold(m,600));
+}
+function flashHold(m,ms){
+  const k=keyEls[m]; if(!k) return;
+  k.classList.add("hl"); setTimeout(()=>k.classList.remove("hl"),ms);
+}
+function playArp(){
+  const {midis}=currentChordMidis();
+  stopAll(true);
+  const step=60/S.tempo/2;
+  // الگوی دقیق رفت‌وبرگشت: ۱، ۳، ۵، ۳، ۱؛ نت آخر همان نت آغازین است.
+  const triad=midis.length>=3?[midis[0],midis[1],midis[2]]:[...midis];
+  const seq=triad.length>=3?[triad[0],triad[1],triad[2],triad[1],triad[0]]:[...triad,...triad.slice(0,-1).reverse()];
+  seq.forEach((m,i)=>{
+    const t=setTimeout(()=>{ Audio_.note(m,Math.max(.28,step*.92),0,1); flashHold(m,Math.max(180,step*850)); }, i*step*1000);
+    S.arpTimer.push(t);
+  });
+}
+function stopAll(clearLoop=true){
+  S.arpTimer.forEach(clearTimeout);
+  S.arpTimer=[];
+  Audio_.stopActive();
+  if(clearLoop){
+    if(S.loopTimer) clearInterval(S.loopTimer);
+    S.loopTimer=null;
+    S.loop=false;
+    const loopButton=document.getElementById("btnLoop");
+    if(loopButton) loopButton.classList.remove("on");
   }
+}
+document.getElementById("btnPlay").onclick=()=>{Audio_.resume();playChord();};
+document.getElementById("btnArp").onclick=()=>{Audio_.resume();playArp();};
+document.getElementById("btnStop").onclick=()=>stopAll(true);
+document.getElementById("btnLoop").onclick=e=>{
+  Audio_.resume();
+  if(S.loop){ stopAll(true); return; }
+  S.loop=true; e.currentTarget.classList.add("on");
+  playChord(true);
+  S.loopTimer=setInterval(()=>playChord(true), (60/S.tempo)*4*1000);
+};
 
-  function createDie(id){
-    const die = document.createElement('div');
-    die.className='die'; die.id=id;
-    const defs = [['face-front','p1'],['face-back','p6'],['face-right','p2'],['face-left','p5'],['face-top','p3'],['face-bottom','p4']];
-    defs.forEach(([cls,p])=>{
-      const face = document.createElement('div');
-      face.className = `face ${cls} ${p}`;
-      for(let i=1;i<=9;i++){
-        const dot = document.createElement('span');
-        dot.className = `dot d${i}`;
-        face.appendChild(dot);
-      }
-      die.appendChild(face);
-    });
-    return die;
+/* ============================================================
+   7) رابط: ریشه‌ها، کیفیت‌ها، معکوس‌ها
+   ============================================================ */
+function renderRoots(){
+  const w=document.getElementById("rootsWhite"), b=document.getElementById("rootsBlack");
+  w.innerHTML=""; b.innerHTML="";
+  ROOTS_W.forEach(([lbl,l,a])=>w.appendChild(rootBtn(lbl,l,a,false)));
+  ROOTS_B.forEach(([lbl,l,a])=>b.appendChild(rootBtn(lbl,l,a,true)));
+  syncRootBtns();
+}
+function rootBtn(lbl,l,a,black){
+  const btn=document.createElement("button");
+  btn.className="btn"+(black?" ":" ");
+  btn.dataset.root=lbl; btn.textContent=lbl;
+  btn.onclick=()=>{ S.rootLetter=l; S.rootAcc=a; S.rootLabel=lbl; syncRootBtns(); refresh(); Audio_.resume(); playChord(); };
+  return btn;
+}
+function syncRootBtns(){
+  document.querySelectorAll("[data-root]").forEach(b=>{
+    const on = b.dataset.root===S.rootLabel;
+    b.classList.toggle("on",on);
+  });
+}
+function renderQuals(){
+  const box=document.getElementById("quals"); box.innerHTML="";
+  const list=QKEYS.filter(k=>QUALITIES[k].fam===S.fam);
+  document.getElementById("qualCount").textContent=FA_DIGITS(list.length)+" حالت";
+  list.forEach(k=>{
+    const q=QUALITIES[k];
+    const btn=document.createElement("button");
+    btn.className="btn"+(S.qual===k?" on":"");
+    btn.style.flexDirection="column"; btn.style.gap="2px";
+    btn.innerHTML=`<span style="direction:ltr;font-family:var(--ffm)">${q.sym||"maj"}</span><span style="font-size:10.5px;opacity:.72;font-weight:500">${q.fa}</span>`;
+    btn.onclick=()=>{ S.qual=k; S.inv=0; renderQuals(); renderInvs(); refresh(); Audio_.resume(); playChord(); };
+    box.appendChild(btn);
+  });
+}
+document.querySelectorAll("[data-fam]").forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll("[data-fam]").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on");
+    S.fam=b.dataset.fam;
+    const available=QKEYS.filter(k=>QUALITIES[k].fam===S.fam);
+    if(!available.includes(S.qual)) S.qual=available[0] || "maj";
+    S.inv=0;
+    renderQuals();
+    renderInvs();
+    refresh();
+  };
+});
+function renderInvs(){
+  const n=QUALITIES[S.qual].iv.length;
+  const box=document.getElementById("invs"); box.innerHTML="";
+  const names=["پایه","معکوس ۱","معکوس ۲","معکوس ۳","معکوس ۴"];
+  for(let i=0;i<n;i++){
+    const b=document.createElement("button");
+    b.className="btn sm"+(S.inv===i?" on":"");
+    b.textContent=names[i];
+    b.onclick=()=>{ S.inv=i; renderInvs(); refresh(); Audio_.resume(); playChord(); };
+    box.appendChild(b);
   }
+}
+function refresh(){ paint(); updateReadout(); }
 
-  function buildBoardEl(player){
-    const card = document.createElement('div');
-    card.className = 'player-board';
-    card.id = 'board-p'+player.id;
-    card.style.setProperty('--pc', player.color);
+/* ============================================================
+   8) تشخیص آکورد
+   ============================================================ */
+function detectFrom(midis){
+  if(midis.length===0) return {html:"هنوز نتی انتخاب نشده است."};
+  const sorted=[...midis].sort((a,b)=>a-b);
+  const pcs=[...new Set(sorted.map(m=>((m%12)+12)%12))];
+  const bass=((sorted[0]%12)+12)%12;
+  const namesTxt = sorted.map(m=>SIMPLE_PC_SHARP[((m%12)+12)%12]+(Math.floor(m/12)-1)).join(" – ");
 
-    const header = document.createElement('div');
-    header.className='pb-header';
-    header.innerHTML = `<span class="pname">${player.name}</span><span class="premain" id="remain-p${player.id}"></span>`;
-    card.appendChild(header);
-
-    const grid = document.createElement('div');
-    grid.className='pb-grid';
-    grid.id = 'grid-p'+player.id;
-    player.board.forEach(cell=>{
-      const tile = document.createElement('div');
-      tile.className='tile' + (cell.broken?' broken':'');
-      tile.dataset.num = cell.num;
-      const span = document.createElement('span');
-      span.textContent = toFa(cell.num);
-      tile.appendChild(span);
-      grid.appendChild(tile);
-    });
-    card.appendChild(grid);
-    return card;
-  }
-
-  function buildDiceCard(){
-    const card = document.createElement('div');
-    card.className='dice-card';
-    card.id = 'diceCard';
-
-    const banner = document.createElement('div');
-    banner.className='turn-banner';
-    banner.id='turnBanner';
-    card.appendChild(banner);
-
-    if(config.diceMode === 'virtual'){
-      const row = document.createElement('div');
-      row.className='dice-row';
-      const d1 = createDie('die1'); const d2 = createDie('die2');
-      row.appendChild(d1); row.appendChild(d2);
-      card.appendChild(row);
-      const rollBtn = document.createElement('button');
-      rollBtn.className='roll-btn'; rollBtn.id='rollBtn'; rollBtn.textContent='پرتاب تاس';
-      rollBtn.addEventListener('click', rollDice);
-      card.appendChild(rollBtn);
-    } else {
-      const manual = document.createElement('div');
-      manual.className='manual-dice';
-      manual.innerHTML = `
-        <select id="manualD1">${[1,2,3,4,5,6].map(n=>`<option value="${n}">${toFa(n)}</option>`).join('')}</select>
-        <span>+</span>
-        <select id="manualD2">${[1,2,3,4,5,6].map(n=>`<option value="${n}">${toFa(n)}</option>`).join('')}</select>
-      `;
-      card.appendChild(manual);
-      const confirmBtn = document.createElement('button');
-      confirmBtn.className='confirm-btn'; confirmBtn.id='confirmBtn'; confirmBtn.textContent='ثبت تاس';
-      confirmBtn.addEventListener('click', confirmManualDice);
-      card.appendChild(confirmBtn);
+  if(pcs.length===1) return {html:`تک‌نت <span class="k">${SIMPLE_PC_SHARP[pcs[0]]}</span> — برای ساختن آکورد حداقل سه نت لازم است.`};
+  if(pcs.length===2){
+    const iv=((pcs[1]-pcs[0])+12)%12;
+    const IVN={0:"هم‌صدا",1:"دوم کوچک",2:"دوم بزرگ",3:"سوم کوچک",4:"سوم بزرگ",5:"چهارم درست",6:"تریتون",7:"پنجم درست",8:"ششم کوچک",9:"ششم بزرگ",10:"هفتم کوچک",11:"هفتم بزرگ"};
+    if(iv===7||iv===5){
+      const r = iv===7?pcs[0]:pcs[1];
+      return {root:r, k:"five", html:`
+        <div style="text-align:center;padding:4px 0 10px">
+          <div style="font-size:30px;font-weight:800;color:var(--acc-2);direction:ltr">${SIMPLE_PC_SHARP[r]}5</div>
+          <div style="color:var(--txt-3);font-size:13px;margin-top:4px">${pcNameFa(r)} پاور کورد</div>
+        </div>
+        <div>نت‌های تو: <span class="k" style="direction:ltr">${namesTxt}</span></div>
+        <div style="margin-top:6px">فقط ریشه و پنجم — نت سوم ندارد، پس نه ماژور است نه مینور.</div>
+        <div style="margin-top:6px;color:var(--txt-3)">یک نت سوم اضافه کن تا مشخص شود شاد است یا غمگین.</div>`};
     }
-
-    const ops = document.createElement('div');
-    ops.className='ops'; ops.id='ops';
-    card.appendChild(ops);
-
-    const msg = document.createElement('div');
-    msg.className='message'; msg.id='message';
-    msg.textContent = 'برای شروع نوبت، تاس را بیندازید.';
-    card.appendChild(msg);
-
-    const skip = document.createElement('button');
-    skip.className='skip-btn'; skip.id='skipBtn'; skip.textContent='رد کردن نوبت';
-    skip.addEventListener('click', ()=> switchTurn(true));
-    card.appendChild(skip);
-
-    return card;
+    return {html:`<b>فاصله:</b> ${IVN[iv]} بین <span class="k">${SIMPLE_PC_SHARP[pcs[0]]}</span> و <span class="k">${SIMPLE_PC_SHARP[pcs[1]]}</span>.<br>
+      <span style="color:var(--txt-3)">نت‌های انتخابی: ${namesTxt}</span><br>یک نت دیگر اضافه کن تا آکورد کامل شود.`};
   }
-
-  function renderGameArea(){
-    gameArea.innerHTML = '';
-    gameArea.className = 'game-area ' + config.layout;
-
-    const slots = players.map(p=> ({type:'player', player:p}));
-    const diceSlot = {type:'dice'};
-    const mid = Math.floor(slots.length/2);
-    slots.splice(mid, 0, diceSlot);
-
-    slots.forEach(slot=>{
-      if(slot.type==='player'){
-        gameArea.appendChild(buildBoardEl(slot.player));
-      } else {
-        gameArea.appendChild(buildDiceCard());
-      }
+  // امتیازدهی
+  const results=[];
+  pcs.forEach(root=>{
+    const set=new Set(pcs.map(p=>((p-root)+12)%12));
+    QKEYS.forEach(k=>{
+      const tpl=new Set(QUALITIES[k].iv.map(x=>((x[1]%12)+12)%12));
+      let inter=0; tpl.forEach(t=>{ if(set.has(t)) inter++; });
+      const missing=[...tpl].filter(t=>!set.has(t));
+      const extra=[...set].filter(s=>!tpl.has(s));
+      const score = inter*3 - missing.length*2.2 - extra.length*2.6
+                  + (root===bass?0.7:0) - (QUALITIES[k].iv.length>4?0.4:0);
+      results.push({root,k,score,missing,extra,exact:missing.length===0&&extra.length===0});
     });
+  });
+  results.sort((a,b)=>b.score-a.score);
+  const top=results[0];
+  const prefSharp = pcs.some(p=>[1,3,6,8,10].includes(p)) ? true : false;
+  const nm = r=>pcName(r.root,prefSharp)+QUALITIES[r.k].sym;
+  const slash = top.root!==bass ? "/"+pcName(bass,prefSharp) : "";
 
-    players.forEach(updateRemainLabel);
+  const others = results.filter(r=>r!==top && r.score>top.score-2.4).slice(0,3)
+    .map(r=>`<span class="k">${nm(r)}${r.root!==bass?"/"+pcName(bass,prefSharp):""}</span>`).join(" ");
+
+  const q=QUALITIES[top.k];
+  let extraTxt="";
+  if(!top.exact){
+    const miss = top.missing.map(m=>pcName((top.root+m)%12,prefSharp)).join("، ");
+    const ex = top.extra.map(m=>pcName((top.root+m)%12,prefSharp)).join("، ");
+    extraTxt = `<div style="margin-top:8px;color:var(--gold)">تقریبی است — ${miss?`نت کم دارد: <b>${miss}</b>. `:""}${ex?`نت اضافه دارد: <b>${ex}</b>.`:""}</div>`;
   }
+  const html=`
+    <div style="text-align:center;padding:4px 0 10px">
+      <div style="font-size:30px;font-weight:800;color:var(--acc-2);direction:ltr">${nm(top)}${slash}</div>
+      <div style="color:var(--txt-3);font-size:13px;margin-top:4px">${pcNameFa(top.root)} ${q.fa}${slash?" با باس "+pcNameFa(bass):""}</div>
+    </div>
+    <div>نت‌های تو: <span class="k" style="direction:ltr">${namesTxt}</span></div>
+    <div style="margin-top:6px">فرمول: <b class="mono" style="direction:ltr;display:inline-block">${q.f}</b></div>
+    ${slash?`<div style="margin-top:6px">بم‌ترین نت ریشه نیست ⇒ آکورد در حالت <b>معکوس</b> نواخته شده است.</div>`:""}
+    ${extraTxt}
+    ${others?`<div style="margin-top:8px;color:var(--txt-3)">احتمال‌های دیگر: ${others}</div>`:""}
+    <div style="margin-top:8px;color:var(--txt-3)">${describeMood(top.k)}</div>`;
+  return {html, root:top.root, k:top.k};
+}
+function pcNameFa(pc){
+  const n=SIMPLE_PC[((pc%12)+12)%12];
+  if(n.length>1) return FA_LETTER[n[0]]+" بمل";
+  return FA_LETTER[n[0]];
+}
+let lastDetect=null;
+function runDetect(){
+  const r=detectFrom([...S.detect]);
+  lastDetect=r;
+  document.getElementById("detResult").innerHTML=r.html;
+}
+document.getElementById("detClear").onclick=()=>{ S.detect.clear(); lastDetect=null; document.getElementById("detResult").textContent="هنوز نتی انتخاب نشده است."; paint(); };
+document.getElementById("detPlay").onclick=()=>{ Audio_.resume(); Audio_.chord([...S.detect].sort((a,b)=>a-b),1.9,.014); };
+document.getElementById("detSend").onclick=()=>{
+  if(!lastDetect||lastDetect.root===undefined){ toast("اول چند نت انتخاب کن"); return; }
+  const pc=lastDetect.root;
+  // نزدیک‌ترین ریشهٔ موجود
+  let found=[...ROOTS_W,...ROOTS_B].find(([lbl,l,a])=>pcOf(l,a)===pc);
+  if(found){ S.rootLetter=found[1]; S.rootAcc=found[2]; S.rootLabel=found[0]; }
+  S.qual=lastDetect.k; S.inv=0; S.fam=QUALITIES[S.qual].fam;
+  document.querySelectorAll("[data-fam]").forEach(x=>x.classList.toggle("on",x.dataset.fam===S.fam));
+  switchTab("build");
+  syncRootBtns(); renderQuals(); renderInvs(); refresh();
+  toast("آکورد به سازنده منتقل شد");
+};
 
-  function updateRemainLabel(player){
-    const el = document.getElementById('remain-p'+player.id);
-    if(!el) return;
-    const remaining = player.board.filter(c=>!c.broken).length;
-    el.textContent = `باقی‌مانده: ${toFa(remaining)}`;
-  }
+/* ============================================================
+   9) تمرین
+   ============================================================ */
+const LVL={1:["maj","min"],2:["maj","min","dim","aug","sus4"],3:["maj","min","dim","aug","sus4","dom7","maj7","min7","m7b5"]};
+const P=S.practice;
+document.querySelectorAll("[data-mode]").forEach(b=>{
+  b.onclick=()=>{ document.querySelectorAll("[data-mode]").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on"); P.mode=b.dataset.mode; newQuestion(); };
+});
+document.querySelectorAll("[data-lvl]").forEach(b=>{
+  b.onclick=()=>{ document.querySelectorAll("[data-lvl]").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on"); P.lvl=+b.dataset.lvl;
+    document.getElementById("lvlName").textContent=["","مقدماتی","متوسط","پیشرفته"][P.lvl];
+    newQuestion(); };
+});
+document.getElementById("qNext").onclick=()=>{Audio_.resume();newQuestion();};
+document.getElementById("qReplay").onclick=()=>{Audio_.resume();replayQuestion();};
 
-  function setMessage(text, highlight){
-    const el = document.getElementById('message');
-    if(!el) return;
-    el.textContent = text;
-    el.classList.toggle('highlight', !!highlight);
-  }
+function randOf(a){ return a[Math.floor(Math.random()*a.length)]; }
+function newQuestion(){
+  clearTimeout(earNextTimer); earNextTimer=null;
+  const quals=LVL[P.lvl];
+  const rootPc=Math.floor(Math.random()*12);
+  const k=randOf(quals);
+  P.answer={rootPc,k};
+  P.locked=false; P.pressedOk=new Set(); P.pressedBad=new Set();
+  P.target=pcChordMidis(rootPc,k).map(m=>((m%12)+12)%12);
+  const opts=document.getElementById("qOpts"); opts.innerHTML="";
 
-  function setActivePlayerUI(){
-    players.forEach(p=>{
-      const boardEl = document.getElementById('board-p'+p.id);
-      if(boardEl) boardEl.classList.toggle('active', p.id === players[currentIndex].id && !gameOver);
+  if(P.mode==="ear"){
+    document.getElementById("qMain").textContent="🎧 گوش کن";
+    document.getElementById("qSub").textContent="این آکورد کدام است؟";
+    const wrong=new Set();
+    while(wrong.size<3){
+      const r=Math.random()<0.55?rootPc:Math.floor(Math.random()*12);
+      const q=randOf(quals);
+      if(r===rootPc&&q===k) continue;
+      wrong.add(r+"|"+q);
+    }
+    const all=[...wrong].map(s=>{const [r,q]=s.split("|");return{rootPc:+r,k:q};});
+    all.push({rootPc,k});
+    all.sort(()=>Math.random()-.5);
+    P.opts=all;
+    all.forEach(o=>{
+      const b=document.createElement("button");
+      b.className="btn"; b.textContent=pcName(o.rootPc,false)+QUALITIES[o.k].sym;
+      b.onclick=()=>answerEar(o,b);
+      opts.appendChild(b);
     });
-    const banner = document.getElementById('turnBanner');
-    const cur = players[currentIndex];
-    if(banner){
-      banner.textContent = `نوبت: ${cur.name}`;
-      banner.style.setProperty('--pc', cur.color);
-      banner.style.color = cur.color;
-    }
-    const diceCard = document.getElementById('diceCard');
-    if(diceCard) diceCard.style.setProperty('--pc', cur.color);
+    setTimeout(replayQuestion,220);
+  } else {
+    const nm=pcName(rootPc,false)+QUALITIES[k].sym;
+    document.getElementById("qMain").textContent=nm;
+    document.getElementById("qSub").innerHTML=`این آکورد را روی کلاویه بزن (${FA_DIGITS(P.target.length)} نت لازم است) — ترتیب مهم نیست.`;
+    const hint=document.createElement("button");
+    hint.className="btn"; hint.textContent="💡 نمایش جواب";
+    hint.onclick=()=>{ if(!P.locked){P.locked=true; showPlayAnswer();} };
+    const skip=document.createElement("button");
+    skip.className="btn"; skip.textContent="⤼ رد کن";
+    skip.onclick=()=>newQuestion();
+    opts.appendChild(hint); opts.appendChild(skip);
   }
-
-  function currentPlayer(){ return players[currentIndex]; }
-
-  function getOptions(d1, d2){
-    const board = currentPlayer().board;
-    const sum = d1+d2;
-    const diff = Math.abs(d1-d2);
-    const prod = d1*d2;
-    const ops = [{label:'جمع', val:sum}, {label:'تفریق', val:diff}];
-    if(config.multiplyAllowed) ops.push({label:'ضرب', val:prod});
-    const candidates = [];
-    const seen = new Set();
-    ops.forEach(o=>{
-      if(o.val>0 && !seen.has(o.val) && board.some(c=>c.num===o.val && !c.broken)){
-        seen.add(o.val); candidates.push(o);
-      }
-    });
-    return { ops, candidates };
-  }
-
-  function renderOps(opsData){
-    const opsEl = document.getElementById('ops');
-    opsEl.innerHTML = '';
-    opsData.ops.forEach(o=>{
-      const btn = document.createElement('button');
-      const valid = opsData.candidates.some(c=>c.val===o.val && c.label===o.label);
-      btn.className = 'op-btn' + (valid?'':' invalid');
-      btn.textContent = `${o.label} = ${toFa(o.val)}`;
-      if(valid) btn.addEventListener('click', ()=> breakTile(o.val));
-      else btn.disabled = true;
-      opsEl.appendChild(btn);
-    });
-    highlightSelectable(opsData.candidates.map(c=>c.val));
-  }
-
-  function highlightSelectable(validNums){
-    const grid = document.getElementById('grid-p'+currentPlayer().id);
-    if(!grid) return;
-    [...grid.children].forEach(tile=>{
-      const num = Number(tile.dataset.num);
-      const isBroken = tile.classList.contains('broken');
-      tile.classList.toggle('selectable', !isBroken && validNums.includes(num));
+  paint();
+}
+function replayQuestion(){
+  if(!P.answer) return;
+  const midis=pcChordMidis(P.answer.rootPc,P.answer.k);
+  if(P.mode==="ear") Audio_.chord(midis,1.9,.02); else Audio_.chord(midis,1.6,.02);
+}
+let earNextTimer=null;
+function answerEar(o,btn){
+  if(P.locked) return; P.locked=true;
+  const ok = o.rootPc===P.answer.rootPc && o.k===P.answer.k;
+  btn.classList.add(ok?"good":"wrong");
+  if(!ok){
+    [...document.getElementById("qOpts").children].forEach(b=>{
+      if(b.textContent===pcName(P.answer.rootPc,false)+QUALITIES[P.answer.k].sym) b.classList.add("good");
     });
   }
+  scoreUp(ok);
+  Audio_.click(ok);
+  document.getElementById("qSub").innerHTML = ok
+    ? `آفرین! <b>${pcName(P.answer.rootPc,false)+QUALITIES[P.answer.k].sym}</b> — ${QUALITIES[P.answer.k].fa}`
+    : `جواب درست: <b>${pcName(P.answer.rootPc,false)+QUALITIES[P.answer.k].sym}</b> — ${describeMood(P.answer.k)}`;
+  clearTimeout(earNextTimer); earNextTimer=setTimeout(()=>{ if(P.mode==="ear" && P.locked) newQuestion(); }, 1600);
+}
+function handlePlayAnswer(midi){
+  if(!P.answer||P.locked) return;
+  const pc=((midi%12)+12)%12;
+  if(P.target.includes(pc)) P.pressedOk.add(midi); else P.pressedBad.add(midi);
+  paint();
+  const got=new Set([...P.pressedOk].map(m=>((m%12)+12)%12));
+  if(got.size===P.target.length && P.pressedBad.size===0){
+    P.locked=true; scoreUp(true); Audio_.click(true);
+    document.getElementById("qSub").innerHTML="✅ درست بود! سؤال بعدی…";
+    setTimeout(newQuestion,1200);
+  } else if(P.pressedBad.size>=1){
+    P.locked=true; scoreUp(false); Audio_.click(false);
+    showPlayAnswer();
+    setTimeout(newQuestion,2200);
+  }
+}
+function showPlayAnswer(){
+  const midis=pcChordMidis(P.answer.rootPc,P.answer.k);
+  midis.forEach(m=>{ keyEls[m]?.classList.add("hl"); });
+  Audio_.chord(midis,1.7,.015);
+  const names=midis.map(m=>SIMPLE_PC_SHARP[((m%12)+12)%12]).join(" – ");
+  document.getElementById("qSub").innerHTML=`نت‌ها: <span class="k" style="direction:ltr">${names}</span> · فرمول ${QUALITIES[P.answer.k].f}`;
+  setTimeout(()=>midis.forEach(m=>keyEls[m]?.classList.remove("hl")),2000);
+}
+function scoreUp(ok){
+  if(ok){P.ok++;P.streak++;P.best=Math.max(P.best,P.streak);} else {P.no++;P.streak=0;}
+  document.getElementById("scOk").textContent=FA_DIGITS(P.ok);
+  document.getElementById("scNo").textContent=FA_DIGITS(P.no);
+  document.getElementById("scBest").textContent=FA_DIGITS(P.best);
+}
 
-  function clearAllSelectable(){
-    players.forEach(p=>{
-      const grid = document.getElementById('grid-p'+p.id);
-      if(grid) [...grid.children].forEach(t=>t.classList.remove('selectable'));
+/* ============================================================
+   10) مرجع
+   ============================================================ */
+let refFam="basic";
+function renderRef(){
+  const box=document.getElementById("refFilter"); box.innerHTML="";
+  [["basic","پایه"],["seventh","هفتم‌ها"],["color","رنگی"],["all","همه"]].forEach(([f,lbl])=>{
+    const b=document.createElement("button");
+    b.className="btn sm"+(refFam===f?" on":"");
+    b.textContent=lbl; b.onclick=()=>{refFam=f;renderRef();};
+    box.appendChild(b);
+  });
+  const tb=document.querySelector("#refTable tbody"); tb.innerHTML="";
+  const roots=[...ROOTS_W,...ROOTS_B];
+  const quals=QKEYS.filter(k=>refFam==="all"||QUALITIES[k].fam===refFam);
+  let count=0;
+  roots.forEach(([lbl,l,a])=>{
+    quals.forEach(k=>{
+      const notes=buildChord(l,a,k);
+      const tr=document.createElement("tr");
+      tr.innerHTML=`<td class="n" style="font-weight:700">${lbl}${QUALITIES[k].sym}</td>
+        <td class="n" style="color:var(--txt)">${notes.map(n=>n.name).join(" ")}</td>
+        <td style="font-size:11px;color:var(--txt-3);direction:ltr;text-align:left">${QUALITIES[k].f}</td>
+        <td><button class="btn sm ghost" style="padding:5px 8px">▶︎</button></td>`;
+      tr.querySelector("button").onclick=()=>{
+        Audio_.resume();
+        const base=midiOf(S.baseOct,pcOf(l,a));
+        Audio_.chord(QUALITIES[k].iv.map(x=>base+x[1]),1.7,.013);
+      };
+      tb.appendChild(tr); count++;
     });
+  });
+  document.getElementById("refCount").textContent=FA_DIGITS(count)+" آکورد";
+}
+
+/* ============================================================
+   10.5) استودیوی توالی آکورد + خروجی MIDI استاندارد
+   ============================================================ */
+const seqState={items:[],selected:0,recording:false,recordStarted:0,lastTap:0,playTimers:[],playIndex:0};
+const ROOT_PC={C:0,'C#':1,Db:1,D:2,'D#':3,Eb:3,E:4,F:5,'F#':6,Gb:6,G:7,'G#':8,Ab:8,A:9,'A#':10,Bb:10,B:11};
+const ROOT_ORDER=['C','C#','Db','D','D#','Eb','E','F','F#','Gb','G','G#','Ab','A','A#','Bb','B'];
+function qualityAliases(){return {'':'maj','maj':'maj','major':'maj','m':'min','min':'min','minor':'min','dim':'dim','aug':'aug','sus2':'sus2','sus4':'sus4','5':'five','power':'five','7':'dom7','dom7':'dom7','maj7':'maj7','m7':'min7','min7':'min7','mmaj7':'mMaj7','mmaj':'mMaj7','m7b5':'m7b5','ø':'m7b5','dim7':'dim7','7#5':'aug7','aug7':'aug7','7sus4':'sev4','6':'six','m6':'min6','add9':'add9','m(add9)':'madd9','madd9':'madd9','9':'nine','maj9':'maj9','m9':'min9','min9':'min9','6/9':'six9'};}
+function parseChordName(raw){
+  const text=String(raw||'').trim().replace(/♭/g,'b').replace(/♯/g,'#').replace(/\s+/g,'');
+  const match=text.match(/^(C#|Db|D#|Eb|F#|Gb|G#|Ab|A#|Bb|C|D|E|F|G|A|B)(.*)$/i);
+  if(!match)return null;
+  const root=match[1][0].toUpperCase()+match[1].slice(1); const suffix=match[2].toLowerCase();
+  const aliases=qualityAliases(); const q=aliases[suffix];
+  if(!q||!QUALITIES[q])return null;
+  return {pc:ROOT_PC[root],q,name:root+QUALITIES[q].sym};
+}
+function chordDisplayName(item){return pcName(item.pc,true)+QUALITIES[item.q].sym;}
+function renderChordCatalog(){
+  const dl=document.getElementById('chordCatalog'); dl.innerHTML='';
+  ROOT_ORDER.forEach(root=>QKEYS.forEach(q=>{const o=document.createElement('option');o.value=root+QUALITIES[q].sym;dl.appendChild(o);}));
+  renderChordBank();
+}
+function renderChordBank(){
+  const bank=document.getElementById('chordBank');bank.innerHTML='';
+  const roots=[S.rootLabel||'C','Am','F','Gm'];
+  const choices=[`${S.rootLabel}maj`,`${S.rootLabel}m`,`${pcName((pcOf(S.rootLetter,S.rootAcc)+5)%12,true)}maj`,`${pcName((pcOf(S.rootLetter,S.rootAcc)+7)%12,true)}7`];
+  [...new Set([...choices,'Am','Fm','Gm','Cmaj7','Dm7','G7'])].slice(0,9).forEach(n=>{
+    const parsed=parseChordName(n);if(!parsed)return;
+    const b=document.createElement('button');b.className='chord-chip';b.innerHTML=`<i class="ti ti-plus"></i> ${chordDisplayName(parsed)}`;
+    b.title='افزودن '+chordDisplayName(parsed);
+    b.onclick=()=>addSequenceChord(parsed);
+    bank.appendChild(b);
+  });
+}
+function addSequenceChord(parsed,beats=2,at=null){
+  const item={id:Date.now()+Math.random(),pc:parsed.pc,q:parsed.q,name:chordDisplayName(parsed),beats:Math.max(1,beats||2)};
+  if(seqState.recording){
+    const now=performance.now();
+    if(seqState.lastTap){const elapsed=(now-seqState.lastTap)/(60000/seqBpm());const quant=Math.max(1,Math.round(elapsed));if(seqState.items.length)seqState.items[seqState.items.length-1].beats=Math.min(8,quant);}
+    seqState.lastTap=now;
   }
+  if(at===null)seqState.items.push(item);else seqState.items.splice(at,0,item);
+  seqState.selected=seqState.items.findIndex(x=>x.id===item.id);renderSequence();
+  if(seqState.recording){playSequenceChord(item);document.getElementById('seqStatus').innerHTML=`<span class="rec-dot"></span>در حال ضبط زمان‌بندی · ${item.name} ثبت شد.`;}
+}
+function seqBpm(){return +document.getElementById('seqBpm').value||100;}
+function renderSequence(){
+  const box=document.getElementById('sequenceList');box.innerHTML='';
+  if(!seqState.items.length){box.innerHTML='<span class="studio-status">هنوز آکوردی اضافه نشده؛ از بخش جست‌وجو شروع کن.</span>';}
+  seqState.items.forEach((it,i)=>{
+    const el=document.createElement('div');el.className='seq-item'+(i===seqState.selected?' selected':'');el.tabIndex=0;
+    el.innerHTML=`<button class="seq-name" title="انتخاب نقطهٔ شروع">${it.name}</button><select aria-label="مدت آکورد به ضرب"><option value="1">۱ ضرب</option><option value="2">۲ ضرب</option><option value="3">۳ ضرب</option><option value="4">۴ ضرب</option><option value="8">۸ ضرب</option></select><div class="seq-controls"><button data-act="left" title="انتقال به چپ"><i class="ti ti-arrow-left"></i></button><button data-act="right" title="انتقال به راست"><i class="ti ti-arrow-right"></i></button><button data-act="copy" title="تکثیر"><i class="ti ti-copy"></i></button><button data-act="del" title="حذف"><i class="ti ti-trash"></i></button></div>`;
+    const sel=el.querySelector('select');sel.value=String(it.beats);sel.onchange=()=>{it.beats=+sel.value;};
+    el.querySelector('.seq-name').onclick=()=>{seqState.selected=i;renderSequence();playSequenceChord(it);};
+    el.querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>{
+      const act=b.dataset.act;
+      if(act==='left'&&i>0){[seqState.items[i-1],seqState.items[i]]=[seqState.items[i],seqState.items[i-1]];seqState.selected=i-1;}
+      if(act==='right'&&i<seqState.items.length-1){[seqState.items[i+1],seqState.items[i]]=[seqState.items[i],seqState.items[i+1]];seqState.selected=i+1;}
+      if(act==='copy'){seqState.items.splice(i+1,0,{...it,id:Date.now()+Math.random()});seqState.selected=i+1;}
+      if(act==='del'){seqState.items.splice(i,1);seqState.selected=Math.min(i,seqState.items.length-1);}
+      renderSequence();
+    });
+    box.appendChild(el);
+  });
+  document.getElementById('seqCount').textContent=FA_DIGITS(seqState.items.length)+' آکورد';
+}
+function playSequenceChord(it){const oct=+(document.getElementById('seqOctave')?.value||4);const base=midiOf(oct,0)+it.pc;const mids=QUALITIES[it.q].iv.map(x=>base+x[1]);Audio_.resume();Audio_.chord(mids,Math.max(.35,(60/seqBpm())*it.beats*.9),.012);}
+function stopSequence(){seqState.playTimers.forEach(clearTimeout);seqState.playTimers=[];seqState.recording=false;document.getElementById('seqRecord').classList.remove('on');document.getElementById('seqStatus').textContent='پخش/ضبط متوقف شد.';}
+function playSequence(from=0){
+  stopSequence();if(!seqState.items.length){toast('ابتدا چند آکورد اضافه کن');return;}Audio_.resume();
+  const beat=60/seqBpm();let offset=0;
+  seqState.items.slice(Math.max(0,from)).forEach((it,j)=>{const i=Math.max(0,from)+j;const delay=offset*beat*1000;seqState.playTimers.push(setTimeout(()=>{seqState.selected=i;renderSequence();playSequenceChord(it);},delay));offset+=it.beats;});
+  seqState.playTimers.push(setTimeout(()=>{document.getElementById('seqStatus').textContent='پخش توالی تمام شد.';},offset*beat*1000+80));
+}
+function startSequenceRecording(fromSelected=false){
+  stopSequence();
+  if(!seqState.items.length){toast('اول از بخش جست‌وجو یک آکورد اضافه کن');return;}
+  if(fromSelected&&seqState.selected>=0)seqState.items=seqState.items.slice(0,seqState.selected+1);
+  seqState.recording=true;seqState.recordStarted=performance.now();seqState.lastTap=0;
+  document.getElementById('seqRecord').classList.add('on');
+  document.getElementById('seqStatus').innerHTML='<span class="rec-dot"></span>ضبط فعال است؛ روی آکوردهای بالا بزن تا به توالی اضافه شوند. فاصلهٔ کلیک‌ها به نزدیک‌ترین ضرب تبدیل می‌شود.';
+}
+function downloadMidi(items,bpm=100,filename='chord-sequence',octave=4){
+  if(!items||!items.length){toast('برای خروجی MIDI ابتدا آکورد انتخاب کن');return;}
+  const ppq=480, events=[];let tick=0;const tempo=Math.round(60000000/Math.max(30,Math.min(300,bpm)));
+  events.push({tick:0,bytes:[0xFF,0x51,0x03,(tempo>>16)&255,(tempo>>8)&255,tempo&255],order:-2});
+  items.forEach(it=>{
+    const start=tick, dur=Math.max(1,it.beats||2)*ppq;
+    const base=(Math.max(1,Math.min(7,+octave||4)+1))*12+(it.pc||0);const notes=QUALITIES[it.q].iv.map(x=>Math.min(120,base+x[1]));
+    notes.forEach(n=>events.push({tick:start,bytes:[0x90,n,92],order:0}));
+    notes.forEach(n=>events.push({tick:start+dur-12,bytes:[0x80,n,0],order:-1}));
+    tick+=dur;
+  });
+  events.push({tick:tick+1,bytes:[0xFF,0x2F,0x00],order:9});events.sort((a,b)=>a.tick-b.tick||a.order-b.order);
+  function vlq(v){v=Math.max(0,Math.floor(v));let buffer=v&0x7f;const out=[];while((v>>=7)){buffer<<=8;buffer|=((v&0x7f)|0x80);}while(true){out.push(buffer&255);if(buffer&0x80)buffer>>=8;else break;}return out;}
+  const track=[];let prev=0;events.forEach(e=>{track.push(...vlq(e.tick-prev),...e.bytes);prev=e.tick;});
+  const be16=n=>[(n>>8)&255,n&255],be32=n=>[(n>>>24)&255,(n>>>16)&255,(n>>>8)&255,n&255];
+  const bytes=[...Array.from('MThd').map(c=>c.charCodeAt(0)),...be32(6),...be16(0),...be16(1),...be16(ppq),...Array.from('MTrk').map(c=>c.charCodeAt(0)),...be32(track.length),...track];
+  const blob=new Blob([new Uint8Array(bytes)],{type:'audio/midi'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename.toLowerCase().replace(/[^a-z0-9\-]+/g,'-')+'.mid';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);toast('فایل MIDI آماده شد');
+}
+document.getElementById('addChordBtn').onclick=()=>{const parsed=parseChordName(document.getElementById('chordSearch').value);if(!parsed){toast('نام آکورد شناخته نشد؛ نمونه: Am یا Cmaj7');return;}addSequenceChord(parsed);document.getElementById('chordSearch').value='';};
+document.getElementById('chordSearch').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();document.getElementById('addChordBtn').click();}});
+document.getElementById('seqBpm').oninput=e=>{document.getElementById('seqBpmLabel').textContent=FA_DIGITS(e.target.value);};
+document.getElementById('seqRecord').onclick=()=>{if(seqState.recording){seqState.recording=false;document.getElementById('seqRecord').classList.remove('on');document.getElementById('seqStatus').textContent='ضبط زمان‌بندی پایان یافت؛ می‌توانی پخش یا MIDI بگیری.';}else startSequenceRecording(false);};
+document.getElementById('seqContinue').onclick=()=>startSequenceRecording(true);
+document.getElementById('seqPlay').onclick=()=>playSequence(0);
+document.getElementById('seqPlayFrom').onclick=()=>playSequence(Math.max(0,seqState.selected));
+document.getElementById('seqStop').onclick=stopSequence;
+document.getElementById('seqClear').onclick=()=>{stopSequence();seqState.items=[];seqState.selected=0;renderSequence();};
+document.getElementById('seqMidi').onclick=()=>downloadMidi(seqState.items,seqBpm(),'my-chord-sequence',+document.getElementById('seqOctave').value);
+document.getElementById('seqSave').onclick=()=>{localStorage.setItem('accordium-sequence-v3',JSON.stringify({items:seqState.items,bpm:seqBpm()}));toast('توالی در مرورگر ذخیره شد');};
+document.getElementById('seqLoad').onclick=()=>{try{const data=JSON.parse(localStorage.getItem('accordium-sequence-v3')||'null');if(!data)throw 0;seqState.items=data.items||[];seqState.selected=0;if(data.bpm)document.getElementById('seqBpm').value=data.bpm;document.getElementById('seqBpmLabel').textContent=FA_DIGITS(seqBpm());renderSequence();toast('توالی بازیابی شد');}catch(e){toast('ذخیره‌ای برای بازیابی وجود ندارد');}};
+renderChordCatalog();renderSequence();
 
-  function breakTile(num){
-    if(gameOver) return;
-    const player = currentPlayer();
-    const cell = player.board.find(c=>c.num===num && !c.broken);
-    if(!cell) return;
-    cell.broken = true;
+/* ============================================================
+   11) تب‌ها، تنظیمات، کیبورد کامپیوتر
+   ============================================================ */
+const TABMETA={
+  build:["آکوردهای پیانو و استودیوی توالی","آکورد بساز، پیش‌روی‌های سبک‌محور را بشنو و توالی دلخواهت را به MIDI تبدیل کن."],
+  detect:["تشخیص آکورد","هر نتی می‌خواهی روی کلاویه بزن؛ من نام آکورد و حالتش را می‌گویم."],
+  practice:["تمرین و آزمون","گوشت را تربیت کن و انگشت‌هایت را روی آکوردها سریع کن."],
+  ref:["مرجع و تنظیمات","جدول کامل آکوردها به‌همراه نت‌ها و فرمول‌ها."]
+};
+function switchTab(t){
+  S.tab=t; stopAll(true);
+  ["build","detect","practice","ref"].forEach(x=>{
+    document.getElementById("tab-"+x)?.classList.toggle("hidden",x!==t);
+  });
+  document.getElementById("tab-build2").classList.toggle("hidden",t!=="build");
+  document.getElementById("readout").classList.toggle("hidden",t!=="build");
+  document.getElementById("playbar").classList.toggle("hidden",t!=="build");
+  document.querySelectorAll("nav.tabs button").forEach(b=>b.classList.toggle("on",b.dataset.tab===t));
+  document.getElementById("pageTitle").textContent=TABMETA[t][0];
+  document.getElementById("pageSub").textContent=TABMETA[t][1];
+  if(t==="ref") renderRef();
+  if(t==="practice" && !P.answer) newQuestion();
+  if(t==="detect") runDetect();
+  paint();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll("nav.tabs button").forEach(b=>b.onclick=()=>{Audio_.resume();switchTab(b.dataset.tab);});
 
-    const grid = document.getElementById('grid-p'+player.id);
-    const tileEl = grid ? [...grid.children].find(t=>Number(t.dataset.num)===num) : null;
-    if(tileEl){
-      tileEl.classList.remove('selectable');
-      tileEl.classList.add('shattering');
-      for(let i=0;i<7;i++){
-        const shard = document.createElement('div');
-        shard.className='shard';
-        const angle = Math.random()*Math.PI*2;
-        const dist = 30+Math.random()*22;
-        shard.style.setProperty('--dx', Math.cos(angle)*dist+'px');
-        shard.style.setProperty('--dy', Math.sin(angle)*dist+'px');
-        shard.style.setProperty('--dr', (Math.random()*360)+'deg');
-        tileEl.appendChild(shard);
-      }
-      setTimeout(()=>{
-        tileEl.classList.remove('shattering');
-        tileEl.classList.add('broken');
-        tileEl.querySelectorAll('.shard').forEach(s=>s.remove());
-      }, 600);
-    }
+document.getElementById("octUp").onclick=()=>{ if(S.kbStartOct<5){S.kbStartOct++;S.baseOct++;renderKeyboard();refresh();} };
+document.getElementById("octDown").onclick=()=>{ if(S.kbStartOct>1){S.kbStartOct--;S.baseOct--;renderKeyboard();refresh();} };
 
-    updateRemainLabel(player);
-    setMessage(`${player.name} سنگ ${toFa(num)} را شکست!`, true);
-    document.getElementById('ops').innerHTML = '';
-    clearAllSelectable();
+function bindSwitch(id,key,after){
+  const el=document.getElementById(id);
+  el.onclick=()=>{ S[key]=!S[key]; el.classList.toggle("on",S[key]); after&&after(); };
+}
+bindSwitch("swNames","showNames",()=>{renderKeyboard();refresh();});
+bindSwitch("swFing","showFing",()=>refresh());
+bindSwitch("swDeg","showDeg",()=>refresh());
+bindSwitch("swKeys","pcKeys");
+document.getElementById("vol").oninput=e=>{
+  const v=+e.target.value; Audio_.setVol(v/100);
+  document.getElementById("volVal").textContent=FA_DIGITS(v)+"٪";
+};
+document.getElementById("tempo").oninput=e=>{
+  S.tempo=+e.target.value;
+  document.getElementById("tempoVal").textContent=FA_DIGITS(S.tempo)+" BPM";
+  if(S.loop && S.loopTimer){clearInterval(S.loopTimer); S.loopTimer=setInterval(()=>playChord(true),(60/S.tempo)*4*1000);}
+};
 
-    if(player.board.every(c=>c.broken)){
-      endGame(player);
-      return;
-    }
-    setTimeout(()=> switchTurn(false), 650);
-  }
+/* کیبورد کامپیوتر */
+const KEYMAP={a:0,w:1,s:2,e:3,d:4,f:5,t:6,g:7,y:8,h:9,u:10,j:11,k:12,o:13,l:14,p:15,";":16};
+let kbShift=0;
+const physicalKeyMidis=new Map();
+window.addEventListener("keydown",e=>{
+  if(!S.pcKeys||e.repeat||e.metaKey||e.ctrlKey||e.altKey) return;
+  if(e.target && e.target.matches && e.target.matches("input,textarea,select,[contenteditable=true]")) return;
+  const k=e.key.toLowerCase();
+  if(k==="z"){kbShift=Math.max(-12,kbShift-12);toast("اکتاو پایین");return;}
+  if(k==="x"){kbShift=Math.min(12,kbShift+12);toast("اکتاو بالا");return;}
+  if(k===" "){e.preventDefault();S.tab==="build"?playChord():replayQuestion();return;}
+  if(KEYMAP[k]===undefined) return;
+  e.preventDefault();
+  const midi=midiOf(S.baseOct,0)+KEYMAP[k]+kbShift;
+  if(S.pressed.has(midi))return; S.pressed.add(midi); physicalKeyMidis.set(k,midi);
+  hitKey(midi); paint();
+});
+window.addEventListener("keyup",e=>{
+  const k=e.key.toLowerCase();
+  const midi=physicalKeyMidis.get(k);
+  if(midi===undefined) return;
+  S.pressed.delete(midi); physicalKeyMidis.delete(k); paint();
+});
 
-  function switchTurn(manualSkip){
-    if(gameOver) return;
-    if(manualSkip){
-      document.getElementById('ops').innerHTML = '';
-      clearAllSelectable();
-    }
-    currentIndex = (currentIndex + 1) % players.length;
-    hasRolled = false;
-    setActivePlayerUI();
-    if(config.diceMode==='virtual'){
-      const rollBtn = document.getElementById('rollBtn');
-      if(rollBtn) rollBtn.disabled = false;
-    }
-    setMessage(manualSkip ? `نوبت رد شد. نوبت ${currentPlayer().name}.` : `نوبت ${currentPlayer().name}.`);
-  }
+let toastT=null;
+function toast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg; t.classList.add("show");
+  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove("show"),1600);
+}
 
-  function processDiceValues(v1, v2){
-    hasRolled = true;
-    const opsData = getOptions(v1, v2);
-    setMessage(`${currentPlayer().name}: تاس‌ها ${toFa(v1)} و ${toFa(v2)} — یک عملیات را انتخاب کنید.`);
-    renderOps(opsData);
-    if(opsData.candidates.length===0){
-      setMessage('هیچ سنگی با این ترکیب باز نمی‌شود. نوبت را رد کنید یا ترکیب دیگری بسازید.', true);
-    }
-  }
-
-  function rollDice(){
-    if(gameOver) return;
-    const rollBtn = document.getElementById('rollBtn');
-    rollBtn.disabled = true;
-    document.getElementById('ops').innerHTML = '';
-    clearAllSelectable();
-    setMessage('در حال پرتاب...');
-
-    const v1 = Math.floor(Math.random()*6)+1;
-    const v2 = Math.floor(Math.random()*6)+1;
-    const die1 = document.getElementById('die1');
-    const die2 = document.getElementById('die2');
-    animateDie(die1, v1);
-    animateDie(die2, v2);
-
-    setTimeout(()=>{
-      processDiceValues(v1, v2);
-      rollBtn.disabled = false;
-    }, 1150);
-  }
-
-  function confirmManualDice(){
-    if(gameOver) return;
-    const v1 = Number(document.getElementById('manualD1').value);
-    const v2 = Number(document.getElementById('manualD2').value);
-    processDiceValues(v1, v2);
-  }
-
-  function animateDie(dieEl, value){
-    dieEl.classList.remove('rolling');
-    dieEl.style.transition = 'none';
-    void dieEl.offsetWidth;
-    const extraX = 720 * (Math.random()>0.5?1:-1);
-    const extraY = 1080 * (Math.random()>0.5?1:-1);
-    dieEl.style.transition = 'transform 1.1s cubic-bezier(.3,1.4,.4,1)';
-    dieEl.style.transform = `rotateX(${extraX}deg) rotateY(${extraY}deg)`;
-    setTimeout(()=>{
-      dieEl.style.transition = 'transform .4s ease-out';
-      dieEl.style.transform = SHOW[value];
-    }, 750);
-  }
-
-  function endGame(winner){
-    gameOver = true;
-    setActivePlayerUI();
-    const rollBtn = document.getElementById('rollBtn');
-    if(rollBtn) rollBtn.disabled = true;
-    resultTitle.textContent = `${winner.name} برنده‌ی معبد شد! 🏆`;
-    const summary = players.map(p=>{
-      const remaining = p.board.filter(c=>!c.broken).length;
-      return `${p.name}: ${toFa(12-remaining)} از ۱۲ سنگ`;
-    }).join(' | ');
-    resultText.textContent = summary;
-    overlay.classList.add('show');
-  }
-
-  function resetToWizard(){
-    overlay.classList.remove('show');
-    gameWrap.classList.add('hidden');
-    wizard.classList.remove('hidden');
-    stepIndex = 0;
-    showStep(0);
-  }
-
-  restartBtn.addEventListener('click', ()=> startGame(config));
-  restartLink.addEventListener('click', resetToWizard);
-
-})();
+/* ============================================================
+   12) شروع
+   ============================================================ */
+renderRoots(); renderQuals(); renderInvs(); renderKeyboard(); refresh();
+document.addEventListener("pointerdown",()=>Audio_.resume());
+setTimeout(()=>toast("برای شنیدن صدا یک‌بار روی صفحه بزن 🎹"),700);
 </script>
-
 </body>
 </html>
